@@ -1,0 +1,269 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+// ── Content collections ─────────────────────────────────────────────
+
+model Service {
+  id        String   @id @default(cuid())
+  position  Int
+  slug      String   @unique
+  number    String
+  title     String
+  copy      String
+  techTags  Json
+  timeline  String
+  priceInr  String
+  priceUsd  String
+  published Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  features ServiceFeature[]
+}
+
+model ServiceFeature {
+  id        String  @id @default(cuid())
+  serviceId String
+  service   Service @relation(fields: [serviceId], references: [id], onDelete: Cascade)
+  position  Int
+  title     String
+  copy      String
+}
+
+model Product {
+  id        String   @id @default(cuid())
+  position  Int
+  slug      String   @unique
+  badge     String?
+  title     String
+  copy      String
+  bullets   Json
+  metrics   Json
+  visualKey String
+  published Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model CaseStudy {
+  id        String   @id @default(cuid())
+  position  Int
+  slug      String   @unique
+  client    String
+  tags      Json
+  copy      String
+  metrics   Json
+  published Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model TeamMember {
+  id        String   @id @default(cuid())
+  position  Int
+  name      String
+  role      String
+  bio       String
+  photoUrl  String?
+  published Boolean  @default(true)
+  updatedAt DateTime @updatedAt
+}
+
+model Office {
+  id           String   @id @default(cuid())
+  position     Int
+  city         String
+  country      String
+  addressLines Json
+  tag          String?
+  published    Boolean  @default(true)
+  updatedAt    DateTime @updatedAt
+}
+
+model TimelineEntry {
+  id        String   @id @default(cuid())
+  position  Int
+  year      String
+  title     String
+  copy      String
+  published Boolean  @default(true)
+  updatedAt DateTime @updatedAt
+}
+
+model TechStackItem {
+  id        String   @id @default(cuid())
+  position  Int
+  name      String
+  blurb     String
+  published Boolean  @default(true)
+  updatedAt DateTime @updatedAt
+}
+
+model QualityGate {
+  id        String   @id @default(cuid())
+  position  Int
+  title     String
+  copy      String
+  published Boolean  @default(true)
+  updatedAt DateTime @updatedAt
+}
+
+model FaqGroup {
+  id        String    @id @default(cuid())
+  position  Int
+  key       String    @unique // "home" | "services" | "contact"
+  title     String
+  items     FaqItem[]
+  updatedAt DateTime  @updatedAt
+}
+
+model FaqItem {
+  id        String   @id @default(cuid())
+  groupId   String
+  group     FaqGroup @relation(fields: [groupId], references: [id], onDelete: Cascade)
+  position  Int
+  question  String
+  answer    String
+  published Boolean  @default(true)
+}
+
+enum PricingSet {
+  ENGAGEMENT
+  PLATFORM
+}
+
+model PricingTier {
+  id          String     @id @default(cuid())
+  set         PricingSet
+  position    Int
+  name        String
+  price       String
+  priceNote   String?
+  blurb       String
+  features    Json
+  ctaLabel    String
+  highlighted Boolean    @default(false)
+  published   Boolean    @default(true)
+  updatedAt   DateTime   @updatedAt
+}
+
+model HeroStat {
+  id       String @id @default(cuid())
+  position Int
+  value    String
+  label    String
+}
+
+model ClientLogo {
+  id       String @id @default(cuid())
+  position Int
+  name     String
+}
+
+model Industry {
+  id         String  @id @default(cuid())
+  position   Int
+  name       String
+  blurb      String?
+  showOnHome Boolean @default(true)
+}
+
+model UseCase {
+  id       String @id @default(cuid())
+  position Int
+  title    String
+  copy     String
+}
+
+model ComparisonRow {
+  id        String @id @default(cuid())
+  position  Int
+  feature   String
+  northmark String
+  typical   String
+}
+
+model TrustBadge {
+  id       String  @id @default(cuid())
+  position Int
+  label    String
+  sublabel String?
+}
+
+model Testimonial {
+  id       String  @id @default(cuid())
+  quote    String
+  author   String
+  role     String
+  company  String
+  featured Boolean @default(true)
+}
+
+// ── Operational models ──────────────────────────────────────────────
+
+enum SubmissionStatus {
+  NEW
+  READ
+  ARCHIVED
+}
+
+model ContactSubmission {
+  id        String           @id @default(cuid())
+  name      String
+  email     String
+  company   String?
+  need      String
+  brief     String
+  status    SubmissionStatus @default(NEW)
+  ip        String?
+  userAgent String?
+  createdAt DateTime         @default(now())
+}
+
+enum Role {
+  ADMIN
+  EDITOR
+}
+
+model User {
+  id           String    @id @default(cuid())
+  email        String    @unique
+  name         String
+  passwordHash String
+  role         Role      @default(EDITOR)
+  disabled     Boolean   @default(false)
+  lastLoginAt  DateTime?
+  createdAt    DateTime  @default(now())
+}
+
+// ── Singletons / per-route ──────────────────────────────────────────
+
+model SiteSettings {
+  id              Int     @id @default(1)
+  accentPreset    String  @default("terracotta")
+  accentColor     String  @default("#b8502a")
+  motionIntensity Float   @default(1)
+  cursorEffects   Boolean @default(true)
+  orgName         String  @default("Northmark Systems")
+  tagline         String  @default("")
+  contactEmail    String  @default("hello@northmark.io")
+  socialLinks     Json    @default("[]")
+  footerNote      String  @default("")
+}
+
+model PageSeo {
+  id          String  @id @default(cuid())
+  path        String  @unique
+  title       String
+  description String
+  ogTitle     String?
+  ogDescription String?
+  noindex     Boolean @default(false)
+}
