@@ -3,9 +3,7 @@ generator client {
 }
 
 datasource db {
-  provider  = "postgresql"
-  url       = env("DATABASE_URL")
-  directUrl = env("DIRECT_URL")
+  provider = "postgresql"
 }
 
 // ── Content collections ─────────────────────────────────────────────
@@ -256,6 +254,27 @@ model SiteSettings {
   contactEmail    String  @default("hello@northmark.io")
   socialLinks     Json    @default("[]")
   footerNote      String  @default("")
+
+  // Brand marks. Images are stored as data URIs and served by /api/brand/*;
+  // when empty the site falls back to the text wordmark and a generated icon.
+  wordmark    String  @default("Northmark")
+  logoData    String? @db.Text
+  logoAlt     String?
+  faviconData String? @db.Text
+
+  // Contact details shown across the site (contact page, footer, legal pages).
+  phone         String @default("+91 20 4890 2200")
+  supportEmail  String @default("support@northmark.io")
+  partnersEmail String @default("partners@northmark.io")
+
+  // Floating WhatsApp / call buttons.
+  whatsappNumber  String  @default("")
+  whatsappMessage String  @default("")
+  whatsappEnabled Boolean @default(false)
+  callEnabled     Boolean @default(false)
+  floatingScope   String  @default("mobile") // all | mobile | off
+
+  updatedAt DateTime @default(now()) @updatedAt
 }
 
 model PageSeo {

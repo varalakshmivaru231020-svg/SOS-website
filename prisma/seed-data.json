@@ -1,0 +1,973 @@
+{
+  "services": [
+    {
+      "position": 1,
+      "slug": "web-development",
+      "number": "01",
+      "title": "Web Development",
+      "copy": "Sites and applications that carry real business load — marketing platforms with editorial workflows, customer portals with authentication and billing, operational dashboards that stream live data.",
+      "techTags": [
+        "Next.js",
+        "TypeScript",
+        "Postgres",
+        "Sanity / Strapi",
+        "Vercel / AWS"
+      ],
+      "timeline": "4–10 weeks typical",
+      "priceInr": "from ₹6.5L",
+      "priceUsd": "$9k",
+      "features": [
+        {
+          "position": 1,
+          "title": "Design to build",
+          "copy": "Figma handoff, design system, component library."
+        },
+        {
+          "position": 2,
+          "title": "Performance budget",
+          "copy": "LCP under 1.8s on 4G, verified per release."
+        },
+        {
+          "position": 3,
+          "title": "SEO & analytics",
+          "copy": "Structured data, sitemaps, event tracking wired in."
+        }
+      ]
+    },
+    {
+      "position": 2,
+      "slug": "mobile-app-development",
+      "number": "02",
+      "title": "Mobile App Development",
+      "copy": "Consumer and field-force apps built for flaky networks and long sessions. Offline-first sync, biometric auth, background location, push and in-app payments — plus the release pipeline and store paperwork.",
+      "techTags": [
+        "Swift",
+        "Kotlin",
+        "React Native",
+        "Firebase",
+        "Detox / XCTest"
+      ],
+      "timeline": "8–16 weeks typical",
+      "priceInr": "from ₹11L",
+      "priceUsd": "$15k",
+      "features": [
+        {
+          "position": 1,
+          "title": "Offline-first",
+          "copy": "Conflict-safe sync queue, resumable uploads."
+        },
+        {
+          "position": 2,
+          "title": "Engagement",
+          "copy": "Push, in-app messaging, WhatsApp re-engagement."
+        },
+        {
+          "position": 3,
+          "title": "Release ops",
+          "copy": "CI builds, phased rollout, crash triage on call."
+        }
+      ]
+    },
+    {
+      "position": 3,
+      "slug": "custom-software",
+      "number": "03",
+      "title": "Custom Software",
+      "copy": "ERP, CRM, warehouse and claims systems shaped around your real process rather than a vendor's template. We migrate the legacy data, integrate the systems that must stay, and leave documentation your team can own.",
+      "techTags": [
+        ".NET / Java",
+        "Node",
+        "Kubernetes",
+        "Kafka",
+        "Snowflake"
+      ],
+      "timeline": "12–28 weeks typical",
+      "priceInr": "pod from ₹9L",
+      "priceUsd": "$12k per month",
+      "features": [
+        {
+          "position": 1,
+          "title": "Process mapping",
+          "copy": "Workshops with the people who use it daily."
+        },
+        {
+          "position": 2,
+          "title": "Legacy migration",
+          "copy": "Dual-run cutover, zero-loss data reconciliation."
+        },
+        {
+          "position": 3,
+          "title": "Audit & roles",
+          "copy": "Granular permissions, immutable activity log."
+        }
+      ]
+    },
+    {
+      "position": 4,
+      "slug": "ecommerce",
+      "number": "04",
+      "title": "eCommerce",
+      "copy": "Headless storefronts on Shopify or Medusa, subscription and marketplace mechanics, ERP-connected inventory, and checkout tuned line by line. Recovery and delivery journeys run on our own WhatsApp and RCS rails.",
+      "techTags": [
+        "Shopify Hydrogen",
+        "Medusa",
+        "Stripe / Razorpay",
+        "Algolia"
+      ],
+      "timeline": "6–14 weeks typical",
+      "priceInr": "from ₹8L",
+      "priceUsd": "$11k",
+      "features": [
+        {
+          "position": 1,
+          "title": "Conversion work",
+          "copy": "A/B tested PDP, cart and one-page checkout."
+        },
+        {
+          "position": 2,
+          "title": "Retention rails",
+          "copy": "Abandoned cart on WhatsApp, RCS order cards."
+        },
+        {
+          "position": 3,
+          "title": "Ops integration",
+          "copy": "ERP, 3PL, returns and reconciliation flows."
+        }
+      ]
+    },
+    {
+      "position": 5,
+      "slug": "ai-solution-services",
+      "number": "05",
+      "title": "AI Solution Services",
+      "copy": "We start from a measurable task, not a model. Retrieval assistants over your documents, extraction pipelines for invoices and claims, forecasting, and voice agents that hand off to humans gracefully — with evaluation sets and guardrails before launch.",
+      "techTags": [
+        "RAG",
+        "Evals",
+        "Vector DB",
+        "Speech-to-text",
+        "VPC deploy"
+      ],
+      "timeline": "2-week spike, 6–12 weeks to production",
+      "priceInr": "",
+      "priceUsd": "",
+      "features": [
+        {
+          "position": 1,
+          "title": "Two-week spike",
+          "copy": "Feasibility, baseline accuracy, cost per task."
+        },
+        {
+          "position": 2,
+          "title": "Guardrails",
+          "copy": "PII redaction, refusal rules, human escalation."
+        },
+        {
+          "position": 3,
+          "title": "Your cloud",
+          "copy": "Deployed in your VPC or region of choice."
+        }
+      ]
+    }
+  ],
+  "engagementTiers": [
+    {
+      "position": 1,
+      "name": "Fixed scope",
+      "price": "From ₹6.5L / $9k",
+      "priceNote": null,
+      "blurb": "Defined deliverable, defined price. Best for launches and rebuilds with clear edges.",
+      "features": [],
+      "ctaLabel": "",
+      "highlighted": false
+    },
+    {
+      "position": 2,
+      "name": "Dedicated pod",
+      "price": "From ₹9L / $12k per month",
+      "priceNote": "Most chosen",
+      "blurb": "A standing team of 3–7 — product, design, engineering, QA — on your roadmap, releasing weekly.",
+      "features": [],
+      "ctaLabel": "",
+      "highlighted": true
+    },
+    {
+      "position": 3,
+      "name": "Advisory",
+      "price": "From ₹1.4L / $1.9k per month",
+      "priceNote": null,
+      "blurb": "Architecture review, vendor selection, hiring plan and a written roadmap you can act on.",
+      "features": [],
+      "ctaLabel": "",
+      "highlighted": false
+    }
+  ],
+  "servicesFaq": [
+    {
+      "position": 1,
+      "question": "Who owns the code and the IP?",
+      "answer": "You do, from the first commit. Repositories live in your organisation; we work inside them."
+    },
+    {
+      "position": 2,
+      "question": "How fast can a pod start?",
+      "answer": "Usually 10 working days — one week of discovery, then the pod is staffed and in your standups."
+    },
+    {
+      "position": 3,
+      "question": "Do you work with our existing team?",
+      "answer": "Most engagements are mixed. We adopt your rituals, review your PRs and hand over documentation as we go."
+    },
+    {
+      "position": 4,
+      "question": "What happens after launch?",
+      "answer": "A support retainer with named engineers, 24/7 monitoring and a quarterly roadmap review — or a clean handover."
+    }
+  ],
+  "techStackItems": [
+    {
+      "position": 1,
+      "name": "Frontend",
+      "blurb": "Next.js, React Native, Swift, Kotlin, Tailwind"
+    },
+    {
+      "position": 2,
+      "name": "Backend",
+      "blurb": "Node, .NET, Java, Go, gRPC, GraphQL"
+    },
+    {
+      "position": 3,
+      "name": "Data",
+      "blurb": "Postgres, Kafka, Snowflake, Redis, S3"
+    },
+    {
+      "position": 4,
+      "name": "Infra",
+      "blurb": "AWS, GCP, Kubernetes, Terraform, Datadog"
+    },
+    {
+      "position": 5,
+      "name": "AI",
+      "blurb": "Claude, GPT-4, pgvector, LangChain, Whisper"
+    },
+    {
+      "position": 6,
+      "name": "QA & security",
+      "blurb": "Playwright, Snyk, OWASP reviews, load testing"
+    }
+  ],
+  "qualityGates": [
+    {
+      "position": 1,
+      "title": "Code review",
+      "copy": "Two-approver rule on every pull request."
+    },
+    {
+      "position": 2,
+      "title": "Automated tests",
+      "copy": "Unit + e2e coverage gates the merge."
+    },
+    {
+      "position": 3,
+      "title": "Load testing",
+      "copy": "5× projected peak before go-live."
+    },
+    {
+      "position": 4,
+      "title": "Security review",
+      "copy": "OWASP checklist and dependency scan."
+    }
+  ],
+  "heroPills": [
+    "Fixed-scope projects",
+    "Dedicated pods",
+    "Staff augmentation",
+    "CTO advisory"
+  ],
+  "servicesHero": {
+    "eyebrow": "Services",
+    "heading": "Engineering teams that ship weekly.",
+    "sub": "Senior-only pods of three to seven people. Discovery in week one, working software in week three, production traffic before the quarter closes."
+  },
+  "products": [
+    {
+      "position": 1,
+      "slug": "whatsapp-business-api",
+      "badge": "Live",
+      "title": "WhatsApp Business API",
+      "copy": "Official BSP access with green-tick verification, template approval handled for you, catalogue and payments support, and a no-code flow builder for two-way conversations.",
+      "bullets": [
+        "Template library with approval tracking",
+        "Chatbot flows with human handoff",
+        "Click-to-WhatsApp ad attribution"
+      ],
+      "metrics": [
+        {
+          "value": "99.4%",
+          "label": "Delivery rate"
+        },
+        {
+          "value": "380 ms",
+          "label": "Median latency"
+        },
+        {
+          "value": "48 hours",
+          "label": "Onboarding"
+        },
+        {
+          "value": "Per conversation + ₹0",
+          "label": "Pricing"
+        }
+      ],
+      "visualKey": "whatsapp"
+    },
+    {
+      "position": 2,
+      "slug": "sms-api",
+      "badge": null,
+      "title": "SMS API",
+      "copy": "One endpoint for OTP, transactional and promotional traffic with multi-operator failover, DLT registration support in India and delivery receipts pushed to your webhook in real time.",
+      "bullets": [
+        "Smart routing across redundant carriers",
+        "OTP service with auto-retry and voice fallback",
+        "Sender ID and DLT template management"
+      ],
+      "metrics": [
+        {
+          "value": "12k / sec",
+          "label": "Throughput"
+        },
+        {
+          "value": "< 3 s",
+          "label": "OTP delivery"
+        },
+        {
+          "value": "99.95%",
+          "label": "Uptime SLA"
+        },
+        {
+          "value": "From ₹0.11 / SMS",
+          "label": "Pricing"
+        }
+      ],
+      "visualKey": "sms"
+    },
+    {
+      "position": 3,
+      "slug": "rcs-messaging",
+      "badge": "New",
+      "title": "RCS Messaging",
+      "copy": "Your brand, verified, inside the native inbox. Rich cards and carousels, suggested replies and actions, typing indicators and read receipts — with automatic SMS fallback where RCS isn't available.",
+      "bullets": [
+        "Verified sender with logo and brand colour",
+        "Carousels, calendars and map actions",
+        "Per-card engagement analytics"
+      ],
+      "metrics": [
+        {
+          "value": "3.6× SMS",
+          "label": "Read rate"
+        }
+      ],
+      "visualKey": "rcs"
+    },
+    {
+      "position": 4,
+      "slug": "cloud-telephony",
+      "badge": null,
+      "title": "AI Powered Cloud Telephony",
+      "copy": "Virtual numbers, click-to-call, call recording and routing on a cloud PBX — with live transcription, sentiment scoring, keyword alerts and an auto-summary written into your CRM before the agent hangs up.",
+      "bullets": [
+        "Real-time transcription in 11 languages",
+        "Agent scorecards and compliance flags",
+        "Salesforce, Zoho and HubSpot sync"
+      ],
+      "metrics": [],
+      "visualKey": "telephony"
+    },
+    {
+      "position": 5,
+      "slug": "omnichannel",
+      "badge": null,
+      "title": "AI Omnichannel Communication",
+      "copy": "Every channel in one agent workspace — WhatsApp, RCS, SMS, voice, email, web and in-app chat — stitched into a single customer timeline. The AI layer drafts replies, classifies intent, routes by skill and escalates on sentiment drop.",
+      "bullets": [
+        "Unified inbox with SLA timers and queues",
+        "Copilot replies grounded in your knowledge base",
+        "Campaign builder with journey branching"
+      ],
+      "metrics": [
+        {
+          "value": "42%",
+          "label": "Faster FRT"
+        },
+        {
+          "value": "7",
+          "label": "Channels"
+        },
+        {
+          "value": "61%",
+          "label": "Auto-resolved"
+        }
+      ],
+      "visualKey": "omnichannel"
+    },
+    {
+      "position": 6,
+      "slug": "ivr",
+      "badge": null,
+      "title": "IVR Solutions",
+      "copy": "Design call flows by dragging them. Multilingual menus, speech and DTMF input, skill-based queues, callback instead of hold music, and outbound IVR for reminders, surveys and collections.",
+      "bullets": [
+        "Visual flow builder, versioned and testable",
+        "Queue callback and priority routing",
+        "Outbound surveys with keypad scoring"
+      ],
+      "metrics": [],
+      "visualKey": "ivr"
+    }
+  ],
+  "platformTiers": [
+    {
+      "position": 1,
+      "name": "Launch",
+      "price": "No platform fee",
+      "priceNote": null,
+      "blurb": "One channel, sandbox to production in a week. Community support.",
+      "features": [
+        "One channel",
+        "sandbox to production in a week",
+        "Community support"
+      ],
+      "ctaLabel": "Request sandbox keys",
+      "highlighted": false
+    },
+    {
+      "position": 2,
+      "name": "Growth",
+      "price": "₹24,000 / $299 per month",
+      "priceNote": null,
+      "blurb": "All channels, omnichannel inbox, 20 agent seats, AI copilot, 99.95% SLA.",
+      "features": [
+        "All channels",
+        "omnichannel inbox",
+        "20 agent seats",
+        "AI copilot",
+        "99.95% SLA"
+      ],
+      "ctaLabel": "Request sandbox keys",
+      "highlighted": true
+    },
+    {
+      "position": 3,
+      "name": "Enterprise",
+      "price": "Talk to sales",
+      "priceNote": null,
+      "blurb": "Private routes, data residency, dedicated numbers, named engineer, custom SLA.",
+      "features": [
+        "Private routes",
+        "data residency",
+        "dedicated numbers",
+        "named engineer",
+        "custom SLA"
+      ],
+      "ctaLabel": "Request sandbox keys",
+      "highlighted": false
+    }
+  ],
+  "useCases": [
+    {
+      "position": 1,
+      "title": "Order & delivery updates",
+      "copy": "WhatsApp + RCS rich cards with tracking and reorder actions."
+    },
+    {
+      "position": 2,
+      "title": "OTP & verification",
+      "copy": "SMS API with voice fallback for near-100% delivery."
+    },
+    {
+      "position": 3,
+      "title": "Collections & reminders",
+      "copy": "Outbound IVR and AI telephony with sentiment escalation."
+    },
+    {
+      "position": 4,
+      "title": "Support deflection",
+      "copy": "Omnichannel copilot resolves FAQ-class tickets automatically."
+    }
+  ],
+  "trustBadges": [
+    {
+      "position": 1,
+      "label": "SOC 2",
+      "sublabel": "Type II audited"
+    },
+    {
+      "position": 2,
+      "label": "ISO 27001",
+      "sublabel": "Certified ISMS"
+    },
+    {
+      "position": 3,
+      "label": "GDPR",
+      "sublabel": "DPA + SCCs"
+    },
+    {
+      "position": 4,
+      "label": "DLT",
+      "sublabel": "TRAI compliant"
+    },
+    {
+      "position": 5,
+      "label": "99.98%",
+      "sublabel": "Rolling 12-month uptime"
+    },
+    {
+      "position": 6,
+      "label": "24/7",
+      "sublabel": "NOC with 15-min response"
+    }
+  ],
+  "channelComparison": {
+    "columns": [
+      "WhatsApp",
+      "RCS",
+      "SMS",
+      "Voice / IVR"
+    ],
+    "rows": [
+      [
+        "Rich media",
+        "✓",
+        "✓",
+        "—",
+        "—"
+      ],
+      [
+        "Works without app install",
+        "Needs WA",
+        "✓",
+        "✓",
+        "✓"
+      ],
+      [
+        "Best for urgency",
+        "Medium",
+        "Medium",
+        "High",
+        "Highest"
+      ]
+    ]
+  },
+  "productsHero": {
+    "eyebrow": "Product suite",
+    "heading": "Six channels. One API key.",
+    "sub": "Messaging, voice and AI infrastructure we build and operate ourselves — carrier-grade routes, one console, one billing account, SDKs in five languages.",
+    "codeSample": "# send a WhatsApp template, fall back to SMS\nPOST https://api.supremeonesoftware.com/v2/messages\n{ \"to\": \"+919876543210\", \"channel\": [\"whatsapp\", \"sms\"],\n  \"template\": \"order_shipped\", \"vars\": { \"id\": \"7741\" } }"
+  },
+  "platformSections": {
+    "hero": {
+      "eyebrow": "Platform",
+      "heading": "One layer under every conversation.",
+      "sub": "Channels, orchestration, intelligence and analytics as four composable layers. Use one, or let the whole stack run your customer communication."
+    },
+    "architectureNote": "Six channel tiles (WhatsApp, SMS, RCS, Voice / IVR, Email, Web & in-app) flow down into the Orchestration engine (Routing · retries · fallback chains · rate shaping · journey logic), which feeds four capability cards: Intelligence (Intent, sentiment, summary, copilot drafts, voice agents.), Agent workspace (Unified inbox, queues, SLA timers, macros.), Analytics (Delivery, cost, CSAT, containment, per-channel funnels.), and Integrations (CRM, ERP, helpdesk, data warehouse, webhooks.).",
+    "developers": "Sandbox in five minutes.\n// node\nconst nm = require('northmark');\nawait nm.messages.send({\n  to: '+919876543210',\n  channel: ['whatsapp', 'rcs', 'sms'],\n  template: 'otp_login', vars: { code }\n});\nSDKs: Node, Python, PHP, Java, Go — plus plain REST.\nWebhooks: Signed events for delivery, replies, call status.\nSandbox: Free test numbers and simulated failure modes.\nSupport: Shared Slack channel with our platform engineers.",
+    "statusStats": [
+      {
+        "value": "99.98%",
+        "label": "Uptime"
+      },
+      {
+        "value": "2",
+        "label": "Incidents > 15 min"
+      },
+      {
+        "value": "6 min",
+        "label": "Median resolution"
+      },
+      {
+        "value": "4",
+        "label": "Data centres live"
+      }
+    ],
+    "migrationSteps": [
+      {
+        "position": 1,
+        "title": "Audit current setup",
+        "copy": "Templates, numbers, volumes, integrations."
+      },
+      {
+        "position": 2,
+        "title": "Parallel run",
+        "copy": "Traffic mirrored on both platforms for two weeks."
+      },
+      {
+        "position": 3,
+        "title": "Cutover",
+        "copy": "Numbers ported, old vendor decommissioned."
+      }
+    ]
+  },
+  "homeHero": {
+    "eyebrow": "Product studio & communication platform · est. 2015",
+    "heading": "We build the software that speaks for your business.",
+    "sub": "Five engineering disciplines and six shipped communication products under one roof — web, mobile, custom systems, commerce and AI, wired into WhatsApp, SMS, RCS and cloud voice from day one.",
+    "ctaPrimary": "Explore services →",
+    "ctaSecondary": "See products"
+  },
+  "heroStats": [
+    {
+      "position": 1,
+      "value": "11 yrs",
+      "label": "Shipping products"
+    },
+    {
+      "position": 2,
+      "value": "2.4B",
+      "label": "Messages / year"
+    },
+    {
+      "position": 3,
+      "value": "99.98%",
+      "label": "Platform uptime"
+    },
+    {
+      "position": 4,
+      "value": "180+",
+      "label": "Products delivered"
+    }
+  ],
+  "marqueeItems": [
+    "Web Development",
+    "Mobile Apps",
+    "Custom Software",
+    "eCommerce",
+    "AI Solutions"
+  ],
+  "clientLogos": [
+    "Larkfield",
+    "Ashvin",
+    "Meridian",
+    "Solace Freight",
+    "Cursive Edu"
+  ],
+  "industriesHome": [
+    "Retail & D2C",
+    "BFSI",
+    "Healthcare",
+    "Logistics",
+    "Education"
+  ],
+  "testimonial": {
+    "quote": "They replaced four vendors and our support backlog in one quarter.",
+    "author": "Shreya Kulkarni",
+    "role": "VP Customer Experience",
+    "company": "Larkfield Retail"
+  },
+  "comparisonRows": [
+    {
+      "position": 1,
+      "feature": "Contracts & invoices",
+      "northmark": "1",
+      "typical": "4 separate"
+    },
+    {
+      "position": 2,
+      "feature": "Time to first working build",
+      "northmark": "2–3 weeks",
+      "typical": "8–12 weeks"
+    },
+    {
+      "position": 3,
+      "feature": "Shared customer data across channels",
+      "northmark": "Always",
+      "typical": "Rarely"
+    },
+    {
+      "position": 4,
+      "feature": "Single point of accountability",
+      "northmark": "Yes",
+      "typical": "No"
+    }
+  ],
+  "homeFaq": [
+    {
+      "position": 1,
+      "question": "Can we start with just messaging and add engineering later?",
+      "answer": "Yes — most accounts start on the products and add a build once the channel proves out."
+    },
+    {
+      "position": 2,
+      "question": "Do you support regions outside India?",
+      "answer": "Yes — active routes and data residency in the UAE, Singapore, the EU and 190+ countries for messaging."
+    },
+    {
+      "position": 3,
+      "question": "Is there a minimum contract length?",
+      "answer": "Products are month-to-month. Build engagements are scoped per project or quarter, not locked into annual terms."
+    }
+  ],
+  "caseStudies": [
+    {
+      "position": 1,
+      "slug": "larkfield-retail",
+      "client": "Larkfield Retail",
+      "tags": [
+        "eCommerce",
+        "WhatsApp API",
+        "RCS"
+      ],
+      "copy": "Replaced four vendors with one headless storefront plus our WhatsApp and RCS rails. Order updates, returns and reorders now run as conversations instead of support tickets.",
+      "metrics": [
+        {
+          "value": "+34%",
+          "label": "Repeat orders"
+        },
+        {
+          "value": "−61%",
+          "label": "Support tickets"
+        },
+        {
+          "value": "9 wks",
+          "label": "To launch"
+        }
+      ]
+    },
+    {
+      "position": 2,
+      "slug": "ashvin-finance",
+      "client": "Ashvin Finance",
+      "tags": [
+        "Custom software",
+        "AI extraction",
+        "IVR"
+      ],
+      "copy": "A custom loan origination system with document intelligence on KYC packets, and collections that start as IVR reminders before they reach a human caller.",
+      "metrics": [
+        {
+          "value": "4.2×",
+          "label": "Faster approval"
+        },
+        {
+          "value": "92%",
+          "label": "KYC auto-read"
+        },
+        {
+          "value": "−28%",
+          "label": "Cost per collection"
+        }
+      ]
+    },
+    {
+      "position": 3,
+      "slug": "meridian-clinics",
+      "client": "Meridian Clinics",
+      "tags": [
+        "Mobile",
+        "Omnichannel",
+        "Cloud telephony"
+      ],
+      "copy": "Patient app with offline check-in across 40 centres, an omnichannel front desk, and multilingual IVR triage that routes urgent calls to a nurse within seconds.",
+      "metrics": [
+        {
+          "value": "−47%",
+          "label": "No-shows"
+        },
+        {
+          "value": "18 s",
+          "label": "Avg. triage time"
+        },
+        {
+          "value": "4.8★",
+          "label": "App rating"
+        }
+      ]
+    }
+  ],
+  "workStats": [
+    {
+      "value": "180+",
+      "label": "Products shipped"
+    },
+    {
+      "value": "9 wks",
+      "label": "Median time to launch"
+    },
+    {
+      "value": "92%",
+      "label": "Clients still with us at year 2"
+    },
+    {
+      "value": "38",
+      "label": "Countries served"
+    }
+  ],
+  "industriesWork": [
+    "Retail & D2C",
+    "BFSI & lending",
+    "Healthcare",
+    "Logistics",
+    "Education",
+    "Hospitality"
+  ],
+  "workHero": {
+    "eyebrow": "Selected work",
+    "heading": "Shipped, measured, still running.",
+    "sub": ""
+  },
+  "aboutHero": {
+    "eyebrow": "About",
+    "heading": "A studio that also runs what it builds.",
+    "story": "We started in 2015 as four engineers doing integration work for telcos. Operating our own messaging platform taught us what breaks at 3 a.m. — that experience is now in every project we deliver."
+  },
+  "principles": [
+    {
+      "position": 1,
+      "title": "Senior only",
+      "copy": "No pyramid staffing. The people in the pitch are the people who write the code."
+    },
+    {
+      "position": 2,
+      "title": "Weekly proof",
+      "copy": "Every Friday there is something running you can click, not a status deck."
+    },
+    {
+      "position": 3,
+      "title": "Own it yourself",
+      "copy": "Your repos, your cloud, documentation written for the team that inherits it."
+    },
+    {
+      "position": 4,
+      "title": "On call with you",
+      "copy": "We carry the pager for the platform we operate — 24/7 NOC, 15-minute response."
+    }
+  ],
+  "timelineEntries": [
+    {
+      "position": 1,
+      "year": "2015",
+      "title": "",
+      "copy": "Founded in Pune doing telco integration work."
+    },
+    {
+      "position": 2,
+      "year": "2018",
+      "title": "",
+      "copy": "Launched our own SMS and voice platform."
+    },
+    {
+      "position": 3,
+      "year": "2021",
+      "title": "",
+      "copy": "Became an official WhatsApp business solution provider."
+    },
+    {
+      "position": 4,
+      "year": "2024",
+      "title": "",
+      "copy": "Shipped the AI copilot and omnichannel workspace."
+    },
+    {
+      "position": 5,
+      "year": "2026",
+      "title": "",
+      "copy": "RCS at scale · 140 people across three offices."
+    }
+  ],
+  "teamMembers": [
+    {
+      "position": 1,
+      "name": "Aarav Deshmukh",
+      "role": "Co-founder & CEO",
+      "bio": ""
+    },
+    {
+      "position": 2,
+      "name": "Nadia Farooqi",
+      "role": "Co-founder & CTO",
+      "bio": ""
+    },
+    {
+      "position": 3,
+      "name": "Rohan Sett",
+      "role": "VP Platform Engineering",
+      "bio": ""
+    },
+    {
+      "position": 4,
+      "name": "Layla Haddad",
+      "role": "Head of Solutions, Dubai",
+      "bio": ""
+    }
+  ],
+  "offices": [
+    {
+      "city": "Bengaluru",
+      "country": "India",
+      "tag": "Head office",
+      "addressLines": [
+        "85/1, Sri Kengal Hanumanthaiah Road",
+        "Srinivasa Colony, Wilson Garden",
+        "Bengaluru 560027, Karnataka, India"
+      ],
+      "position": 1
+    }
+  ],
+  "contactHero": {
+    "eyebrow": "Contact",
+    "heading": "Tell us the problem.",
+    "sub": "You get a reply within one business day and an architecture, timeline and number within 48 hours of the first call."
+  },
+  "contactRoutes": [
+    {
+      "position": 1,
+      "title": "New projects",
+      "copy": "hello@supremeonesoftware.com · +91 20 4890 2200",
+      "email": "hello@supremeonesoftware.com"
+    },
+    {
+      "position": 2,
+      "title": "Platform support",
+      "copy": "support@supremeonesoftware.com · 24/7 NOC",
+      "email": "support@supremeonesoftware.com"
+    },
+    {
+      "position": 3,
+      "title": "Partnerships",
+      "copy": "partners@supremeonesoftware.com",
+      "email": "partners@supremeonesoftware.com"
+    }
+  ],
+  "contactFaq": [
+    {
+      "position": 1,
+      "question": "What should I include in the brief?",
+      "answer": "The problem you're solving, rough timeline and budget range, and any systems we'd need to integrate with."
+    },
+    {
+      "position": 2,
+      "question": "Do you take on smaller projects?",
+      "answer": "Yes — the products can be self-serve from day one, and fixed-scope builds start from ₹6.5L / $9k."
+    },
+    {
+      "position": 3,
+      "question": "Can we meet in person first?",
+      "answer": "Happily — our Pune and Dubai offices host in-person discovery sessions on request."
+    }
+  ],
+  "needOptions": [
+    "Web development",
+    "Mobile app development",
+    "Custom software",
+    "eCommerce",
+    "AI solutions",
+    "Messaging & voice products"
+  ],
+  "briefPlaceholder": "Where it hurts, what you've tried, when you need it live.",
+  "ndaNote": "We sign NDAs before the first call if you prefer.",
+  "footerTagline": "Software studio and communication platform. Pune · Dubai · Singapore.",
+  "footerCopyright": "© 2026 Supreme One Software Pvt Ltd",
+  "footerCompliance": "SOC 2 Type II · ISO 27001 · GDPR"
+}

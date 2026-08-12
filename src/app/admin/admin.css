@@ -1,0 +1,203 @@
+/* Admin panel — clean utilitarian shell on the same token system. */
+
+.admin-root {
+  display: grid;
+  grid-template-columns: 232px 1fr;
+  min-height: 100vh;
+  background: var(--paper);
+}
+@media (max-width: 820px) {
+  .admin-root { grid-template-columns: 1fr; }
+  .admin-side { position: static !important; height: auto !important; flex-direction: row !important; overflow-x: auto; }
+  .admin-side nav { display: flex !important; gap: 2px; }
+}
+
+.admin-side {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding: 22px 14px;
+  border-right: 1px solid var(--line);
+  background: var(--paper2);
+  overflow-y: auto;
+}
+.admin-side .wordmark { font-size: 20px; padding-inline: 10px; }
+.admin-side nav { display: grid; gap: 2px; }
+.admin-side nav a {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 9px 12px;
+  border-radius: 8px;
+  font-size: 13.5px;
+  color: var(--muted);
+  white-space: nowrap;
+}
+.admin-side nav a:hover { background: var(--paper3); color: var(--ink); }
+.admin-side nav a.active { background: var(--ink); color: var(--paper); }
+.admin-side .side-label {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--muted);
+  padding: 14px 12px 4px;
+}
+
+.admin-main { padding: clamp(20px, 3.5vw, 44px); min-width: 0; }
+.admin-head { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; flex-wrap: wrap; margin-bottom: 26px; }
+.admin-head h1 { font-size: clamp(26px, 3vw, 36px); }
+.admin-head .sub { color: var(--muted); font-size: 14px; margin-top: 6px; }
+
+.admin-card {
+  background: var(--paper2);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 16px;
+}
+
+.admin-grid { display: grid; gap: 14px; }
+.admin-grid.cols { grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); }
+
+.admin-table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 12px; background: var(--paper2); }
+.admin-table { width: 100%; border-collapse: collapse; font-size: 13.5px; min-width: 640px; }
+.admin-table th {
+  text-align: left;
+  font-size: 10.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--muted);
+  font-weight: 500;
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--line);
+  background: var(--paper3);
+}
+.admin-table td { padding: 10px 14px; border-bottom: 1px solid var(--line); vertical-align: top; }
+.admin-table tr:last-child td { border-bottom: none; }
+.admin-table tr.unread td { font-weight: 600; }
+
+.admin-form { display: grid; gap: 14px; }
+.admin-form .row { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; }
+.admin-form label { display: grid; gap: 6px; font-size: 12px; color: var(--muted); font-weight: 500; }
+.admin-form input, .admin-form select, .admin-form textarea {
+  font: inherit;
+  font-size: 14px;
+  color: var(--ink);
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 9px 12px;
+  width: 100%;
+}
+.admin-form input:focus, .admin-form select:focus, .admin-form textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 16%, transparent);
+}
+.admin-form input[type="checkbox"] { width: auto; }
+.admin-form .inline { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--ink); }
+
+.btn-admin {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 18px;
+  border-radius: 8px;
+  font-size: 13.5px;
+  font-weight: 500;
+  background: var(--ink);
+  color: var(--paper);
+  border: 1px solid var(--ink);
+  transition: background 0.2s, color 0.2s;
+}
+.btn-admin:hover { background: var(--accent); border-color: var(--accent); }
+.btn-admin.ghost { background: transparent; color: var(--ink); border-color: var(--line); }
+.btn-admin.ghost:hover { color: var(--accent); border-color: var(--accent); background: transparent; }
+.btn-admin.danger { background: transparent; color: #a33; border-color: color-mix(in srgb, #a33 40%, transparent); }
+.btn-admin.danger:hover { background: #a33; color: #fff; }
+.btn-admin.small { padding: 5px 12px; font-size: 12.5px; }
+
+.chip-admin {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  color: var(--muted);
+}
+.chip-admin.new { color: var(--accent); border-color: var(--accent); }
+.chip-admin.ok { color: var(--good); border-color: var(--good); }
+
+details.admin-editor { border: 1px solid var(--line); border-radius: 10px; background: var(--paper2); }
+details.admin-editor > summary {
+  cursor: pointer;
+  padding: 13px 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  list-style: none;
+  font-size: 14px;
+  font-weight: 500;
+}
+details.admin-editor > summary::-webkit-details-marker { display: none; }
+details.admin-editor > summary::before { content: "▸"; color: var(--accent); font-size: 12px; }
+details.admin-editor[open] > summary::before { content: "▾"; }
+details.admin-editor .editor-body { padding: 4px 16px 18px; border-top: 1px solid var(--line); padding-top: 16px; }
+details.admin-editor > summary .muted { color: var(--muted); font-weight: 400; font-size: 12.5px; }
+
+/* "Add a new …" sits above the list and hard right, identically on every
+   content screen, instead of being buried under a long list of records. */
+details.admin-add { border: 0; background: transparent; border-radius: 0; }
+details.admin-add > summary {
+  width: fit-content;
+  margin-left: auto;
+  padding: 9px 18px;
+  border-radius: 999px;
+  background: var(--ink);
+  color: var(--paper);
+  font-size: 13px;
+  transition: background 0.25s;
+}
+details.admin-add > summary:hover { background: var(--accent); }
+details.admin-add > summary::before { content: "+"; color: inherit; font-size: 14px; }
+details.admin-add[open] > summary::before { content: "×"; }
+details.admin-add .editor-body {
+  margin-top: 12px;
+  padding: 16px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--paper2);
+}
+
+.admin-tabs { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 20px; }
+.admin-tabs a {
+  padding: 8px 16px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  font-size: 13px;
+  color: var(--muted);
+}
+.admin-tabs a.active { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+
+.stat-tile { display: grid; gap: 4px; }
+.stat-tile .v { font-family: var(--font-serif), Georgia, serif; font-size: 34px; line-height: 1; }
+.stat-tile .l { color: var(--muted); font-size: 12.5px; }
+
+.login-wrap {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+}
+.login-card {
+  width: min(400px, 100%);
+  background: var(--paper2);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 36px 32px;
+}
