@@ -13,7 +13,7 @@ export default async function Footer() {
         <div className="footer-grid">
           <div>
             <div className="wordmark" style={{ marginBottom: 14 }}>
-              <Brandmark wordmark={settings.wordmark} logoSrc={logoSrc} logoAlt={settings.logoAlt} height={logoSrc ? 46 : 28} />
+              <Brandmark wordmark={settings.wordmark} logoSrc={logoSrc} logoAlt={settings.logoAlt} height={logoSrc ? 42 : 28} />
             </div>
             <p style={{ color: "var(--muted)", fontSize: 14, maxWidth: "30ch" }}>{settings.tagline}</p>
             <div className="footer-contact">

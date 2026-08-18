@@ -552,21 +552,17 @@ html[data-cursor="on"] .cursor-dot { opacity: 1; }
 .hp-field { position: absolute; left: -9999px; opacity: 0; height: 0; overflow: hidden; }
 
 /* ── Brand mark ─────────────────────────────────────────── */
-/* The supplied logo is white + orange artwork on a baked-in black background
-   (no alpha channel), so on the cream paper it would read as a black box.
-   Keying the black out is not an option either — the wordmark is white and
-   would vanish. Instead the black becomes deliberate: a dark plate with the
-   logo's own background colour, sized to hug the artwork. */
+/* Expects a logo with a real alpha channel. The supplied artwork was white +
+   orange on a baked-in black plate, which read as a black box on the cream
+   paper; it is re-cut for light backgrounds (white ink → --ink, plate and the
+   '+' knocked out of the S → transparent) rather than boxed in here. Keep the
+   element plate-free so the mark sits on the paper like the wordmark it
+   replaces — see logo-light.png at the repo root for the prepared asset. */
 .brand-logo {
   display: block;
   width: auto;
   max-width: 220px;
   object-fit: contain;
-  background: #000;
-  border-radius: 8px;
-  /* Tight vertical padding so the height budget goes to the artwork, not the
-     plate — the lockup's small second line needs the pixels. */
-  padding: 3px 9px;
   max-height: 100%;
 }
 .site-footer .brand-logo { max-width: 200px; }

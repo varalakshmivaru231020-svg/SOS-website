@@ -48,10 +48,12 @@ export default function Header({
     <header className="site-header">
       <div className="container bar">
         <Link href="/" className="wordmark" aria-label={`${wordmark} — home`}>
-          {/* 30px suited a text wordmark; the uploaded lockup is a wide 2.9:1
+          {/* 30px suited a text wordmark; the uploaded lockup is a wide 3.6:1
               horizontal logo whose second line was illegible at that size.
-              44 fits the 68px bar with breathing room. */}
-          <Brandmark wordmark={wordmark} logoSrc={logoSrc} logoAlt={logoAlt} height={logoSrc ? 44 : 30} />
+              40 fits the 68px bar with breathing room — and now that the dark
+              plate and the artwork's baked-in margin are gone, it buys the
+              mark more pixels than the old 44 did. */}
+          <Brandmark wordmark={wordmark} logoSrc={logoSrc} logoAlt={logoAlt} height={logoSrc ? 40 : 30} />
         </Link>
         <nav className={`site-nav${open ? " open" : ""}`} aria-label="Main">
           {LINKS.map((l) => (
