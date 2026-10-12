@@ -3,8 +3,9 @@ import { getSettings } from "@/lib/content";
 
 /**
  * Serves the logo and favicon uploaded in the admin panel.
- * Both are stored as data URIs on SiteSettings; when one is missing we fall
- * back to a generated SVG mark so the site always has a logo and a tab icon.
+ * Both are stored as data URIs on SiteSettings. Without an uploaded logo we
+ * draw the wordmark as SVG; without an uploaded favicon we redirect to the
+ * brand mark in /public, so the site always has a logo and a tab icon.
  * Callers append ?v=<settings.updatedAt> so a new upload busts the cache.
  */
 export async function GET(_req: NextRequest, { params }: { params: Promise<{ asset: string }> }) {
@@ -29,23 +30,22 @@ export async function GET(_req: NextRequest, { params }: { params: Promise<{ ass
     }
   }
 
-  return new Response(fallbackSvg(settings.wordmark, settings.accentColor, asset === "favicon"), {
+  // No upload: the brand mark in /public is the favicon. A relative Location
+  // keeps the redirect on the public host behind the proxy.
+  if (asset === "favicon") {
+    return new Response(null, { status: 307, headers: { Location: "/icon-192.png" } });
+  }
+
+  return new Response(fallbackLogoSvg(settings.wordmark, settings.accentColor), {
     headers: { "Content-Type": "image/svg+xml", "Cache-Control": "public, max-age=31536000, immutable" },
   });
 }
 
-/** Generated mark: the wordmark's initial on the accent colour (favicon), or the wordmark set in serif (logo). */
-function fallbackSvg(wordmark: string, accent: string, isFavicon: boolean): string {
+/** Generated logo: the wordmark set in serif with its accent full stop. */
+function fallbackLogoSvg(wordmark: string, accent: string): string {
   const safeAccent = /^#[0-9a-fA-F]{3,8}$/.test(accent) ? accent : "#b8502a";
   const text = (wordmark || "Supreme One Software").trim();
   const escaped = text.replace(/[<>&"]/g, (c) => ({ "<": "&lt;", ">": "&gt;", "&": "&amp;", '"': "&quot;" })[c]!);
-
-  if (isFavicon) {
-    return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-<rect width="64" height="64" rx="14" fill="${safeAccent}"/>
-<text x="32" y="45" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="40" fill="#ffffff">${escaped.charAt(0).toUpperCase()}</text>
-</svg>`;
-  }
 
   const width = Math.max(120, escaped.length * 17 + 20);
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${width} 40">

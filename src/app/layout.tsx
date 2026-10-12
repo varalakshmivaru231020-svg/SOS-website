@@ -16,13 +16,23 @@ else{sessionStorage.setItem('nm_seen','1');d.setAttribute('data-seq','on');windo
 
 export async function generateMetadata(): Promise<Metadata> {
   const [seo, settings] = await Promise.all([getSeo("/"), getSettings()]);
-  // ?v= is the settings timestamp, so uploading a new icon busts the cache.
-  const icon = `/api/brand/favicon?v=${settings.assetVersion}`;
+  // A favicon uploaded in Admin → Brand & contact wins (?v= busts the cache on
+  // re-upload); otherwise the brand mark set in /public, cut from the logo.
+  const uploaded = settings.faviconData ? `/api/brand/favicon?v=${settings.assetVersion}` : null;
   return {
     metadataBase: new URL(SITE_URL),
     title: seo?.title || "Supreme One Software — Every customer conversation, in one place",
     description: seo?.description || undefined,
-    icons: { icon: [{ url: icon }], shortcut: [icon], apple: [{ url: icon }] },
+    icons: uploaded
+      ? { icon: [{ url: uploaded }], shortcut: [uploaded], apple: [{ url: uploaded }] }
+      : {
+          icon: [
+            { url: "/favicon.ico", sizes: "16x16 32x32 48x48" },
+            { url: "/icon-192.png", type: "image/png", sizes: "192x192" },
+            { url: "/icon-512.png", type: "image/png", sizes: "512x512" },
+          ],
+          apple: [{ url: "/apple-touch-icon.png", sizes: "180x180" }],
+        },
   };
 }
 

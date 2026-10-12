@@ -61,8 +61,8 @@ export default async function BrandAdminPage() {
 
         <h2 style={{ fontSize: 15, fontWeight: 600, marginTop: 10 }}>Browser icon (favicon)</h2>
         <p style={{ fontSize: 13, color: "var(--muted)", marginTop: -8 }}>
-          A square PNG, SVG or ICO — 64&times;64 or larger. Without one, the site generates an icon from the wordmark
-          initial on the accent colour.
+          A square PNG, SVG or ICO — 64&times;64 or larger. Without one, the site uses the &ldquo;S&rdquo; brand mark
+          cut from the logo (the files in <code>public/</code>).
         </p>
         <div className="row">
           <label>
