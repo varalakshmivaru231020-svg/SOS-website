@@ -49,10 +49,10 @@ export default async function PricingPage() {
         lede="Start with one product or run the whole platform. Tell us your channels and volume, and we’ll put together the right plan."
         actions={
           <>
-            <Link href={contactHref("platform")} className="btn btn-accent" data-magnet>
+            <Link href={contactHref("platform")} className="btn btn-accent">
               Get a custom quote
             </Link>
-            <Link href={demoHref("platform")} className="btn btn-ghost" data-magnet>
+            <Link href={demoHref("platform")} className="btn btn-ghost">
               Book a Demo
             </Link>
           </>
@@ -78,7 +78,6 @@ export default async function PricingPage() {
                   <Link
                     href={contactHref("platform")}
                     className={`btn ${p.highlighted ? "btn-accent" : "btn-ghost"}`}
-                    data-magnet
                   >
                     {p.ctaLabel || "Talk to sales"}
                   </Link>
@@ -132,7 +131,7 @@ export default async function PricingPage() {
               you handle, and what you’d like to automate — we’ll come back with a quote.
             </p>
             <div className="hero-actions" data-reveal>
-              <Link href={contactHref("platform")} className="btn btn-accent" data-magnet>
+              <Link href={contactHref("platform")} className="btn btn-accent">
                 Get a custom quote
               </Link>
             </div>

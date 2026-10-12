@@ -898,7 +898,7 @@ export const PRODUCTS: Product[] = [
       description: "Turn happy customers into public reviews, automatically. Book a demo with Supreme One Software.",
     },
     hero: {
-      headline: "Turn happy customers into public reviews, automatically",
+      headline: "Turn happy customers into public reviews automatically",
       accent: "public reviews",
       sub: "A one-tap review link or table QR code, sent at the right moment, with AI-drafted prompts that make writing a review easy.",
     },

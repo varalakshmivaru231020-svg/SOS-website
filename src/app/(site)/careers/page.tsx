@@ -27,7 +27,7 @@ export default async function CareersPage() {
         lede="We’re a product studio and communication platform team building WhatsApp, voice and chat products — and the apps and websites that sit alongside them."
         actions={
           email ? (
-            <a href={`mailto:${email}?subject=${encodeURIComponent("Careers")}`} className="btn btn-accent" data-magnet>
+            <a href={`mailto:${email}?subject=${encodeURIComponent("Careers")}`} className="btn btn-accent">
               Send us your CV
             </a>
           ) : undefined

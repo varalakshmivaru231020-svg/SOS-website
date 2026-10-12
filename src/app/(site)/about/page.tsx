@@ -27,10 +27,10 @@ export default async function AboutPage() {
         lede={ABOUT.intro}
         actions={
           <>
-            <Link href={demoHref()} className="btn btn-accent" data-magnet>
+            <Link href={demoHref()} className="btn btn-accent">
               Book a Demo
             </Link>
-            <Link href="/contact" className="btn btn-ghost" data-magnet>
+            <Link href="/contact" className="btn btn-ghost">
               Contact us
             </Link>
           </>

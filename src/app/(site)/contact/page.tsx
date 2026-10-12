@@ -38,7 +38,7 @@ export default async function ContactPage() {
         accent="our team"
         lede="Tell us what you need — a demo, a quote or a custom build — and we’ll get back to you."
         actions={
-          <Link href={demoHref()} className="btn btn-accent" data-magnet>
+          <Link href={demoHref()} className="btn btn-accent">
             Book a Demo
           </Link>
         }

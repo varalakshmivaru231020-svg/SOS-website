@@ -139,7 +139,7 @@ export function buildMenu(): MenuEntry[] {
       match: ["/services"],
       columns: [{ links: SERVICES.map((s) => ({ href: offeringHref(s), label: s.name, note: s.tagline })) }],
     },
-    { kind: "link", label: "Customers", href: "/customers" },
+    // Customers is linked from the footer only (Company column).
     { kind: "link", label: "Pricing", href: "/pricing" },
   ];
 }

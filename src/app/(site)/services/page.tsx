@@ -27,10 +27,10 @@ export default function ServicesPage() {
         lede={HOME.services.sub}
         actions={
           <>
-            <Link href={contactHref()} className="btn btn-accent" data-magnet>
+            <Link href={contactHref()} className="btn btn-accent">
               Start a Project
             </Link>
-            <Link href={demoHref()} className="btn btn-ghost" data-magnet>
+            <Link href={demoHref()} className="btn btn-ghost">
               Book a Call
             </Link>
           </>

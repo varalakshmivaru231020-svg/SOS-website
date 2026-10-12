@@ -149,7 +149,7 @@ export default function ContactForm({
       )}
 
       <div className="form-foot">
-        <button type="submit" className="btn btn-accent" data-magnet disabled={pending}>
+        <button type="submit" className="btn btn-accent" disabled={pending}>
           {pending ? "Sending…" : intent === "demo" ? "Book my demo" : "Send message"}
         </button>
         <p className="form-note">

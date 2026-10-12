@@ -2,10 +2,9 @@ import Accent from "./Accent";
 import Breadcrumbs, { type Crumb } from "./Breadcrumbs";
 
 /**
- * The page-opening band: off-white with a peach glow and the faint grid
- * (the grid comes from the fixed overlay in the site layout), eyebrow, one H1
- * with its italic accent, lede and actions. With a `visual` it splits into
- * copy + mockup; without, the headline gets the full measure.
+ * The page-opening band: eyebrow, one H1 with its orange accent phrase, lede
+ * and actions. With a `visual` it splits into copy + mockup; without, the
+ * headline gets the full measure.
  */
 export default function PageHero({
   eyebrow,
@@ -29,9 +28,7 @@ export default function PageHero({
   size?: "lg" | "md";
 }) {
   return (
-    <section className="hero" data-scrub>
-      <div className="glow glow-accent" data-par="0.07" aria-hidden="true" />
-      <div className="glow glow-peach" data-par="0.11" aria-hidden="true" />
+    <section className="hero">
       <div className="container">
         {crumbs && <Breadcrumbs trail={crumbs} />}
         <div className={visual ? "hero-grid" : undefined}>
@@ -41,7 +38,7 @@ export default function PageHero({
                 {eyebrow}
               </span>
             )}
-            <h1 className={`display${size === "md" ? " display-md" : ""}`} data-lines data-reveal data-delay="0.06">
+            <h1 className={`display${size === "md" ? " display-md" : ""}`} data-reveal data-delay="0.06">
               <Accent text={title} accent={accent} />
             </h1>
             {lede && (

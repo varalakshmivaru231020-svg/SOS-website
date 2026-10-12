@@ -185,7 +185,7 @@ details.admin-add .editor-body {
 .admin-tabs a.active { background: var(--ink); color: var(--paper); border-color: var(--ink); }
 
 .stat-tile { display: grid; gap: 4px; }
-.stat-tile .v { font-family: var(--font-serif), Georgia, serif; font-size: 34px; line-height: 1; }
+.stat-tile .v { font-weight: 600; font-size: 34px; line-height: 1; }
 .stat-tile .l { color: var(--muted); font-size: 12.5px; }
 
 .login-wrap {

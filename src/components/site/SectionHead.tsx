@@ -23,7 +23,7 @@ export default function SectionHead({
           {eyebrow}
         </span>
       )}
-      <Tag className="h2" data-lines data-reveal data-delay="0.06">
+      <Tag className="h2" data-reveal data-delay="0.06">
         <Accent text={heading} accent={accent} />
       </Tag>
       {sub && (

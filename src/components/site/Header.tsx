@@ -185,7 +185,7 @@ export default function Header({
         </nav>
 
         <div className="bar-end">
-          <Link href="/book-a-demo" className="btn btn-accent nav-cta" data-magnet>
+          <Link href="/book-a-demo" className="btn btn-accent nav-cta">
             Book a Demo
           </Link>
           <button

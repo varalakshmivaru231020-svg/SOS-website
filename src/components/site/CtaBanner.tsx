@@ -27,9 +27,8 @@ export default function CtaBanner({
 }) {
   return (
     <section className="cta-band">
-      <div className="glow glow-accent" aria-hidden="true" />
       <div className="container">
-        <h2 className="h2" data-lines data-reveal>
+        <h2 className="h2" data-reveal>
           <Accent text={heading} accent={accent} />
         </h2>
         {sub && (
@@ -38,11 +37,11 @@ export default function CtaBanner({
           </p>
         )}
         <div className="cta-actions" data-reveal data-delay="0.12">
-          <Link href={href} className="btn btn-accent" data-magnet>
+          <Link href={href} className="btn btn-accent">
             {cta}
           </Link>
           {secondary && (
-            <Link href={secondary.href} className="btn btn-line-light" data-magnet>
+            <Link href={secondary.href} className="btn btn-line-light">
               {secondary.label}
             </Link>
           )}

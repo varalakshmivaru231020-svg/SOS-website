@@ -28,10 +28,10 @@ export default function IndustryPage({ ind }: { ind: Industry }) {
         lede={ind.hero.sub}
         actions={
           <>
-            <Link href={demoHref()} className="btn btn-accent" data-magnet>
+            <Link href={demoHref()} className="btn btn-accent">
               Book a Demo
             </Link>
-            <Link href="#products-used" className="btn btn-ghost" data-magnet>
+            <Link href="#products-used" className="btn btn-ghost">
               See the products
             </Link>
           </>
@@ -73,8 +73,7 @@ export default function IndustryPage({ ind }: { ind: Industry }) {
               const p = getProduct(u.product);
               if (!p) return null;
               return (
-                <Link key={u.product} href={productHref(p.slug)} className="l-card" data-card data-reveal data-delay={0.05 * i}>
-                  <span className="sheen" aria-hidden="true" />
+                <Link key={u.product} href={productHref(p.slug)} className="l-card" data-reveal data-delay={0.05 * i}>
                   <span className="l-kicker">{p.tagline}</span>
                   <span className="l-title">{p.name}</span>
                   <span className="l-note">{u.how}</span>

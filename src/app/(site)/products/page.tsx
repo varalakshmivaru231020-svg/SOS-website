@@ -44,10 +44,10 @@ export default function ProductsOverviewPage() {
         lede={HOME.products.sub}
         actions={
           <>
-            <Link href={demoHref("platform")} className="btn btn-accent" data-magnet>
+            <Link href={demoHref("platform")} className="btn btn-accent">
               Book a Demo
             </Link>
-            <Link href={contactHref("platform")} className="btn btn-ghost" data-magnet>
+            <Link href={contactHref("platform")} className="btn btn-ghost">
               Talk to Sales
             </Link>
           </>

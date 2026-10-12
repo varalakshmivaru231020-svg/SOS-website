@@ -41,10 +41,10 @@ export default function OfferingPage({ o }: { o: Offering }) {
         lede={o.hero.sub}
         actions={
           <>
-            <Link href={isService ? contactHref(o.slug) : demoHref(o.slug)} className="btn btn-accent" data-magnet>
+            <Link href={isService ? contactHref(o.slug) : demoHref(o.slug)} className="btn btn-accent">
               {isService ? "Start a Project" : "Book a Demo"}
             </Link>
-            <Link href={isService ? demoHref(o.slug) : contactHref(o.slug)} className="btn btn-ghost" data-magnet>
+            <Link href={isService ? demoHref(o.slug) : contactHref(o.slug)} className="btn btn-ghost">
               {isService ? "Book a Call" : "Talk to Sales"}
             </Link>
           </>

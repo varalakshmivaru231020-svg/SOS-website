@@ -35,7 +35,7 @@ export default async function CustomersPage() {
         accent="every channel"
         lede="How teams use the platform to answer faster, automate the routine and measure what works."
         actions={
-          <Link href={demoHref()} className="btn btn-accent" data-magnet>
+          <Link href={demoHref()} className="btn btn-accent">
             Book a Demo
           </Link>
         }

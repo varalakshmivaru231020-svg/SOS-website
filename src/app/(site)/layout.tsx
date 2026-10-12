@@ -1,8 +1,6 @@
 import Header from "@/components/site/Header";
 import Footer from "@/components/site/Footer";
 import EffectsProvider from "@/components/motion/EffectsProvider";
-import TitleSequence from "@/components/motion/TitleSequence";
-import Atmosphere from "@/components/motion/Atmosphere";
 import FloatingActions from "@/components/site/FloatingActions";
 import SiteScripts from "@/components/site/SiteScripts";
 import NavProgress from "@/components/site/NavProgress";
@@ -41,9 +39,6 @@ export default async function SiteLayout({ children }: { children: React.ReactNo
   return (
     <>
       <JsonLd data={jsonLd} />
-      <TitleSequence wordmark={settings.wordmark} />
-      <div className="grid-overlay" aria-hidden="true" />
-      <Atmosphere />
       <EffectsProvider />
       <SiteScripts />
       <NavProgress />

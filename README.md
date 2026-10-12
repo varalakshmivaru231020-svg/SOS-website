@@ -51,31 +51,19 @@ npm run dev
 - Admin: http://localhost:3000/admin — sign in with `ADMIN_EMAIL` / `ADMIN_PASSWORD` from `.env`
   (defaults: `admin@northmark.local` / `change-me-northmark-2026` — **change these**).
 
-## The cinematic layer
+## Design system
 
-The site is directed, not just animated. Motion responds continuously to the
-viewer instead of playing once and going still.
+Minimal by request: white page, light-grey alternate sections, one sans family
+(Inter, via `next/font/google`) and the brand orange as the single accent — accent
+phrases in headlines are coloured, not italic. Sizes and corners come from tokens in
+`src/app/globals.css` (`--fs-1`…`--fs-8`, `--r-sm`…`--r-round`); use them rather than new
+values, so the site keeps one type scale and one set of radii. Labels are sentence case,
+never below 12px.
 
-| Piece | What it does | Where |
-|---|---|---|
-| **Title sequence** | Ink curtain, wordmark rising out of its mask, hairline rule drawing, then the curtain lifts. Once per session. Server-rendered and CSS-driven so it is up before the first paint — no flash. | `TitleSequence.tsx`, gate script in `app/layout.tsx` |
-| **Masked type** | Headlines split into per-word masks that rise line by line, like a title card. Masks are per word, so reflow can never break them. | `data-lines` → `EffectsProvider` |
-| **Scrubbed dissolve** | Heroes recede — scale, lift, fade — continuously as you scroll past, driven by a live `--p` variable. | `data-scrub` |
-| **Atmosphere** | Film grain, vignette, and a warm key light that drifts on its own and leans toward the pointer. | `Atmosphere.tsx` |
-| **Counting figures** | Stats roll up when they enter frame and land on the exact copy. | `data-count` |
-| **Parallax** | Layers drift at their own rates as you scroll. | `data-par` |
-| **Hero threads** | The phone / inbox / browser mockups play their conversation in, message by message. | `.chat` in `globals.css`, `DemoVisual.tsx` |
-| **Cuts** | Navigation plays an ink wipe while the incoming page settles up underneath. | `(site)/template.tsx` |
-
-**Timing is released, not guessed.** Scroll reveals wait for the curtain's own
-`animationstart`, so the hero is caught mid-motion as the frame opens rather
-than finishing behind it.
-
-**Everything collapses gracefully.** Under `prefers-reduced-motion`, or with the
-Appearance motion slider at 0, headings are never split, grain and key light are
-removed, the curtain never appears, and the page renders as plain legible
-content. Reveal-hidden styles are gated behind `html.js`, so search engines and
-no-JS visitors always receive the full text.
+Motion is limited to a short fade-up as content scrolls in (`data-reveal`, staggered by
+`data-delay`), counting figures (`data-count`), the hero phone conversations and a top
+loading bar on navigation. All of it switches off under `prefers-reduced-motion` or with the
+Appearance motion slider at 0.
 
 ## Brand, contact details & floating buttons
 

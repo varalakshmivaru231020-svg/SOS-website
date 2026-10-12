@@ -16,8 +16,7 @@ export function LinkCard({
   delay?: number;
 }) {
   return (
-    <Link href={href} className="l-card" data-card data-reveal data-delay={delay}>
-      <span className="sheen" aria-hidden="true" />
+    <Link href={href} className="l-card" data-reveal data-delay={delay}>
       {kicker && <span className="l-kicker">{kicker}</span>}
       <span className="l-title">{title}</span>
       <span className="l-note">{note}</span>

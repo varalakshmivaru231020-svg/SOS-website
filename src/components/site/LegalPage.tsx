@@ -55,7 +55,7 @@ export default function LegalPage({
           </ol>
           <nav className="legal-nav" aria-label="Legal pages" data-reveal>
             {LEGAL_LINKS.filter((l) => l.href !== path).map((l) => (
-              <Link key={l.href} href={l.href} className="btn btn-ghost" data-magnet>
+              <Link key={l.href} href={l.href} className="btn btn-ghost">
                 {l.label} →
               </Link>
             ))}

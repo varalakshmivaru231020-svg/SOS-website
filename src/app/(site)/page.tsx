@@ -29,10 +29,10 @@ export default async function HomePage() {
         note={HOME.hero.note}
         actions={
           <>
-            <Link href={demoHref()} className="btn btn-accent" data-magnet>
+            <Link href={demoHref()} className="btn btn-accent">
               Book a Demo
             </Link>
-            <Link href="/products" className="btn btn-ghost" data-magnet>
+            <Link href="/products" className="btn btn-ghost">
               Explore Products
             </Link>
           </>
@@ -100,7 +100,7 @@ export default async function HomePage() {
             ))}
           </div>
           <div className="more-link" data-reveal>
-            <Link href="/industries" className="btn btn-ghost" data-magnet>
+            <Link href="/industries" className="btn btn-ghost">
               All industries →
             </Link>
           </div>

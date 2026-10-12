@@ -1,16 +1,9 @@
-import localFont from "next/font/local";
+import { Inter } from "next/font/google";
 
-export const instrumentSerif = localFont({
-  src: [
-    { path: "../fonts/instrument-serif-regular.woff2", weight: "400", style: "normal" },
-    { path: "../fonts/instrument-serif-italic.woff2", weight: "400", style: "italic" },
-  ],
-  variable: "--font-serif",
-  display: "swap",
-});
-
-export const spaceGrotesk = localFont({
-  src: [{ path: "../fonts/space-grotesk-var.woff2", weight: "300 700", style: "normal" }],
+// One clean sans for headings and text alike. Downloaded at build time and
+// served from the site's own domain. latin-ext carries the ₹ sign.
+export const inter = Inter({
+  subsets: ["latin", "latin-ext"],
   variable: "--font-sans",
   display: "swap",
 });
