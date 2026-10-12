@@ -10,9 +10,11 @@ export type BrandmarkProps = {
   logoAlt?: string | null;
   className?: string;
   height?: number;
+  /** The header logo is above the fold on every page: fetch it first. */
+  priority?: boolean;
 };
 
-export default function Brandmark({ wordmark, logoSrc, logoAlt, className, height = 30 }: BrandmarkProps) {
+export default function Brandmark({ wordmark, logoSrc, logoAlt, className, height = 30, priority }: BrandmarkProps) {
   if (logoSrc) {
     return (
       // Not next/image: the logo is served from the database through /api/brand
@@ -23,6 +25,7 @@ export default function Brandmark({ wordmark, logoSrc, logoAlt, className, heigh
         alt={logoAlt || wordmark}
         className={`brand-logo${className ? ` ${className}` : ""}`}
         style={{ height }}
+        fetchPriority={priority ? "high" : undefined}
       />
     );
   }

@@ -219,6 +219,9 @@ model ContactSubmission {
   company   String?
   need      String
   brief     String
+  phone     String?
+  // Where the enquiry came from: the page the visitor was on before the form.
+  source    String?
   status    SubmissionStatus @default(NEW)
   ip        String?
   userAgent String?
@@ -266,6 +269,11 @@ model SiteSettings {
   phone         String @default("+91 20 4890 2200")
   supportEmail  String @default("support@northmark.io")
   partnersEmail String @default("partners@northmark.io")
+
+  // Company details for the footer and contact page; hidden until filled in.
+  cin           String @default("")
+  gst           String @default("")
+  businessHours String @default("")
 
   // Floating WhatsApp / call buttons.
   whatsappNumber  String  @default("")

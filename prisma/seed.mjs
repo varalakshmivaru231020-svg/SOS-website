@@ -1,6 +1,12 @@
-// Seeds the database with the complete content of the original Supreme One Software site,
-// transcribed verbatim from `Supreme One Software Website.html` into seed-data.json.
-// Also creates the first admin user from ADMIN_EMAIL / ADMIN_PASSWORD.
+// Seeds the database-managed content of the revamped Supreme One Software site
+// from seed-data.json: proof-strip figures, FAQ groups, the office, hidden
+// draft pricing and per-page SEO. Product, service and industry page copy is
+// not here — it lives in src/content.
+//
+// Content tables are wiped and re-seeded (idempotent), including the tables
+// the previous site used that nothing reads any more. Users, enquiries and
+// Brand & contact settings are preserved — settings are only created when
+// missing. Also creates the first admin from ADMIN_EMAIL / ADMIN_PASSWORD.
 import { PrismaClient } from "@prisma/client";
 import { PrismaPg } from "@prisma/adapter-pg";
 import bcrypt from "bcryptjs";
@@ -16,72 +22,47 @@ const data = JSON.parse(readFileSync(join(dirname(fileURLToPath(import.meta.url)
 const db = new PrismaClient({ adapter: new PrismaPg({ connectionString: process.env.DATABASE_URL }) });
 
 async function resetAndSeed() {
-  // Content tables are wiped and re-seeded (idempotent). Operational tables
-  // (User, ContactSubmission) are preserved — only upserted.
   await db.$transaction([
-    db.serviceFeature.deleteMany(),
-    db.service.deleteMany(),
-    db.product.deleteMany(),
-    db.caseStudy.deleteMany(),
-    db.teamMember.deleteMany(),
-    db.office.deleteMany(),
-    db.timelineEntry.deleteMany(),
-    db.techStackItem.deleteMany(),
-    db.qualityGate.deleteMany(),
     db.faqItem.deleteMany(),
     db.faqGroup.deleteMany(),
     db.pricingTier.deleteMany(),
     db.heroStat.deleteMany(),
     db.clientLogo.deleteMany(),
+    db.testimonial.deleteMany(),
+    db.caseStudy.deleteMany(),
+    db.teamMember.deleteMany(),
+    db.office.deleteMany(),
+    db.timelineEntry.deleteMany(),
+    db.pageSeo.deleteMany(),
+    // Retired with the revamp — product, service and industry content moved
+    // to src/content. Cleared so no stale template copy lingers in the DB.
+    db.serviceFeature.deleteMany(),
+    db.service.deleteMany(),
+    db.product.deleteMany(),
+    db.techStackItem.deleteMany(),
+    db.qualityGate.deleteMany(),
     db.industry.deleteMany(),
     db.useCase.deleteMany(),
     db.comparisonRow.deleteMany(),
     db.trustBadge.deleteMany(),
-    db.testimonial.deleteMany(),
-    db.pageSeo.deleteMany(),
   ]);
 
-  for (const s of data.services) {
-    await db.service.create({
-      data: {
-        position: s.position, slug: s.slug, number: s.number, title: s.title, copy: s.copy,
-        techTags: s.techTags, timeline: s.timeline, priceInr: s.priceInr, priceUsd: s.priceUsd,
-        features: { create: s.features.map((f) => ({ position: f.position, title: f.title, copy: f.copy })) },
-      },
-    });
-  }
+  await db.heroStat.createMany({ data: data.heroStats.map((s) => ({ position: s.position, value: s.value, label: s.label })) });
 
-  for (const p of data.products) {
-    await db.product.create({
-      data: {
-        position: p.position, slug: p.slug, badge: p.badge, title: p.title, copy: p.copy,
-        bullets: p.bullets, metrics: p.metrics, visualKey: p.visualKey,
-      },
-    });
-  }
-
-  for (const c of data.caseStudies) {
-    await db.caseStudy.create({
-      data: { position: c.position, slug: c.slug, client: c.client, tags: c.tags, copy: c.copy, metrics: c.metrics },
-    });
-  }
-
-  await db.teamMember.createMany({ data: data.teamMembers.map((t) => ({ position: t.position, name: t.name, role: t.role, bio: t.bio ?? "" })) });
-  await db.office.createMany({ data: data.offices.map((o) => ({ position: o.position, city: o.city, country: o.country, addressLines: o.addressLines, tag: o.tag })) });
-  await db.timelineEntry.createMany({ data: data.timelineEntries.map((t) => ({ position: t.position, year: t.year, title: t.title ?? "", copy: t.copy })) });
-  await db.techStackItem.createMany({ data: data.techStackItems.map((t) => ({ position: t.position, name: t.name, blurb: t.blurb })) });
-  await db.qualityGate.createMany({ data: data.qualityGates.map((q) => ({ position: q.position, title: q.title, copy: q.copy })) });
-
-  const faqGroups = [
-    { key: "home", title: "Questions, answered", position: 1, items: data.homeFaq },
-    { key: "services", title: "Questions", position: 2, items: data.servicesFaq },
-    { key: "contact", title: "Before you write", position: 3, items: data.contactFaq },
-  ];
-  for (const g of faqGroups) {
+  for (const [g, group] of data.faqGroups.entries()) {
     await db.faqGroup.create({
       data: {
-        key: g.key, title: g.title, position: g.position,
-        items: { create: g.items.map((i) => ({ position: i.position, question: i.question, answer: i.answer })) },
+        key: group.key,
+        title: group.title,
+        position: g + 1,
+        items: {
+          create: group.items.map((item, i) => ({
+            position: i + 1,
+            question: item.question,
+            answer: item.answer,
+            published: item.published ?? true,
+          })),
+        },
       },
     });
   }
@@ -92,26 +73,36 @@ async function resetAndSeed() {
   ];
   await db.pricingTier.createMany({
     data: tiers.map((t) => ({
-      set: t.set, position: t.position, name: t.name, price: t.price, priceNote: t.priceNote,
-      blurb: t.blurb, features: t.features ?? [], ctaLabel: t.ctaLabel ?? "", highlighted: !!t.highlighted,
+      set: t.set,
+      position: t.position,
+      name: t.name,
+      price: t.price,
+      priceNote: t.priceNote,
+      blurb: t.blurb,
+      features: t.features ?? [],
+      ctaLabel: t.ctaLabel ?? "",
+      highlighted: !!t.highlighted,
+      published: t.published ?? true,
     })),
   });
 
-  await db.heroStat.createMany({ data: data.heroStats.map((s) => ({ position: s.position, value: s.value, label: s.label })) });
-  await db.clientLogo.createMany({ data: data.clientLogos.map((n, i) => ({ position: i + 1, name: typeof n === "string" ? n : n.name })) });
-
-  const homeSet = data.industriesHome.map((n) => n.toLowerCase().split(" ")[0]);
-  await db.industry.createMany({
-    data: data.industriesWork.map((n, i) => {
-      const name = typeof n === "string" ? n : n.name;
-      return { position: i + 1, name, blurb: typeof n === "object" ? n.blurb : null, showOnHome: homeSet.includes(name.toLowerCase().split(" ")[0]) };
-    }),
+  await db.office.createMany({
+    data: data.offices.map((o) => ({ position: o.position, city: o.city, country: o.country, addressLines: o.addressLines, tag: o.tag })),
   });
-
-  await db.useCase.createMany({ data: data.useCases.map((u) => ({ position: u.position, title: u.title, copy: u.copy })) });
-  await db.comparisonRow.createMany({ data: data.comparisonRows.map((r) => ({ position: r.position, feature: r.feature, northmark: r.northmark, typical: r.typical })) });
-  await db.trustBadge.createMany({ data: data.trustBadges.map((b) => ({ position: b.position, label: b.label, sublabel: b.sublabel })) });
-  await db.testimonial.create({ data: { ...data.testimonial, featured: true } });
+  await db.caseStudy.createMany({
+    data: data.caseStudies.map((c) => ({ position: c.position, slug: c.slug, client: c.client, tags: c.tags, copy: c.copy, metrics: c.metrics })),
+  });
+  await db.teamMember.createMany({
+    data: data.teamMembers.map((t) => ({ position: t.position, name: t.name, role: t.role, bio: t.bio ?? "" })),
+  });
+  await db.timelineEntry.createMany({
+    data: data.timelineEntries.map((t) => ({ position: t.position, year: t.year, title: t.title ?? "", copy: t.copy })),
+  });
+  await db.testimonial.createMany({
+    data: data.testimonials.map((t) => ({ quote: t.quote, author: t.author, role: t.role ?? "", company: t.company ?? "", featured: !!t.featured })),
+  });
+  await db.clientLogo.createMany({ data: data.clientLogos.map((name, i) => ({ position: i + 1, name })) });
+  await db.pageSeo.createMany({ data: data.pageSeo });
 
   await db.siteSettings.upsert({
     where: { id: 1 },
@@ -124,35 +115,22 @@ async function resetAndSeed() {
       cursorEffects: true,
       orgName: "Supreme One Software Pvt Ltd",
       tagline: data.footerTagline,
-      contactEmail: "hello@supremeonesoftware.com",
+      contactEmail: "sales@supremeonesoftware.com",
       socialLinks: [],
-      footerNote: data.footerCompliance,
+      footerNote: "",
       wordmark: "Supreme One Software",
-      phone: "+91 20 4890 2200",
+      phone: "+91 91641 61611",
       supportEmail: "support@supremeonesoftware.com",
       partnersEmail: "partners@supremeonesoftware.com",
       // Floating buttons ship off — switch them on in Admin → Brand & contact
-      // once a real WhatsApp number is in place.
+      // once the WhatsApp number is confirmed.
       whatsappNumber: "",
-      whatsappMessage: "Hi Supreme One Software — I'd like to talk about a project.",
+      whatsappMessage: "Hi Supreme One Software — I'd like to know more about the platform.",
       whatsappEnabled: false,
       callEnabled: false,
-      floatingScope: "mobile",
+      floatingScope: "all",
     },
   });
-
-  const seo = [
-    { path: "/", title: "Supreme One Software — We build the software that speaks for your business", description: "Product studio and communication platform. Five engineering disciplines and six shipped communication products under one roof — web, mobile, custom systems, commerce and AI." },
-    { path: "/services", title: "Services — Supreme One Software", description: "Senior-only engineering pods that ship weekly. Web, mobile, custom software, eCommerce and AI solution services — discovery in week one, working software in week three." },
-    { path: "/products", title: "Products — Supreme One Software", description: "Six channels, one API key. WhatsApp Business API, SMS, RCS, AI cloud telephony, omnichannel suite and IVR — built and operated by Supreme One Software." },
-    { path: "/platform", title: "Platform — Supreme One Software", description: "One layer under every conversation. Sub-second routing, regional data residency, drop-in SDKs — SOC 2 Type II, ISO 27001, 99.98% uptime." },
-    { path: "/work", title: "Work — Supreme One Software", description: "Shipped, measured, still running. Case studies from retail, finance and healthcare — 180+ products delivered across 38 countries." },
-    { path: "/about", title: "About — Supreme One Software", description: "A studio that also runs what it builds. Founded 2015 in Pune; 140 people across Pune, Dubai and Singapore." },
-    { path: "/contact", title: "Contact — Supreme One Software", description: "Tell us the problem. A reply within one business day; architecture, timeline and number within 48 hours of the first call." },
-    { path: "/legal/privacy", title: "Privacy Policy — Supreme One Software", description: "How Supreme One Software Pvt Ltd collects, uses and protects your data." },
-    { path: "/legal/terms", title: "Terms of Service — Supreme One Software", description: "The terms that govern use of Supreme One Software's website and services." },
-  ];
-  await db.pageSeo.createMany({ data: seo });
 
   const email = process.env.ADMIN_EMAIL ?? "admin@northmark.local";
   const password = process.env.ADMIN_PASSWORD ?? "change-me";
@@ -166,5 +144,8 @@ async function resetAndSeed() {
 }
 
 resetAndSeed()
-  .catch((e) => { console.error(e); process.exit(1); })
+  .catch((e) => {
+    console.error(e);
+    process.exit(1);
+  })
   .finally(() => db.$disconnect());

@@ -1,7 +1,7 @@
 import { db } from "@/lib/db";
 import { saveFaqGroup, saveFaqItem, deleteFaqItem } from "@/lib/actions/admin/faqs";
 
-// FAQ groups are fixed (home / services / contact) — a <details> editor per
+// FAQ groups are fixed (general / channels / pricing / support / contact) — a <details> editor per
 // group, plain server-action forms, no client JS. Position numbers control order.
 export default async function FaqsAdminPage() {
   const groups = await db.faqGroup.findMany({
@@ -15,8 +15,9 @@ export default async function FaqsAdminPage() {
         <div>
           <h1 className="serif">FAQs</h1>
           <p className="sub">
-            One group per page (home, services, contact). Groups are fixed — edit their title and item lists. Position
-            controls order.
+            General, channels, pricing and support appear on the FAQ page (pricing also on Pricing); contact appears on
+            the Contact page. Groups are fixed — edit their titles and questions. Unpublished questions stay hidden, so
+            draft answers can wait here until they are confirmed. Position controls order.
           </p>
         </div>
       </div>

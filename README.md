@@ -1,11 +1,28 @@
 # Supreme One Software — Website + Admin Panel
 
-The Supreme One Software site rebuilt as a fully functional Next.js application: real URLs and SEO,
-a working contact form (validated, spam-guarded, stored + emailed), and a complete admin
-panel where every piece of content — services, products, case studies, pricing, FAQs,
-team, appearance, SEO — is editable without touching code.
+The Supreme One Software marketing site and admin panel, built on Next.js. Structure and copy
+follow the **website content guide** (October 2026): a mega-menu header, the home page, one
+product template (11 products + 2 services), one industry template (10 industries), and the
+Customers, Pricing, About, Careers, Partners, FAQ, Contact, Book a Demo and legal pages.
 
-Built per the plan in `../Northmark-Website-Plan.md`. Content was originally transcribed from `Northmark Website.html`.
+## Where content lives
+
+| Content | Where to edit it |
+|---|---|
+| Product, service and industry pages; home page, About and platform copy | `src/content/*.ts` (typed; live on the next deploy) |
+| Proof-strip figures, testimonials, client logos | Admin → Site blocks |
+| Case studies | Admin → Customers |
+| Pricing plans (platform + custom engineering) | Admin → Pricing |
+| FAQ answers (FAQ, Pricing and Contact pages) | Admin → FAQs |
+| Team, milestones, registered office | Admin → About page |
+| Contact details, CIN/GST, business hours, socials, logo, floating buttons | Admin → Brand & contact |
+
+Anything the guide marks as still to be confirmed (testimonials, pricing, measured results,
+the support-hours answer) stays **hidden until someone adds or publishes a real entry** — the
+page sections simply don't render while empty. Benchmark claims the guide labels
+"illustrative" are kept in `src/content/products.ts` with `illustrative: true` and not shown.
+Product screenshots: add `src: "/products/<slug>/1.webp"` to a product's `shots` once the
+designer's images are in `public/`; the gallery appears when all three are present.
 
 ## Stack
 
@@ -46,7 +63,8 @@ viewer instead of playing once and going still.
 | **Scrubbed dissolve** | Heroes recede — scale, lift, fade — continuously as you scroll past, driven by a live `--p` variable. | `data-scrub` |
 | **Atmosphere** | Film grain, vignette, and a warm key light that drifts on its own and leans toward the pointer. | `Atmosphere.tsx` |
 | **Counting figures** | Stats roll up when they enter frame and land on the exact copy. | `data-count` |
-| **Velocity** | The marquee skews with scroll speed; layers parallax at their own rates. | `--vel`, `data-par` |
+| **Parallax** | Layers drift at their own rates as you scroll. | `data-par` |
+| **Hero threads** | The phone / inbox / browser mockups play their conversation in, message by message. | `.chat` in `globals.css`, `DemoVisual.tsx` |
 | **Cuts** | Navigation plays an ink wipe while the incoming page settles up underneath. | `(site)/template.tsx` |
 
 **Timing is released, not guessed.** Scroll reveals wait for the curtain's own
@@ -68,9 +86,11 @@ Everything below is managed in **Admin → Brand & contact** — no code changes
 - **Browser icon (favicon)** — upload a square PNG, SVG or ICO. Without one the site
   generates an icon from the wordmark's initial on the current accent colour, so there
   is always a proper tab icon.
-- **Contact details** — the new-projects, support and partnerships email addresses plus
-  the phone number. These feed the contact page's three routes, the footer, and the
-  privacy/terms pages at once.
+- **Contact details** — the sales, support and partnerships email addresses, the phone
+  number and business hours. These feed the contact page, the footer, the partners page
+  and the legal pages at once.
+- **Company details & socials** — CIN, GST number and LinkedIn / Instagram / Facebook /
+  YouTube links. Each appears in the footer (and CIN/GST on Contact and About) once filled in.
 - **Floating buttons** — a WhatsApp and a call button pinned bottom-right. Each has its
   own on/off switch, and "Show buttons on" chooses **mobile only** (default), **all
   screen sizes**, or **hidden**. On phones they sit side by side above the thumb as
@@ -86,10 +106,15 @@ without a redeploy.
 2. In `.env` (or your host's environment variables) set:
    - `DATABASE_URL` — the **Transaction pooler** string (port 6543) with `?pgbouncer=true&connection_limit=1`
    - `DIRECT_URL` — the **Session pooler / direct** string (port 5432)
-3. `npm run db:deploy && npm run db:seed`
+3. `npm run db:deploy && npm run db:seed` — run these **before** deploying new code: the
+   build reads the database, and new code expects the new columns. `db:seed` replaces the
+   content tables (FAQs, proof strip, pricing, case studies, team, testimonials, SEO); it
+   keeps users, enquiries and Brand & contact settings.
 4. Deploy to Vercel (recommended): import the repo, add the env vars
    (`DATABASE_URL`, `DIRECT_URL`, `AUTH_SECRET`, `ADMIN_EMAIL`, `ADMIN_PASSWORD`,
-   optional `RESEND_API_KEY`, `EMAIL_FROM`, `NEXT_PUBLIC_SITE_URL`).
+   `NEXT_PUBLIC_SITE_URL`, optional `RESEND_API_KEY`, `EMAIL_FROM`, `NEXT_PUBLIC_GA_ID`,
+   `NEXT_PUBLIC_CHAT_WIDGET_SRC`). Cached DB reads outlive deployments — after a re-seed,
+   bump `CACHE_VERSION` in `src/lib/content.ts`.
 5. Email: add a Resend API key and verify your sending domain (SPF + DKIM) so enquiry
    notifications reach the inbox. Without a key, enquiries are still stored and visible
    in the admin Inbox — nothing is lost.
@@ -97,11 +122,13 @@ without a redeploy.
 ## What's where
 
 ```
-prisma/schema.prisma      # ~24 models — the full content inventory
-prisma/seed.mjs           # loads every row of original site content + first admin
-prisma/seed-data.json     # the transcribed content (also a content backup)
-src/app/(site)/           # 7 public pages + legal, static, served from CDN
-src/app/admin/            # 12-screen admin panel (dynamic, session-gated)
+prisma/schema.prisma      # content + operational models (some pre-revamp tables now unused)
+prisma/seed.mjs           # loads the DB-managed content + first admin
+prisma/seed-data.json     # that content (also a content backup)
+src/content/              # product, service, industry and site copy — the templates' data
+src/app/(site)/           # public pages; [slug] routes for products, services, industries
+src/components/site/      # OfferingPage + IndustryPage templates, header, mockups, form
+src/app/admin/            # admin panel (dynamic, session-gated)
 src/lib/content.ts        # cached DB readers — admin saves revalidate these tags
 src/lib/actions/          # server actions: contact form, auth, admin CRUD
 src/components/motion/    # the ported animation engine (reveals, tilt, cursor, orbs)
@@ -117,12 +144,21 @@ pages regenerate on the next request. Visitors never wait on the database.
 
 ## Contact form protection
 
-`name` 2–100 · valid email · `company` ≤120 · need ∈ 6 categories · `brief` 20–2000,
-plus a hidden honeypot field, a <2.5s time-trap, and a 5/hour/IP rate limit. The enquiry
-is stored **before** email is attempted, so an email outage can never lose a lead.
+`name` 2–100 · valid email · optional `phone`, `company` ≤120 and message ≤2000 ·
+interest ∈ the products/services list, plus a hidden honeypot field, a <2.5s time-trap,
+and a 5/hour/IP rate limit. Each enquiry records the page the visitor came from (shown in
+the Inbox and the CSV export). The enquiry is stored **before** email is attempted, so an
+email outage can never lose a lead.
+
+## Analytics & chat widget
+
+Both are off until configured. `NEXT_PUBLIC_GA_ID` loads Google Analytics 4 — page views,
+plus `book_demo_click` (every Book a Demo link, with the page and its location) and
+`book_demo_submit` / `enquiry_submit` events. `NEXT_PUBLIC_CHAT_WIDGET_SRC` loads the live
+chat widget script. The privacy and cookie policies describe analytics only when it's on.
 
 ## Deliberate v1 scope
 
-No rich-text editor (plain text), no draft preview (published toggle), no i18n, no blog
-or careers pages (URL space reserved), drag-reorder via position numbers. Team photos are
-a nullable field awaiting an upload pipeline.
+No rich-text editor (plain text), no draft preview (published toggle), no i18n, no blog,
+drag-reorder via position numbers. Team photos are a URL field awaiting an upload pipeline.
+No cookie-consent banner yet — add one before switching on analytics if you need consent.

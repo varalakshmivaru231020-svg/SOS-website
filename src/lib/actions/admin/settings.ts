@@ -38,7 +38,6 @@ export async function updateSiteSettings(formData: FormData): Promise<void> {
     accentPreset,
     accentColor,
     motionIntensity,
-    cursorEffects: formData.get("cursorEffects") === "on",
     orgName: String(formData.get("orgName") ?? "").trim() || "Supreme One Software Pvt Ltd",
     tagline: String(formData.get("tagline") ?? "").trim(),
     contactEmail: String(formData.get("contactEmail") ?? "").trim(),

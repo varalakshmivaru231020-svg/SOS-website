@@ -3,17 +3,18 @@ import { unstable_cache } from "next/cache";
 import { db } from "@/lib/db";
 import type { PricingSet, Prisma } from "@prisma/client";
 
+// Part of every cache key below. Bump it when a release changes what the
+// database holds (e.g. after re-seeding), so the new deployment can't be
+// served entries cached by the previous one — the data cache outlives deploys.
+const CACHE_VERSION = "2026-10-revamp";
+
 // One tag per content family. Admin save actions call revalidateTag() with
 // these — keep every tag here so an action can never miss a path.
 export const TAGS = {
-  services: "services",
-  products: "products",
   work: "work",
   team: "team",
   offices: "offices",
   timeline: "timeline",
-  stack: "stack",
-  quality: "quality",
   faqs: "faqs",
   pricing: "pricing",
   blocks: "blocks",
@@ -21,57 +22,28 @@ export const TAGS = {
   seo: "seo",
 } as const;
 
-export const getServices = unstable_cache(
-  () =>
-    db.service.findMany({
-      where: { published: true },
-      orderBy: { position: "asc" },
-      include: { features: { orderBy: { position: "asc" } } },
-    }),
-  ["services"],
-  { tags: [TAGS.services] },
-);
-
-export const getProducts = unstable_cache(
-  () => db.product.findMany({ where: { published: true }, orderBy: { position: "asc" } }),
-  ["products"],
-  { tags: [TAGS.products] },
-);
-
 export const getCaseStudies = unstable_cache(
   () => db.caseStudy.findMany({ where: { published: true }, orderBy: { position: "asc" } }),
-  ["case-studies"],
+  ["case-studies", CACHE_VERSION],
   { tags: [TAGS.work] },
 );
 
 export const getTeam = unstable_cache(
   () => db.teamMember.findMany({ where: { published: true }, orderBy: { position: "asc" } }),
-  ["team"],
+  ["team", CACHE_VERSION],
   { tags: [TAGS.team] },
 );
 
 export const getOffices = unstable_cache(
   () => db.office.findMany({ where: { published: true }, orderBy: { position: "asc" } }),
-  ["offices"],
+  ["offices", CACHE_VERSION],
   { tags: [TAGS.offices] },
 );
 
 export const getTimeline = unstable_cache(
   () => db.timelineEntry.findMany({ where: { published: true }, orderBy: { position: "asc" } }),
-  ["timeline"],
+  ["timeline", CACHE_VERSION],
   { tags: [TAGS.timeline] },
-);
-
-export const getStack = unstable_cache(
-  () => db.techStackItem.findMany({ where: { published: true }, orderBy: { position: "asc" } }),
-  ["stack"],
-  { tags: [TAGS.stack] },
-);
-
-export const getQualityGates = unstable_cache(
-  () => db.qualityGate.findMany({ where: { published: true }, orderBy: { position: "asc" } }),
-  ["quality"],
-  { tags: [TAGS.quality] },
 );
 
 export const getFaqGroups = unstable_cache(
@@ -80,7 +52,7 @@ export const getFaqGroups = unstable_cache(
       orderBy: { position: "asc" },
       include: { items: { where: { published: true }, orderBy: { position: "asc" } } },
     }),
-  ["faq-groups"],
+  ["faq-groups", CACHE_VERSION],
   { tags: [TAGS.faqs] },
 );
 
@@ -91,7 +63,7 @@ export async function getFaqGroup(key: string) {
 
 export const getPricingTiers = unstable_cache(
   () => db.pricingTier.findMany({ where: { published: true }, orderBy: [{ set: "asc" }, { position: "asc" }] }),
-  ["pricing"],
+  ["pricing", CACHE_VERSION],
   { tags: [TAGS.pricing] },
 );
 
@@ -102,43 +74,19 @@ export async function getPricing(set: PricingSet) {
 
 export const getHeroStats = unstable_cache(
   () => db.heroStat.findMany({ orderBy: { position: "asc" } }),
-  ["hero-stats"],
+  ["hero-stats", CACHE_VERSION],
   { tags: [TAGS.blocks] },
 );
 
 export const getClientLogos = unstable_cache(
   () => db.clientLogo.findMany({ orderBy: { position: "asc" } }),
-  ["client-logos"],
+  ["client-logos", CACHE_VERSION],
   { tags: [TAGS.blocks] },
 );
 
-export const getIndustries = unstable_cache(
-  () => db.industry.findMany({ orderBy: { position: "asc" } }),
-  ["industries"],
-  { tags: [TAGS.blocks] },
-);
-
-export const getUseCases = unstable_cache(
-  () => db.useCase.findMany({ orderBy: { position: "asc" } }),
-  ["use-cases"],
-  { tags: [TAGS.blocks] },
-);
-
-export const getComparisonRows = unstable_cache(
-  () => db.comparisonRow.findMany({ orderBy: { position: "asc" } }),
-  ["comparison-rows"],
-  { tags: [TAGS.blocks] },
-);
-
-export const getTrustBadges = unstable_cache(
-  () => db.trustBadge.findMany({ orderBy: { position: "asc" } }),
-  ["trust-badges"],
-  { tags: [TAGS.blocks] },
-);
-
-export const getTestimonial = unstable_cache(
-  () => db.testimonial.findFirst({ where: { featured: true } }),
-  ["testimonial"],
+export const getTestimonials = unstable_cache(
+  () => db.testimonial.findMany({ orderBy: [{ featured: "desc" }, { id: "asc" }] }),
+  ["testimonials", CACHE_VERSION],
   { tags: [TAGS.blocks] },
 );
 
@@ -158,16 +106,19 @@ export const getSettings = unstable_cache(
         cursorEffects: true,
         orgName: "Supreme One Software Pvt Ltd",
         tagline: "",
-        contactEmail: "hello@supremeonesoftware.com",
+        contactEmail: "sales@supremeonesoftware.com",
         socialLinks: [] as unknown as Prisma.JsonValue,
         footerNote: "",
         wordmark: "Supreme One Software",
         logoData: null,
         logoAlt: null,
         faviconData: null,
-        phone: "+91 20 4890 2200",
+        phone: "+91 91641 61611",
         supportEmail: "support@supremeonesoftware.com",
         partnersEmail: "partners@supremeonesoftware.com",
+        cin: "",
+        gst: "",
+        businessHours: "",
         whatsappNumber: "",
         whatsappMessage: "",
         whatsappEnabled: false,
@@ -178,13 +129,13 @@ export const getSettings = unstable_cache(
       }
     );
   },
-  ["settings"],
+  ["settings", CACHE_VERSION],
   { tags: [TAGS.settings] },
 );
 
 export const getAllSeo = unstable_cache(
   () => db.pageSeo.findMany(),
-  ["page-seo"],
+  ["page-seo", CACHE_VERSION],
   { tags: [TAGS.seo] },
 );
 
@@ -196,6 +147,14 @@ export async function getSeo(path: string) {
 /** Typed helpers for Json columns. */
 export function asStringArray(v: unknown): string[] {
   return Array.isArray(v) ? v.filter((x): x is string => typeof x === "string") : [];
+}
+export type SocialLink = { label: string; url: string };
+export function asSocialLinks(v: unknown): SocialLink[] {
+  if (!Array.isArray(v)) return [];
+  return v.filter(
+    (x): x is SocialLink =>
+      !!x && typeof x === "object" && typeof (x as SocialLink).label === "string" && typeof (x as SocialLink).url === "string",
+  );
 }
 export type Metric = { value: string; label: string };
 export function asMetrics(v: unknown): Metric[] {

@@ -1,249 +1,173 @@
 import Link from "next/link";
 import type { Metadata } from "next";
-import { getTimeline, getOffices, getTeam, asStringArray } from "@/lib/content";
-import { COPY, emphasize } from "@/lib/copy";
+import { getTimeline, getOffices, getTeam, getSettings, asStringArray } from "@/lib/content";
 import { pageMetadata } from "@/lib/seo";
+import { demoHref } from "@/content";
+import { ABOUT, HOME } from "@/content/site";
+import PageHero from "@/components/site/PageHero";
+import SectionHead from "@/components/site/SectionHead";
+import CtaBanner from "@/components/site/CtaBanner";
+import { LinkCard, Steps } from "@/components/site/Cards";
 
 export async function generateMetadata(): Promise<Metadata> {
-  return pageMetadata("/about", "About Supreme One Software — A studio that also runs what it builds");
+  return pageMetadata("/about", ABOUT.seo);
 }
 
 export default async function AboutPage() {
-  const [timeline, offices, team] = await Promise.all([getTimeline(), getOffices(), getTeam()]);
-  const hero = COPY.aboutHero;
-  const h = emphasize(hero.heading, "runs");
+  const [timeline, offices, team, settings] = await Promise.all([getTimeline(), getOffices(), getTeam(), getSettings()]);
+  const office = offices[0];
 
   return (
     <>
-      {/* ── Hero ── */}
-      <section className="section" data-scrub style={{ position: "relative", overflow: "hidden" }}>
-        <div className="glow glow-accent" data-par="0.07" style={{ width: 420, height: 420, top: -120, right: "8%" }} />
-        <div className="glow glow-indigo" data-par="0.11" style={{ width: 380, height: 380, bottom: -100, left: "-4%" }} />
-        <div className="container">
-          <span className="eyebrow" data-reveal>
-            {hero.eyebrow}
-          </span>
-          <h1 className="display" data-lines data-reveal data-delay="0.06">
-            {h.pre}
-            <em>{h.em}</em>
-            {h.post}
-          </h1>
-          <p className="lede" style={{ marginTop: 30, maxWidth: "62ch" }} data-reveal data-delay="0.14">
-            {hero.story}
-          </p>
-        </div>
-      </section>
+      <PageHero
+        crumbs={[{ label: "Our Story", href: "/about" }]}
+        eyebrow={ABOUT.eyebrow}
+        title={ABOUT.headline}
+        accent={ABOUT.accent}
+        lede={ABOUT.intro}
+        actions={
+          <>
+            <Link href={demoHref()} className="btn btn-accent" data-magnet>
+              Book a Demo
+            </Link>
+            <Link href="/contact" className="btn btn-ghost" data-magnet>
+              Contact us
+            </Link>
+          </>
+        }
+      />
 
-      {/* ── Principles ── */}
-      <section className="section section-line" style={{ background: "var(--paper3)" }}>
-        <div className="container">
-          <span className="eyebrow" data-reveal>
-            Principles
-          </span>
-          <h2 className="h2" data-lines data-reveal data-delay="0.06">
-            How we <em>work</em>.
-          </h2>
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 380px), 1fr))",
-              gap: 18,
-              marginTop: "clamp(36px, 5vw, 64px)",
-            }}
-          >
-            {COPY.principles.map((p, i) => (
-              <div
-                key={p.position}
-                data-card
-                data-reveal
-                data-delay={0.05 * i}
-                style={{
-                  background: "var(--paper2)",
-                  border: "1px solid var(--line)",
-                  borderRadius: 16,
-                  padding: "26px 24px",
-                }}
-              >
-                <div className="sheen" aria-hidden="true" />
-                <div style={{ fontSize: 12, color: "var(--accent)", fontVariantNumeric: "tabular-nums", marginBottom: 14 }}>
-                  {String(p.position).padStart(2, "0")}
-                </div>
-                <div className="h3 serif">{p.title}</div>
-                <p style={{ color: "var(--muted)", fontSize: 14.5, marginTop: 10, lineHeight: 1.55 }}>{p.copy}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── Timeline ── */}
+      {/* ── What we do ── */}
       <section className="section section-line">
-        <div className="container" style={{ maxWidth: 880 }}>
+        <div className="container">
+          <SectionHead eyebrow="What we do" heading="Engineering and messaging under one roof" accent="one roof" />
+          <div className="card-grid two">
+            <LinkCard href="/products" title={ABOUT.whatWeDo[0].title} note={ABOUT.whatWeDo[0].copy} />
+            <LinkCard href="/services" title={ABOUT.whatWeDo[1].title} note={ABOUT.whatWeDo[1].copy} delay={0.06} />
+          </div>
+        </div>
+      </section>
+
+      {/* ── Mission ── */}
+      <section className="section section-line tint">
+        <div className="container narrow">
           <span className="eyebrow" data-reveal>
-            Timeline
+            Our mission
           </span>
-          <h2 className="h2" data-lines data-reveal data-delay="0.06">
-            From four engineers to <em>140</em>.
-          </h2>
-          <div style={{ marginTop: "clamp(30px, 4vw, 52px)", borderTop: "1px solid var(--line)" }}>
-            {timeline.map((t, i) => (
-              <div
-                key={t.id}
-                data-reveal
-                data-delay={0.05 * i}
-                style={{
-                  display: "grid",
-                  gridTemplateColumns: "clamp(72px, 12vw, 120px) 1fr",
-                  gap: "clamp(14px, 3vw, 36px)",
-                  alignItems: "baseline",
-                  padding: "clamp(18px, 2.6vw, 26px) 6px",
-                  borderBottom: "1px solid var(--line)",
-                }}
-              >
-                <span className="serif" style={{ color: "var(--accent)", fontSize: "clamp(22px, 2.6vw, 30px)", lineHeight: 1 }}>
-                  {t.year}
+          <p className="problem serif" data-reveal data-delay="0.06">
+            {ABOUT.mission}
+          </p>
+        </div>
+      </section>
+
+      {/* ── Values ── */}
+      <section className="section section-line">
+        <div className="container">
+          <SectionHead eyebrow="What we stand for" heading="How we show up for customers" accent="show up" />
+          <div className="why-grid">
+            {ABOUT.values.map((v, i) => (
+              <div key={v.title} className="why-item" data-reveal data-delay={0.07 * i}>
+                <span className="why-n" aria-hidden="true">
+                  {String(i + 1).padStart(2, "0")}
                 </span>
-                <span>
-                  {t.title && (
-                    <span style={{ display: "block", fontWeight: 500, marginBottom: 4 }}>{t.title}</span>
-                  )}
-                  <span style={{ color: "var(--muted)", fontSize: 15, lineHeight: 1.55 }}>{t.copy}</span>
-                </span>
+                <h3 className="h3 serif">{v.title}</h3>
+                <p>{v.copy}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ── Offices ── */}
-      <section className="section section-line" style={{ background: "var(--paper3)" }}>
+      {/* ── How we work ── */}
+      <section className="section section-line tint">
         <div className="container">
-          <span className="eyebrow" data-reveal>
-            Offices
-          </span>
-          <h2 className="h2" data-lines data-reveal data-delay="0.06">
-            One team, <em>one</em> address.
-          </h2>
-          <p className="lede" style={{ marginTop: 22, maxWidth: "62ch" }} data-reveal data-delay="0.12">
-            Engineering, solution consulting and support all under one roof in Bengaluru.
-          </p>
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 280px), 1fr))",
-              gap: 18,
-              marginTop: "clamp(30px, 4vw, 52px)",
-            }}
-          >
-            {offices.map((o, i) => (
-              <div
-                key={o.id}
-                data-card
-                data-reveal
-                data-delay={0.05 * i}
-                style={{
-                  background: "var(--paper2)",
-                  border: "1px solid var(--line)",
-                  borderRadius: 16,
-                  padding: "26px 24px",
-                }}
-              >
-                <div className="sheen" aria-hidden="true" />
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 12 }}>
-                  <h3 className="h3 serif">{o.city}</h3>
-                  {o.tag && (
-                    <span
-                      style={{
-                        fontSize: 10,
-                        textTransform: "uppercase",
-                        letterSpacing: "0.14em",
-                        fontWeight: 600,
-                        color: "var(--accent)",
-                        border: "1px solid currentColor",
-                        borderRadius: 999,
-                        padding: "3px 10px",
-                        whiteSpace: "nowrap",
-                      }}
-                    >
-                      {o.tag}
+          <SectionHead eyebrow="How we work" heading="Discover, design, build, launch" accent="launch" />
+          <Steps steps={ABOUT.process} />
+        </div>
+      </section>
+
+      {/* ── Milestones (Admin → About page → Timeline) ── */}
+      {timeline.length > 0 && (
+        <section className="section section-line">
+          <div className="container narrow">
+            <SectionHead eyebrow="Milestones" heading="Since 2015" accent="2015" />
+            <ol className="timeline">
+              {timeline.map((t, i) => (
+                <li key={t.id} data-reveal data-delay={0.05 * i}>
+                  <span className="serif">{t.year}</span>
+                  <p>
+                    {t.title && <b>{t.title}. </b>}
+                    {t.copy}
+                  </p>
+                </li>
+              ))}
+            </ol>
+          </div>
+        </section>
+      )}
+
+      {/* ── Team (Admin → About page → Team) ── */}
+      {team.length > 0 && (
+        <section className="section section-line">
+          <div className="container">
+            <SectionHead eyebrow="Our team" heading="The people behind the platform" accent="behind" />
+            <div className="team">
+              {team.map((m, i) => (
+                <div key={m.id} className="member" data-reveal data-delay={0.05 * i}>
+                  {m.photoUrl ? (
+                    // eslint-disable-next-line @next/next/no-img-element -- admin-entered URL, any host
+                    <img src={m.photoUrl} alt="" className="member-photo" />
+                  ) : (
+                    <span className="member-photo initials" aria-hidden="true">
+                      {m.name
+                        .split(" ")
+                        .map((w) => w[0])
+                        .slice(0, 2)
+                        .join("")}
                     </span>
                   )}
+                  <h3 className="serif">{m.name}</h3>
+                  <p className="member-role">{m.role}</p>
+                  {m.bio && <p>{m.bio}</p>}
                 </div>
-                <div style={{ color: "var(--muted)", fontSize: 13, marginTop: 6 }}>{o.country}</div>
-                <div style={{ marginTop: 16, borderTop: "1px solid var(--line)", paddingTop: 14 }}>
-                  {asStringArray(o.addressLines).map((line) => (
-                    <div key={line} style={{ color: "var(--muted)", fontSize: 14.5, lineHeight: 1.6 }}>
-                      {line}
-                    </div>
-                  ))}
-                </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
-      {/* ── Leadership ── */}
+      {/* ── Company details ── */}
       <section className="section section-line">
-        <div className="container">
-          <span className="eyebrow" data-reveal>
-            Leadership
-          </span>
-          <h2 className="h2" data-lines data-reveal data-delay="0.06">
-            Who you’ll actually <em>talk</em> to.
-          </h2>
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 220px), 1fr))",
-              gap: 18,
-              marginTop: "clamp(36px, 5vw, 64px)",
-            }}
-          >
-            {team.map((m, i) => (
-              <div
-                key={m.id}
-                data-card
-                data-reveal
-                data-delay={0.05 * i}
-                style={{
-                  background: "var(--paper2)",
-                  border: "1px solid var(--line)",
-                  borderRadius: 16,
-                  padding: "26px 24px",
-                }}
-              >
-                <div className="sheen" aria-hidden="true" />
-                <div className="h3 serif">{m.name}</div>
-                <div style={{ color: "var(--muted)", fontSize: 14, marginTop: 8 }}>{m.role}</div>
-                {m.bio && (
-                  <p style={{ color: "var(--muted)", fontSize: 14, marginTop: 12, lineHeight: 1.55 }}>{m.bio}</p>
-                )}
+        <div className="container narrow">
+          <SectionHead eyebrow="Company details" heading={settings.orgName} />
+          <dl className="biz-details wide" data-reveal>
+            <div>
+              <dt>Established</dt>
+              <dd>2015</dd>
+            </div>
+            {settings.cin && (
+              <div>
+                <dt>CIN</dt>
+                <dd>{settings.cin}</dd>
               </div>
-            ))}
-          </div>
+            )}
+            {settings.gst && (
+              <div>
+                <dt>GST</dt>
+                <dd>{settings.gst}</dd>
+              </div>
+            )}
+            {office && (
+              <div>
+                <dt>Registered office</dt>
+                <dd>{asStringArray(office.addressLines).join(", ")}</dd>
+              </div>
+            )}
+          </dl>
         </div>
       </section>
 
-      {/* ── Careers CTA ── */}
-      <section className="section section-line" style={{ background: "var(--ink)", color: "var(--paper)" }}>
-        <div className="container" style={{ textAlign: "center" }}>
-          <span className="eyebrow" data-reveal>
-            Careers
-          </span>
-          <h2 className="h2" style={{ margin: "18px auto 0" }} data-reveal data-delay="0.06">
-            We’re hiring <em>senior</em> engineers.
-          </h2>
-          <p style={{ color: "rgba(246,244,240,0.7)", fontSize: 15.5, marginTop: 20 }} data-reveal data-delay="0.12">
-            Bengaluru and remote. No bureaucracy, real ownership.
-          </p>
-          <div style={{ display: "flex", justifyContent: "center", marginTop: 36 }} data-reveal data-delay="0.18">
-            <Link href="/contact" className="btn btn-accent" data-magnet>
-              See open roles
-            </Link>
-          </div>
-        </div>
-      </section>
+      <CtaBanner heading={HOME.banner.heading} accent={HOME.banner.accent} />
     </>
   );
 }

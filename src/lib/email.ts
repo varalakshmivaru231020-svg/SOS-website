@@ -3,9 +3,11 @@ import "server-only";
 type EnquiryEmail = {
   name: string;
   email: string;
+  phone?: string | null;
   company?: string | null;
   need: string;
   brief: string;
+  source?: string | null;
 };
 
 /**
@@ -28,14 +30,16 @@ export async function sendEnquiryNotification(to: string, enquiry: EnquiryEmail)
         from,
         to: [to],
         reply_to: enquiry.email,
-        subject: `New project brief — ${enquiry.name}${enquiry.company ? ` (${enquiry.company})` : ""}`,
+        subject: `New enquiry: ${enquiry.need} — ${enquiry.name}${enquiry.company ? ` (${enquiry.company})` : ""}`,
         text: [
           `Name: ${enquiry.name}`,
           `Email: ${enquiry.email}`,
-          `Company: ${enquiry.company ?? "—"}`,
-          `Need: ${enquiry.need}`,
+          `Phone: ${enquiry.phone || "—"}`,
+          `Company: ${enquiry.company || "—"}`,
+          `Interested in: ${enquiry.need}`,
+          `Came from: ${enquiry.source || "—"}`,
           "",
-          enquiry.brief,
+          enquiry.brief || "(no message)",
         ].join("\n"),
       }),
     });

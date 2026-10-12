@@ -16,11 +16,11 @@ export async function GET(): Promise<Response> {
 
   const submissions = await db.contactSubmission.findMany({ orderBy: { createdAt: "desc" } });
 
-  const header = ["date", "name", "email", "company", "need", "brief", "status"];
+  const header = ["date", "name", "email", "phone", "company", "interest", "message", "source", "status"];
   const lines = [header.join(",")];
   for (const s of submissions) {
     lines.push(
-      [s.createdAt.toISOString(), s.name, s.email, s.company ?? "", s.need, s.brief, s.status]
+      [s.createdAt.toISOString(), s.name, s.email, s.phone ?? "", s.company ?? "", s.need, s.brief, s.source ?? "", s.status]
         .map(csvField)
         .join(","),
     );

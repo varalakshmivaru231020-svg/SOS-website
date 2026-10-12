@@ -1,34 +1,39 @@
 import Link from "next/link";
 import type { Metadata } from "next";
-import type { CSSProperties } from "react";
 import { pageMetadata } from "@/lib/seo";
 import { getSettings } from "@/lib/content";
+import LegalPage, { type LegalSection } from "@/components/site/LegalPage";
 
 export async function generateMetadata(): Promise<Metadata> {
-  return pageMetadata("/legal/privacy", "Privacy policy — Supreme One Software Pvt Ltd");
+  return pageMetadata("/legal/privacy", {
+    title: "Privacy Policy | Supreme One Software",
+    description: "How Supreme One Software Pvt Ltd collects, uses and protects your personal information.",
+  });
 }
 
-type LegalSection = { title: string; body: string[] };
+// Whether analytics is switched on is decided at build time, so the policy
+// always describes what this deployment actually runs.
+const ANALYTICS = Boolean(process.env.NEXT_PUBLIC_GA_ID);
 
 const buildSections = (email: string): LegalSection[] => [
   {
     title: "What we collect",
     body: [
-      "When you write to us through the contact form we collect the details you choose to share: your name, email address, company, and a brief description of your project. That is the whole list — we don’t ask for anything the conversation doesn’t need.",
-      "Like most websites, our servers also record basic technical logs — IP address, browser type, and the pages requested — used only to keep the site running and secure.",
+      "When you write to us or book a demo through this site, we collect the details you choose to share: your name, email address, and — if you add them — your phone number, company and message, along with the product you’re interested in. We also note which page of our site you came from, so we know what you were reading when you got in touch.",
+      "Like most websites, our servers also record basic technical logs — IP address, browser type and the pages requested — used only to keep the site running and secure.",
     ],
   },
   {
     title: "How we use it",
     body: [
-      "We use your details for one purpose: to respond to your enquiry and, if the conversation continues, to scope and deliver the work you’ve asked about.",
+      "We use your details to respond to your enquiry and, if the conversation continues, to arrange a demo, prepare a quote, or scope and deliver the work you’ve asked about.",
       "We don’t sell your information, we don’t rent it, and we don’t add you to a marketing list unless you explicitly ask to hear from us.",
     ],
   },
   {
     title: "Storage and security",
     body: [
-      "Enquiry data is stored on access-controlled infrastructure and encrypted in transit and at rest. Access is limited to the Supreme One Software team members who need it to answer you — nobody else.",
+      "Enquiry data is stored on access-controlled infrastructure and encrypted in transit. Access is limited to the Supreme One Software team members who need it to answer you.",
     ],
   },
   {
@@ -40,7 +45,14 @@ const buildSections = (email: string): LegalSection[] => [
   {
     title: "Third parties",
     body: [
-      "Form submissions reach us through an email delivery provider, which processes your message solely to route it to our inbox. Beyond that, no third party receives your personal information — this site runs no advertising trackers and no analytics that identify you.",
+      "Form submissions reach us through an email delivery provider, which processes your message solely to route it to our inbox.",
+      "Our contact page shows a map embedded from Google Maps, which loads content from Google; and the WhatsApp button opens WhatsApp, where Meta’s own terms apply.",
+      ANALYTICS
+        ? "We use Google Analytics to understand how visitors use the site — which pages are viewed and how often the Book a Demo button is used. Google processes this data on our behalf; it does not include the contents of your enquiry."
+        : "This site runs no advertising trackers and no analytics that identify you.",
+      <>
+        More detail is in our <Link href="/legal/cookies">Cookie Policy</Link>.
+      </>,
     ],
   },
   {
@@ -57,80 +69,16 @@ const buildSections = (email: string): LegalSection[] => [
   },
 ];
 
-const bodyStyle: CSSProperties = {
-  color: "var(--muted)",
-  fontSize: 15,
-  lineHeight: 1.7,
-  marginTop: 12,
-  maxWidth: "68ch",
-};
-
 export default async function PrivacyPage() {
   const settings = await getSettings();
-  const email = settings.contactEmail;
-  const sections = buildSections(email);
   return (
-    <>
-      {/* ── Hero ── */}
-      <section className="section" data-scrub style={{ position: "relative", overflow: "hidden" }}>
-        <div className="glow glow-accent" data-par="0.07" style={{ width: 360, height: 360, top: -120, right: "10%" }} />
-        <div className="container">
-          <span className="eyebrow" data-reveal>
-            Legal
-          </span>
-          <h1 className="display" style={{ fontSize: "clamp(40px, 6.4vw, 92px)" }} data-reveal data-delay="0.06">
-            Privacy <em>policy.</em>
-          </h1>
-          <p className="lede" style={{ marginTop: 26 }} data-reveal data-delay="0.12">
-            The short version: we collect only what you send us, we use it only to talk to you, and we never sell it.
-          </p>
-          <p style={{ color: "var(--muted)", fontSize: 13, marginTop: 18 }} data-reveal data-delay="0.16">
-            Last updated: August 2026
-          </p>
-        </div>
-      </section>
-
-      {/* ── Policy ── */}
-      <section className="section section-line">
-        <div className="container" style={{ maxWidth: 860 }}>
-          <div style={{ borderTop: "1px solid var(--line)" }}>
-            {sections.map((s, i) => (
-              <div
-                key={s.title}
-                data-reveal
-                data-delay={0.04 * i}
-                style={{
-                  display: "grid",
-                  gridTemplateColumns: "56px 1fr",
-                  gap: "clamp(14px, 3vw, 36px)",
-                  padding: "clamp(22px, 3vw, 34px) 6px",
-                  borderBottom: "1px solid var(--line)",
-                }}
-              >
-                <span style={{ fontSize: 13, color: "var(--accent)", fontVariantNumeric: "tabular-nums", paddingTop: 8 }}>
-                  {String(i + 1).padStart(2, "0")}
-                </span>
-                <div>
-                  <h3 className="h3 serif">{s.title}</h3>
-                  {s.body.map((p) => (
-                    <p key={p.slice(0, 32)} style={bodyStyle}>
-                      {p}
-                    </p>
-                  ))}
-                </div>
-              </div>
-            ))}
-          </div>
-          <div style={{ display: "flex", gap: 14, flexWrap: "wrap", marginTop: 34 }} data-reveal>
-            <a href={`mailto:${email}`} className="btn btn-solid" data-magnet>
-              {email}
-            </a>
-            <Link href="/legal/terms" className="btn btn-ghost" data-magnet>
-              Terms of service →
-            </Link>
-          </div>
-        </div>
-      </section>
-    </>
+    <LegalPage
+      path="/legal/privacy"
+      title="Privacy Policy"
+      accent="Policy"
+      lede="The short version: we collect only what you send us, we use it only to talk to you, and we never sell it."
+      updated="October 2026"
+      sections={buildSections(settings.contactEmail)}
+    />
   );
 }

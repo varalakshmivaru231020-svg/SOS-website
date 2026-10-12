@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { instrumentSerif, spaceGrotesk } from "@/lib/fonts";
 import { getSettings, getSeo } from "@/lib/content";
+import { SITE_URL } from "@/lib/site-url";
 import "./globals.css";
 
 // Keep in sync with the 1.75s lift delay on .title-seq in globals.css.
@@ -18,8 +19,9 @@ export async function generateMetadata(): Promise<Metadata> {
   // ?v= is the settings timestamp, so uploading a new icon busts the cache.
   const icon = `/api/brand/favicon?v=${settings.assetVersion}`;
   return {
-    title: seo?.title ?? "Supreme One Software — Software studio & communication platform",
-    description: seo?.description ?? "",
+    metadataBase: new URL(SITE_URL),
+    title: seo?.title || "Supreme One Software — Every customer conversation, in one place",
+    description: seo?.description || undefined,
     icons: { icon: [{ url: icon }], shortcut: [icon], apple: [{ url: icon }] },
   };
 }
@@ -33,7 +35,6 @@ export default async function RootLayout({ children }: { children: React.ReactNo
       // hydrates — deliberate, and the only way to avoid a curtain flash on
       // repeat visits. Without this, hydration reports the extra attribute.
       suppressHydrationWarning
-      data-cursor={settings.cursorEffects ? "on" : "off"}
       style={
         {
           "--accent": settings.accentColor,

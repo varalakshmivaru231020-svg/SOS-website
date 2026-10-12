@@ -2,7 +2,7 @@
 
 // Ports the original site's attribute-driven animation engine:
 // [data-reveal]/[data-delay] scroll reveals, [data-par] parallax,
-// [data-card] 3D tilt + sheen, [data-magnet] magnetic buttons, custom cursor,
+// [data-card] 3D tilt + sheen, [data-magnet] magnetic buttons,
 // scroll progress bar and the ambient canvas orb field. Markup stays in server
 // components; this single client component wires behaviour onto it and
 // re-scans on every route change.
@@ -23,7 +23,6 @@ function motionLevel() {
 
 export default function EffectsProvider() {
   const pathname = usePathname();
-  const cursorRef = useRef<HTMLDivElement>(null);
   const progressRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -295,7 +294,7 @@ export default function EffectsProvider() {
     };
   }, []);
 
-  // Magnetic buttons (delegated) + cursor grow.
+  // Magnetic buttons (delegated).
   useEffect(() => {
     if (prefersReducedMotion() || !finePointer()) return;
     const onMove = (e: PointerEvent) => {
@@ -307,11 +306,6 @@ export default function EffectsProvider() {
           el.style.transform = "";
         }
       });
-      const cursor = cursorRef.current;
-      if (cursor) {
-        const interactive = target.closest("a, button, [data-magnet]");
-        cursor.classList.toggle("grow", !!interactive);
-      }
       if (magnet) {
         const m = motionLevel();
         if (m === 0) return;
@@ -324,31 +318,6 @@ export default function EffectsProvider() {
     };
     document.addEventListener("pointermove", onMove, { passive: true });
     return () => document.removeEventListener("pointermove", onMove);
-  }, []);
-
-  // Custom cursor follower (lerped).
-  useEffect(() => {
-    const cursor = cursorRef.current;
-    if (!cursor || prefersReducedMotion() || !finePointer()) return;
-    if (document.documentElement.dataset.cursor !== "on") return;
-    let x = -100, y = -100, tx = -100, ty = -100;
-    let raf = 0;
-    const onMove = (e: PointerEvent) => {
-      tx = e.clientX;
-      ty = e.clientY;
-    };
-    const loop = () => {
-      x += (tx - x) * 0.17;
-      y += (ty - y) * 0.17;
-      cursor.style.transform = `translate(${x - 15}px, ${y - 15}px)`;
-      raf = requestAnimationFrame(loop);
-    };
-    document.addEventListener("pointermove", onMove, { passive: true });
-    raf = requestAnimationFrame(loop);
-    return () => {
-      document.removeEventListener("pointermove", onMove);
-      cancelAnimationFrame(raf);
-    };
   }, []);
 
   // Ambient orb field — lazy-init after paint, DPR-capped, paused off-tab.
@@ -364,7 +333,7 @@ export default function EffectsProvider() {
       const dpr = Math.min(window.devicePixelRatio || 1, 2);
       const accent =
         getComputedStyle(document.documentElement).getPropertyValue("--accent").trim() || "#b8502a";
-      const colors = [accent, "#2b3a8f"];
+      const colors = [accent, "#e8956a"];
       type Orb = { x: number; y: number; r: number; a: number; s: number; p: number; c: string };
       let orbs: Orb[] = [];
       const size = () => {
@@ -437,7 +406,6 @@ export default function EffectsProvider() {
     <>
       <canvas ref={canvasRef} className="ambient-canvas" aria-hidden="true" />
       <div ref={progressRef} className="scroll-progress" aria-hidden="true" />
-      <div ref={cursorRef} className="cursor-dot" aria-hidden="true" />
     </>
   );
 }

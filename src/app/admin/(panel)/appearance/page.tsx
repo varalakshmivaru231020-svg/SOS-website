@@ -93,17 +93,6 @@ export default async function AppearanceAdminPage() {
               defaultValue={settings.motionIntensity}
             />
           </label>
-          <span className="inline" style={{ alignSelf: "end" }}>
-            <input
-              id="cursor-effects"
-              name="cursorEffects"
-              type="checkbox"
-              defaultChecked={settings.cursorEffects}
-            />
-            <label htmlFor="cursor-effects" style={{ display: "inline" }}>
-              Cursor effects
-            </label>
-          </span>
         </div>
 
         <div className="row">

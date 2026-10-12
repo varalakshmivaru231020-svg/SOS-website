@@ -84,10 +84,17 @@ export default async function InboxAdminPage({
             <div className="editor-body">
               <p style={{ fontSize: 13, color: "var(--muted)", margin: "0 0 10px" }}>
                 <a href={`mailto:${s.email}`}>{s.email}</a>
+                {s.phone && (
+                  <>
+                    {" · "}
+                    <a href={`tel:${s.phone.replace(/[^\d+]/g, "")}`}>{s.phone}</a>
+                  </>
+                )}
                 {s.company ? ` · ${s.company}` : ""} · {s.need}
+                {s.source ? ` · came from ${s.source}` : ""}
               </p>
               <p style={{ whiteSpace: "pre-wrap", fontSize: 14, lineHeight: 1.6, margin: "0 0 16px" }}>
-                {s.brief}
+                {s.brief || <em style={{ color: "var(--muted)" }}>No message.</em>}
               </p>
               <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
                 <form action={setSubmissionStatus}>

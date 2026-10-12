@@ -7,6 +7,17 @@ import { TAGS } from "@/lib/content";
 
 const MAX_BYTES = 512 * 1024; // 512 KB — plenty for a logo or icon
 const ALLOWED = ["image/png", "image/jpeg", "image/svg+xml", "image/webp", "image/x-icon", "image/vnd.microsoft.icon"];
+// Keep in sync with SOCIAL_NETWORKS on /admin/brand ("use server" files may
+// only export async functions).
+const SOCIAL_NETWORKS = ["LinkedIn", "Instagram", "Facebook", "YouTube"];
+
+/** Only http(s) links make it into the footer. */
+function socialLinks(formData: FormData) {
+  return SOCIAL_NETWORKS.flatMap((label) => {
+    const url = String(formData.get(`social_${label}`) ?? "").trim();
+    return /^https?:\/\/\S+$/i.test(url) ? [{ label, url }] : [];
+  });
+}
 
 /**
  * Turns an uploaded image into a data URI for storage on SiteSettings.
@@ -35,6 +46,10 @@ export async function updateBrand(formData: FormData): Promise<void> {
     supportEmail: String(formData.get("supportEmail") ?? "").trim(),
     partnersEmail: String(formData.get("partnersEmail") ?? "").trim(),
     phone: String(formData.get("phone") ?? "").trim(),
+    businessHours: String(formData.get("businessHours") ?? "").trim(),
+    cin: String(formData.get("cin") ?? "").trim(),
+    gst: String(formData.get("gst") ?? "").trim(),
+    socialLinks: socialLinks(formData),
     whatsappNumber: String(formData.get("whatsappNumber") ?? "").trim(),
     whatsappMessage: String(formData.get("whatsappMessage") ?? "").trim(),
     whatsappEnabled: formData.get("whatsappEnabled") === "on",

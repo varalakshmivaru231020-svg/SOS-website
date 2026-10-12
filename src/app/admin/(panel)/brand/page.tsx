@@ -1,6 +1,10 @@
 import { db } from "@/lib/db";
 import { requireSession } from "@/lib/auth";
 import { updateBrand } from "@/lib/actions/admin/brand";
+import { asSocialLinks } from "@/lib/content";
+
+// The networks the content guide lists for the footer; empty ones are skipped.
+const SOCIAL_NETWORKS = ["LinkedIn", "Instagram", "Facebook", "YouTube"];
 
 // Admin-only editor for the brand marks, published contact details, and the
 // floating WhatsApp / call buttons. Writes the same SiteSettings singleton the
@@ -10,6 +14,8 @@ export default async function BrandAdminPage() {
 
   const s = await db.siteSettings.findUnique({ where: { id: 1 } });
   const v = String(s?.updatedAt?.getTime() ?? 0);
+  const socials = asSocialLinks(s?.socialLinks);
+  const socialUrl = (label: string) => socials.find((x) => x.label === label)?.url ?? "";
 
   return (
     <>
@@ -99,8 +105,41 @@ export default async function BrandAdminPage() {
           </label>
           <label>
             Phone
-            <input name="phone" defaultValue={s?.phone ?? ""} placeholder="+91 20 4890 2200" />
+            <input name="phone" defaultValue={s?.phone ?? ""} placeholder="+91 91641 61611" />
           </label>
+        </div>
+        <label>
+          Business hours (shown on the contact page)
+          <input name="businessHours" defaultValue={s?.businessHours ?? ""} placeholder="Mon–Sat, 9:30 am – 6:30 pm IST" />
+        </label>
+
+        <h2 style={{ fontSize: 15, fontWeight: 600, marginTop: 10 }}>Company details</h2>
+        <p style={{ fontSize: 13, color: "var(--muted)", marginTop: -8 }}>
+          Shown in the footer, on the contact page and on About once filled in. The registered office address is edited
+          under About page → Offices.
+        </p>
+        <div className="row">
+          <label>
+            CIN
+            <input name="cin" defaultValue={s?.cin ?? ""} />
+          </label>
+          <label>
+            GST number
+            <input name="gst" defaultValue={s?.gst ?? ""} />
+          </label>
+        </div>
+
+        <h2 style={{ fontSize: 15, fontWeight: 600, marginTop: 10 }}>Social profiles</h2>
+        <p style={{ fontSize: 13, color: "var(--muted)", marginTop: -8 }}>
+          Full URLs. Each one appears in the footer once added.
+        </p>
+        <div className="row">
+          {SOCIAL_NETWORKS.map((n) => (
+            <label key={n}>
+              {n}
+              <input name={`social_${n}`} type="url" defaultValue={socialUrl(n)} placeholder="https://" />
+            </label>
+          ))}
         </div>
 
         <h2 style={{ fontSize: 15, fontWeight: 600, marginTop: 10 }}>Floating buttons</h2>

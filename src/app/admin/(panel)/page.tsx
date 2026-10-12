@@ -2,13 +2,13 @@ import Link from "next/link";
 import { db } from "@/lib/db";
 
 export default async function DashboardPage() {
-  const [unread, total, services, products, cases, faqs, latest] = await Promise.all([
+  const [unread, total, testimonials, cases, plans, faqs, latest] = await Promise.all([
     db.contactSubmission.count({ where: { status: "NEW" } }),
     db.contactSubmission.count(),
-    db.service.count(),
-    db.product.count(),
-    db.caseStudy.count(),
-    db.faqItem.count(),
+    db.testimonial.count(),
+    db.caseStudy.count({ where: { published: true } }),
+    db.pricingTier.count({ where: { published: true } }),
+    db.faqItem.count({ where: { published: true } }),
     db.contactSubmission.findMany({ orderBy: { createdAt: "desc" }, take: 5 }),
   ]);
 
@@ -17,7 +17,10 @@ export default async function DashboardPage() {
       <div className="admin-head">
         <div>
           <h1 className="serif">Dashboard</h1>
-          <p className="sub">Everything on the site is editable from here — changes go live in seconds.</p>
+          <p className="sub">
+            Enquiries, plus the content marketing confirms and updates: proof figures, testimonials, case studies,
+            pricing and FAQs. Product and industry page copy lives in the codebase (src/content).
+          </p>
         </div>
         <Link href="/admin/inbox" className="btn-admin">
           Open inbox {unread > 0 ? `(${unread} new)` : ""}
@@ -28,10 +31,10 @@ export default async function DashboardPage() {
         {[
           { v: unread, l: "Unread enquiries", href: "/admin/inbox" },
           { v: total, l: "Total enquiries", href: "/admin/inbox" },
-          { v: services, l: "Services", href: "/admin/services" },
-          { v: products, l: "Products", href: "/admin/products" },
-          { v: cases, l: "Case studies", href: "/admin/work" },
-          { v: faqs, l: "FAQ items", href: "/admin/faqs" },
+          { v: testimonials, l: "Testimonials", href: "/admin/site-blocks?tab=testimonials" },
+          { v: cases, l: "Published case studies", href: "/admin/work" },
+          { v: plans, l: "Published pricing plans", href: "/admin/pricing?set=PLATFORM" },
+          { v: faqs, l: "Published FAQ items", href: "/admin/faqs" },
         ].map((s) => (
           <Link key={s.l} href={s.href} className="admin-card stat-tile" style={{ marginBottom: 0 }}>
             <span className="v">{s.v}</span>
@@ -52,7 +55,7 @@ export default async function DashboardPage() {
                   <th>Date</th>
                   <th>Name</th>
                   <th>Company</th>
-                  <th>Need</th>
+                  <th>Interested in</th>
                   <th>Status</th>
                 </tr>
               </thead>
