@@ -185,16 +185,18 @@ function InboxMock({ demo, className }: { demo: InboxDemo; className?: string })
     <figure
       className={`device inbox chat${className ? ` ${className}` : ""}`}
       role="img"
-      aria-label="Example team inbox with WhatsApp, Instagram, Messenger and web chat conversations in one list"
+      aria-label={demo.label ?? "Example team inbox with WhatsApp, Instagram, Messenger and web chat conversations in one list"}
       data-reveal
       data-delay="0.12"
     >
       <div className="inbox-head">
-        <b>Team inbox</b>
+        <b>{demo.title ?? "Team inbox"}</b>
         <span className="inbox-tabs">
-          <span className="on">All</span>
-          <span>Mine</span>
-          <span>Unassigned</span>
+          {(demo.tabs ?? ["All", "Mine", "Unassigned"]).map((t, i) => (
+            <span key={t} className={i === 0 ? "on" : undefined}>
+              {t}
+            </span>
+          ))}
         </span>
       </div>
       <div className="chat-body">

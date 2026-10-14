@@ -40,7 +40,7 @@ export const HOME = {
     ],
   } satisfies ChatDemo,
   products: {
-    heading: "Eleven products. One platform.",
+    heading: "Fourteen products. One platform.",
     accent: "One platform.",
     sub: "Pick one tool or run all of them together — every product shares the same contacts, inbox and reports.",
   },
@@ -109,9 +109,9 @@ export const ABOUT = {
   seo: {
     title: "Our Story | Supreme One Software",
     description:
-      "Supreme One Software builds the software that speaks for your business — a product studio and communication platform company, established in 2015.",
+      "Supreme One Software builds the software that speaks for your business — a product studio and communication platform company, established in 2025.",
   },
-  eyebrow: "Product studio & communication platform · Est. 2015",
+  eyebrow: "Product studio & communication platform · Est. 2025",
   headline: "We build the software that speaks for your business",
   accent: "speaks",
   intro:

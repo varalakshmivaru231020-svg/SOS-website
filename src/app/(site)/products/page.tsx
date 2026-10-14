@@ -11,15 +11,16 @@ import { Features, LinkCard, Steps } from "@/components/site/Cards";
 
 export async function generateMetadata(): Promise<Metadata> {
   return pageMetadata("/products", {
-    title: "Platform overview — 11 communication products | Supreme One Software",
+    title: "Platform overview — 14 products | Supreme One Software",
     description:
-      "WhatsApp Business API, RCS, IVR, Facebook and Instagram automation, chatbots, campaigns, a unified team inbox, e-commerce, forms and AI reviews — one platform. Book a demo.",
+      "WhatsApp Business API, RCS, IVR, Facebook and Instagram automation, chatbots, campaigns, a unified team inbox, e-commerce, forms, AI reviews, ERP, a website builder and CRM — one platform. Book a demo.",
   });
 }
 
 const GROUP_HEADINGS: Record<(typeof PRODUCT_GROUPS)[number]["key"], { heading: string; accent: string }> = {
   messaging: { heading: "Reach customers on the channels they already use", accent: "already use" },
   automation: { heading: "Automate the routine, grow what works", accent: "grow what works" },
+  business: { heading: "Run the business behind the conversations", accent: "behind the conversations" },
 };
 
 const SHARED = [

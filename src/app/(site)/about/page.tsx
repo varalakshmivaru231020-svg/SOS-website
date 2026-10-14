@@ -90,7 +90,7 @@ export default async function AboutPage() {
       {timeline.length > 0 && (
         <section className="section section-line">
           <div className="container narrow">
-            <SectionHead eyebrow="Milestones" heading="Since 2015" accent="2015" />
+            <SectionHead eyebrow="Milestones" heading="Since 2025" accent="2025" />
             <ol className="timeline">
               {timeline.map((t, i) => (
                 <li key={t.id} data-reveal data-delay={0.05 * i}>
@@ -143,7 +143,7 @@ export default async function AboutPage() {
           <dl className="biz-details wide" data-reveal>
             <div>
               <dt>Established</dt>
-              <dd>2015</dd>
+              <dd>2025</dd>
             </div>
             {settings.cin && (
               <div>

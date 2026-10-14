@@ -14,6 +14,7 @@ export const OFFERINGS: Offering[] = [...PRODUCTS, ...SERVICES];
 export const PRODUCT_GROUPS = [
   { key: "messaging", label: "Messaging & voice" },
   { key: "automation", label: "Automation & growth" },
+  { key: "business", label: "Business software" },
 ] as const;
 
 export function productsIn(group: Product["group"]): Product[] {

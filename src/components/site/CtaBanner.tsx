@@ -28,23 +28,23 @@ export default function CtaBanner({
   return (
     <section className="cta-band">
       <div className="container">
-        <h2 className="h2" data-reveal>
-          <Accent text={heading} accent={accent} />
-        </h2>
-        {sub && (
-          <p className="cta-sub" data-reveal data-delay="0.08">
-            {sub}
-          </p>
-        )}
-        <div className="cta-actions" data-reveal data-delay="0.12">
-          <Link href={href} className="btn btn-accent">
-            {cta}
-          </Link>
-          {secondary && (
-            <Link href={secondary.href} className="btn btn-line-light">
-              {secondary.label}
+        <div className="cta-card" data-reveal>
+          <div className="cta-copy">
+            <h2 className="h2">
+              <Accent text={heading} accent={accent} />
+            </h2>
+            {sub && <p className="cta-sub">{sub}</p>}
+          </div>
+          <div className="cta-actions">
+            <Link href={href} className="btn btn-accent">
+              {cta}
             </Link>
-          )}
+            {secondary && (
+              <Link href={secondary.href} className="btn btn-ghost">
+                {secondary.label}
+              </Link>
+            )}
+          </div>
         </div>
       </div>
     </section>

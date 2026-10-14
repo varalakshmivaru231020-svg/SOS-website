@@ -1,5 +1,6 @@
 // The eleven communication products — Section 4A/4B of the website content
-// guide, transcribed into the product page template. Edits here go live on the
+// guide, transcribed into the product page template — plus the business
+// software (ERP, Website Builder, CRM). Edits here go live on the
 // next build. Departures from the guide are deliberate and noted inline.
 import type { Product } from "./types";
 
@@ -977,6 +978,248 @@ export const PRODUCTS: Product[] = [
             actions: ["Post on Google"],
           },
         },
+      ],
+    },
+  },
+
+  // ── Business software ──────────────────────────────────────────────
+  // Not in the content guide: added at the founder's request. Benefits carry
+  // no figures until there are measured ones to quote.
+  {
+    kind: "product",
+    slug: "erp",
+    group: "business",
+    name: "ERP",
+    tagline: "Inventory, billing and operations in one system",
+    priority: "P2",
+    seo: {
+      title: "ERP | Supreme One Software",
+      description:
+        "Run inventory, purchasing, billing and accounts from one system, with updates sent over WhatsApp. Book a demo with Supreme One Software.",
+    },
+    hero: {
+      headline: "Run your whole operation from one system",
+      accent: "one system",
+      sub: "Inventory, purchasing, sales, billing and accounts in a single ERP — with order and payment updates sent to customers over WhatsApp and SMS.",
+    },
+    problem:
+      "Stock lives in one spreadsheet, invoices in another tool and orders in someone’s inbox. Every handover is manual, numbers never quite match, and nobody can see the whole business at once.",
+    steps: [
+      { title: "Map your processes", copy: "We walk through how you buy, stock, sell and bill today." },
+      { title: "Configure the modules", copy: "Switch on the modules you need and set them up around your workflow." },
+      { title: "Move your data", copy: "Bring in products, customers, suppliers and opening balances." },
+      { title: "Go live & train", copy: "Your team is trained on the system, with support after launch." },
+    ],
+    features: [
+      { title: "Inventory & warehouses", copy: "Live stock levels across locations, with low-stock alerts." },
+      { title: "Purchasing", copy: "Purchase orders, supplier records and goods received in one flow." },
+      { title: "Sales & invoicing", copy: "Quotes, orders and GST-ready invoices from the same records." },
+      { title: "Accounts & payments", copy: "Track receivables, payables and payments against every invoice." },
+      { title: "Reports & dashboards", copy: "Sales, stock and cash flow at a glance, for every branch." },
+      { title: "Customer updates on WhatsApp", copy: "Order, dispatch and payment messages sent automatically." },
+    ],
+    shots: [
+      { title: "Operations dashboard with sales, stock and cash flow" },
+      { title: "Inventory list across two warehouses" },
+      { title: "Invoice with a WhatsApp payment reminder" },
+    ],
+    benefits: [
+      { text: "One source of truth for stock, sales and accounts." },
+      { text: "Less re-keying between spreadsheets, billing and messaging tools." },
+      { text: "Customers hear about orders and payments without anyone sending a message by hand." },
+    ],
+    useCase:
+      "A distributor runs purchasing, three warehouses and billing from one ERP. When an order is dispatched the customer gets a WhatsApp update with the invoice, and overdue payments trigger a polite reminder automatically.",
+    builtFor: ["logistics-distribution", "retail-e-commerce", "automotive", "restaurants-food-delivery"],
+    worksWith: ["WhatsApp Business API", "Payment gateways", "Tally / accounting exports", "Spreadsheet import"],
+    faqs: [
+      {
+        q: "Can the ERP be tailored to how we work?",
+        a: "Yes — modules are configured around your processes, and custom changes can be built where you need them.",
+      },
+      {
+        q: "Can we move our existing data across?",
+        a: "Yes. We import products, customers, suppliers and opening balances from your current spreadsheets or software.",
+      },
+      {
+        q: "Does it work across multiple branches or warehouses?",
+        a: "Yes — stock, sales and reports can be tracked per location and for the business as a whole.",
+      },
+      {
+        q: "Do we need to use your messaging products as well?",
+        a: "No. The ERP works on its own; WhatsApp and SMS updates are there when you want them.",
+      },
+    ],
+    closing: { headline: "Ready to see your whole business in one place?", accent: "one place?", cta: "Book an ERP demo" },
+    demo: {
+      channel: "inbox",
+      title: "Orders",
+      tabs: ["Today", "Pending", "Dispatched"],
+      label: "Example ERP order list with order values and fulfilment status",
+      rows: [
+        { name: "SO-1042 · Mehta Traders", channel: "₹48,200", preview: "24 items · Warehouse A", tag: "Packing" },
+        { name: "SO-1041 · Kaveri Stores", channel: "₹12,750", preview: "Invoice sent on WhatsApp", tag: "Dispatched" },
+        { name: "PO-0388 · Sunrise Supplies", channel: "₹96,000", preview: "Goods received, 2 items short", tag: "Review" },
+        { name: "SO-1040 · Anand Retail", channel: "₹7,900", preview: "Payment received", tag: "Closed" },
+      ],
+    },
+  },
+  {
+    kind: "product",
+    slug: "website-builder",
+    group: "business",
+    name: "Website Builder",
+    tagline: "Launch a professional site without code",
+    priority: "P2",
+    seo: {
+      title: "Website Builder | Supreme One Software",
+      description:
+        "Build a fast, mobile-ready business website without code, with chat, forms and bookings built in. Book a demo with Supreme One Software.",
+    },
+    hero: {
+      headline: "Launch a professional website without writing code",
+      accent: "without writing code",
+      sub: "Pick a template, add your content and publish — with WhatsApp chat, enquiry forms and bookings already wired in.",
+    },
+    problem:
+      "A custom website takes weeks and a developer for every small change, while generic builders leave you stitching together chat, forms and analytics yourself. Meanwhile, visitors leave without a way to reach you.",
+    steps: [
+      { title: "Choose a template", copy: "Start from a design made for your industry." },
+      { title: "Add your content", copy: "Edit text, images, products and services in a visual editor." },
+      { title: "Connect your channels", copy: "Turn on WhatsApp chat, enquiry forms and bookings." },
+      { title: "Publish & grow", copy: "Go live on your own domain and track visits and enquiries." },
+    ],
+    features: [
+      { title: "Drag-and-drop editor", copy: "Change any page yourself — no developer needed." },
+      { title: "Mobile-ready templates", copy: "Every design looks right on phones, tablets and desktops." },
+      { title: "Built-in chat & forms", copy: "Visitors message you on WhatsApp or send an enquiry in one tap." },
+      { title: "Bookings & catalogue", copy: "Show products or services and take bookings online." },
+      { title: "SEO basics included", copy: "Page titles, descriptions and sitemaps handled for you." },
+      { title: "Your own domain & SSL", copy: "Publish on your domain with a secure connection." },
+    ],
+    shots: [
+      { title: "Visual editor with a page being edited" },
+      { title: "Template gallery filtered by industry" },
+      { title: "Published site on a phone with the chat button open" },
+    ],
+    benefits: [
+      { text: "Go live in days rather than waiting on a full custom build." },
+      { text: "Make changes yourself, whenever you need to." },
+      { text: "Every enquiry lands in the same inbox as your other channels." },
+    ],
+    useCase:
+      "A salon launches its site from a beauty template in an afternoon. Clients browse services, book a slot online and get the confirmation on WhatsApp — and the owner updates prices whenever they change.",
+    builtFor: ["salons-wellness", "restaurants-food-delivery", "real-estate", "education"],
+    worksWith: ["WhatsApp Business API", "Unified Team Inbox", "Google Analytics", "Payment gateways"],
+    faqs: [
+      {
+        q: "Do I need any technical skills?",
+        a: "No. If you can edit a document, you can edit your site — and we’ll help with the initial setup.",
+      },
+      {
+        q: "Can I use my own domain?",
+        a: "Yes. Connect a domain you already own, or we’ll help you register one.",
+      },
+      {
+        q: "What if I outgrow the builder?",
+        a: "Our website development team can build custom features or a fully custom site when you need it.",
+      },
+      {
+        q: "Where do website enquiries go?",
+        a: "Into your team inbox alongside WhatsApp, Instagram and Facebook conversations, or to your email.",
+      },
+    ],
+    closing: { headline: "Your new website could be live this week.", accent: "live this week.", cta: "Start building" },
+    demo: {
+      channel: "web",
+      contact: "Glow Studio",
+      messages: [
+        { from: "customer", text: "Hi, do you have a slot for a haircut on Saturday?" },
+        { from: "business", text: "We do! Pick a time that suits you:", replies: ["11:00", "14:30", "17:00"] },
+        { from: "customer", text: "14:30 please" },
+        {
+          from: "business",
+          card: { title: "Booked · Sat 14:30", body: "Confirmation sent to your WhatsApp", actions: ["Add to calendar"] },
+        },
+      ],
+    },
+  },
+  {
+    kind: "product",
+    slug: "crm",
+    group: "business",
+    name: "CRM",
+    tagline: "Every lead and customer, tracked to the sale",
+    priority: "P1",
+    seo: {
+      title: "CRM | Supreme One Software",
+      description:
+        "Track every lead from first message to closed sale, with WhatsApp, calls and follow-ups in one CRM. Book a demo with Supreme One Software.",
+    },
+    hero: {
+      headline: "Never lose track of a lead again",
+      accent: "a lead",
+      sub: "A CRM built around conversations — every WhatsApp chat, call and enquiry becomes a contact, a deal and a follow-up your team can see.",
+    },
+    problem:
+      "Leads arrive on WhatsApp, Instagram, calls and forms, then live in personal phones and spreadsheets. Follow-ups slip, nobody knows who spoke to whom, and good opportunities go cold.",
+    steps: [
+      { title: "Capture every lead", copy: "Enquiries from chat, calls, ads and forms become contacts automatically." },
+      { title: "Build your pipeline", copy: "Set up stages that match how you sell, and move deals along them." },
+      { title: "Follow up on time", copy: "Tasks, reminders and WhatsApp templates keep every lead moving." },
+      { title: "Measure & improve", copy: "See conversion by source, stage and salesperson." },
+    ],
+    features: [
+      { title: "Contact timeline", copy: "Every message, call, note and order for a customer in one view." },
+      { title: "Visual sales pipeline", copy: "Drag deals between stages and see what’s stuck." },
+      { title: "Lead assignment", copy: "Route new leads to the right person by source, area or round-robin." },
+      { title: "Tasks & reminders", copy: "Never miss a follow-up, with reminders for every open deal." },
+      { title: "WhatsApp from the CRM", copy: "Message a lead on WhatsApp without leaving their record." },
+      { title: "Sales reports", copy: "Conversion, revenue and response time by team member." },
+    ],
+    shots: [
+      { title: "Pipeline board with deals in each stage" },
+      { title: "Contact timeline with WhatsApp messages and calls" },
+      { title: "Sales report by source and team member" },
+    ],
+    benefits: [
+      { text: "Every lead is captured, assigned and followed up — none left in a personal phone." },
+      { text: "Managers see the whole pipeline without chasing updates." },
+      { text: "Conversations and sales live in the same place." },
+    ],
+    useCase:
+      "A real-estate agency routes every property enquiry from Facebook ads and WhatsApp into the CRM, assigns it to an agent by area, and reminds that agent to follow up — so no buyer waits a day for a reply.",
+    builtFor: ["real-estate", "education", "bfsi", "automotive"],
+    worksWith: ["WhatsApp Business API", "Facebook Lead Ads", "IVR Solutions", "Form Builder", "Google Sheets"],
+    faqs: [
+      {
+        q: "Can we import our existing contacts?",
+        a: "Yes — import from spreadsheets or another CRM, with fields mapped during onboarding.",
+      },
+      {
+        q: "Does it work with our WhatsApp number?",
+        a: "Yes. Connected through the WhatsApp Business API, your team chats with leads straight from the CRM.",
+      },
+      {
+        q: "Can we customise the pipeline stages?",
+        a: "Yes — set up stages, fields and lead sources to match how your team sells.",
+      },
+      {
+        q: "Is there a mobile app for the sales team?",
+        a: "The CRM works in the mobile browser, so your team can update deals on the move.",
+      },
+    ],
+    closing: { headline: "Turn more conversations into customers.", accent: "customers.", cta: "Book a CRM demo" },
+    demo: {
+      channel: "inbox",
+      title: "Pipeline",
+      tabs: ["All deals", "Mine", "Due today"],
+      label: "Example CRM pipeline with leads, their source and deal stage",
+      rows: [
+        { name: "Ananya R.", channel: "WhatsApp", preview: "2BHK site visit booked for Sunday", tag: "Site visit" },
+        { name: "Vikram S.", channel: "Lead Ads", preview: "Follow-up call due today", tag: "Contacted" },
+        { name: "Meera K.", channel: "Web form", preview: "Sent price sheet and brochure", tag: "Proposal" },
+        { name: "Rohit P.", channel: "IVR", preview: "Booking amount received", tag: "Won" },
       ],
     },
   },

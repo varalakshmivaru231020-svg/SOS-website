@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import type { Offering } from "@/content/types";
+import type { Offering, Product } from "@/content/types";
 import { OFFERINGS, PRODUCT_GROUPS, contactHref, demoHref, getIndustry, industryHref, offeringHref } from "@/content";
 import PageHero from "./PageHero";
 import SectionHead from "./SectionHead";
@@ -11,7 +11,7 @@ import FaqAccordion from "./FaqAccordion";
 import { Features, LinkCard, Steps } from "./Cards";
 
 const GROUP_LABEL: Record<Offering["group"], string> = {
-  ...(Object.fromEntries(PRODUCT_GROUPS.map((g) => [g.key, g.label])) as Record<"messaging" | "automation", string>),
+  ...(Object.fromEntries(PRODUCT_GROUPS.map((g) => [g.key, g.label])) as Record<Product["group"], string>),
   engineering: "Custom engineering",
 };
 

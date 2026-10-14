@@ -52,7 +52,7 @@ export default function EffectsProvider() {
 
   // Figures count up when they enter the frame. Parses the leading number
   // and keeps whatever suffix the copy uses (+, %, yrs); anything that
-  // doesn't start with a digit ("Est. 2015") is left as written.
+  // doesn't start with a digit ("Est. 2025") is left as written.
   useEffect(() => {
     const els = Array.from(document.querySelectorAll<HTMLElement>("[data-count]:not(.counted)"));
     if (!els.length) return;

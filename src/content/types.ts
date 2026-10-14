@@ -17,7 +17,10 @@ export type ProductSlug =
   | "unified-team-inbox"
   | "ecommerce-solutions"
   | "form-builder"
-  | "ai-reviews-qr";
+  | "ai-reviews-qr"
+  | "erp"
+  | "website-builder"
+  | "crm";
 
 export type ServiceSlug = "mobile-app-development" | "website-development";
 
@@ -58,6 +61,11 @@ export type ChatDemo = {
 
 export type InboxDemo = {
   channel: "inbox";
+  /** Window title and filter tabs; default to the team inbox's. */
+  title?: string;
+  tabs?: string[];
+  /** What the figure shows, for assistive tech. */
+  label?: string;
   rows: { name: string; channel: string; preview: string; tag: string }[];
 };
 
@@ -107,7 +115,7 @@ type OfferingBase = {
 export type Product = OfferingBase & {
   kind: "product";
   slug: ProductSlug;
-  group: "messaging" | "automation";
+  group: "messaging" | "automation" | "business";
 };
 
 export type Service = OfferingBase & {

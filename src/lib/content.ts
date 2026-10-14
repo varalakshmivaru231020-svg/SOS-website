@@ -6,7 +6,7 @@ import type { PricingSet, Prisma } from "@prisma/client";
 // Part of every cache key below. Bump it when a release changes what the
 // database holds (e.g. after re-seeding), so the new deployment can't be
 // served entries cached by the previous one — the data cache outlives deploys.
-const CACHE_VERSION = "2026-10-revamp";
+const CACHE_VERSION = "2026-10-business-software";
 
 // One tag per content family. Admin save actions call revalidateTag() with
 // these — keep every tag here so an action can never miss a path.

@@ -1,7 +1,7 @@
 {
   "_note": "Database-managed content for the revamped site (website content guide, Oct 2026). Product, service and industry page copy lives in src/content. Collections left empty here (case studies, team, testimonials, client logos, milestones) are filled in from the admin panel once real entries are confirmed.",
   "heroStats": [
-    { "position": 1, "value": "Est. 2015", "label": "Software studio behind the platform" },
+    { "position": 1, "value": "Est. 2025", "label": "Software studio behind the platform" },
     { "position": 2, "value": "11", "label": "Communication products, one dashboard" },
     { "position": 3, "value": "5", "label": "Channels: WhatsApp, Instagram, Facebook, RCS, Voice" }
   ],
@@ -12,7 +12,7 @@
       "items": [
         {
           "question": "What is Supreme One Software?",
-          "answer": "A product studio and communication platform company, established in 2015. We build messaging, voice and custom software for businesses."
+          "answer": "A product studio and communication platform company, established in 2025. We build messaging, voice and custom software for businesses."
         },
         {
           "question": "What products do you offer?",
@@ -200,7 +200,7 @@
     },
     {
       "path": "/products",
-      "title": "Platform overview — 11 communication products | Supreme One Software",
+      "title": "Platform overview — 14 products | Supreme One Software",
       "description": "WhatsApp Business API, RCS, IVR, Facebook and Instagram automation, chatbots, campaigns, a unified team inbox, e-commerce, forms and AI reviews — one platform. Book a demo."
     },
     {
@@ -226,7 +226,7 @@
     {
       "path": "/about",
       "title": "Our Story | Supreme One Software",
-      "description": "Supreme One Software builds the software that speaks for your business — a product studio and communication platform company, established in 2015."
+      "description": "Supreme One Software builds the software that speaks for your business — a product studio and communication platform company, established in 2025."
     },
     {
       "path": "/contact",

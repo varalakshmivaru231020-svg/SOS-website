@@ -8,6 +8,7 @@ import PageHero from "@/components/site/PageHero";
 import SectionHead from "@/components/site/SectionHead";
 import DemoVisual from "@/components/site/DemoVisual";
 import CtaBanner from "@/components/site/CtaBanner";
+import Testimonials from "@/components/site/Testimonials";
 import { LinkCard, Steps } from "@/components/site/Cards";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -16,7 +17,8 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function HomePage() {
   const [stats, testimonials] = await Promise.all([getHeroStats(), getTestimonials()]);
-  const testimonial = testimonials.find((t) => t.featured);
+  // Featured quotes first; the home page shows up to three.
+  const quotes = (testimonials.some((t) => t.featured) ? testimonials.filter((t) => t.featured) : testimonials).slice(0, 3);
 
   return (
     <>
@@ -137,18 +139,12 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* ── Testimonial — appears once a real quote is added in the admin ── */}
-      {testimonial && (
+      {/* ── Testimonials — appear once real quotes are added in Admin → Site blocks ── */}
+      {quotes.length > 0 && (
         <section className="section section-line tint">
-          <div className="container narrow">
-            <blockquote className="quote" data-reveal>
-              <p className="serif">“{testimonial.quote}”</p>
-              <footer>
-                <b>{testimonial.author}</b>
-                {[testimonial.role, testimonial.company].filter(Boolean).length > 0 &&
-                  ` — ${[testimonial.role, testimonial.company].filter(Boolean).join(" at ")}`}
-              </footer>
-            </blockquote>
+          <div className="container">
+            <SectionHead eyebrow="Testimonials" heading="What our clients say" accent="clients" />
+            <Testimonials items={quotes} />
           </div>
         </section>
       )}

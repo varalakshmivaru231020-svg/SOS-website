@@ -4,6 +4,7 @@ import { getCaseStudies, getClientLogos, getTestimonials, asMetrics, asStringArr
 import { pageMetadata } from "@/lib/seo";
 import { INDUSTRIES, demoHref, industryHref } from "@/content";
 import { HOME } from "@/content/site";
+import Testimonials from "@/components/site/Testimonials";
 import PageHero from "@/components/site/PageHero";
 import SectionHead from "@/components/site/SectionHead";
 import CtaBanner from "@/components/site/CtaBanner";
@@ -93,17 +94,7 @@ export default async function CustomersPage() {
         <section className="section section-line tint">
           <div className="container">
             <SectionHead eyebrow="In their words" heading="What customers say" accent="say" />
-            <div className="quotes">
-              {testimonials.map((t, i) => (
-                <blockquote key={t.id} className="quote small" data-reveal data-delay={0.06 * i}>
-                  <p className="serif">“{t.quote}”</p>
-                  <footer>
-                    <b>{t.author}</b>
-                    {[t.role, t.company].filter(Boolean).length > 0 && ` — ${[t.role, t.company].filter(Boolean).join(" at ")}`}
-                  </footer>
-                </blockquote>
-              ))}
-            </div>
+            <Testimonials items={testimonials} />
           </div>
         </section>
       )}

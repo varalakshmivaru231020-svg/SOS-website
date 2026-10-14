@@ -23,7 +23,7 @@ export default async function SiteLayout({ children }: { children: React.ReactNo
     description: settings.tagline || undefined,
     email: settings.contactEmail || undefined,
     telephone: settings.phone || undefined,
-    foundingDate: "2015",
+    foundingDate: "2025",
     logo: logoSrc ? `${SITE_URL}${logoSrc}` : undefined,
     address: office
       ? {
