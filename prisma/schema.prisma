@@ -248,8 +248,8 @@ model User {
 
 model SiteSettings {
   id              Int     @id @default(1)
-  accentPreset    String  @default("terracotta")
-  accentColor     String  @default("#b8502a")
+  accentPreset    String  @default("brand")
+  accentColor     String  @default("#ff6500")
   motionIntensity Float   @default(1)
   cursorEffects   Boolean @default(true)
   orgName         String  @default("Northmark Systems")

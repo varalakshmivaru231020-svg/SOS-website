@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { inter } from "@/lib/fonts";
+import { inter, spaceGrotesk } from "@/lib/fonts";
 import { getSettings, getSeo } from "@/lib/content";
 import { SITE_URL } from "@/lib/site-url";
 import "./globals.css";
@@ -41,7 +41,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
       }
       data-motion={settings.motionIntensity === 0 ? "0" : undefined}
     >
-      <body className={inter.variable}>
+      <body className={`${inter.variable} ${spaceGrotesk.variable}`}>
         {children}
       </body>
     </html>

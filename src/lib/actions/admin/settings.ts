@@ -10,6 +10,7 @@ import { TAGS } from "@/lib/content";
 // Keep in sync with the swatches on /admin/appearance ("use server" files may
 // only export async functions, so this stays module-private).
 const ACCENT_PRESETS: Record<string, string> = {
+  brand: "#ff6500",
   terracotta: "#b8502a",
   moss: "#1c7d55",
   indigo: "#2b3a8f",
@@ -26,10 +27,10 @@ function normalizeHex(v: FormDataEntryValue | null): string | null {
 export async function updateSiteSettings(formData: FormData): Promise<void> {
   await requireSession("ADMIN");
 
-  const preset = String(formData.get("accentPreset") ?? "terracotta");
+  const preset = String(formData.get("accentPreset") ?? "brand");
   const custom = normalizeHex(formData.get("accentCustom"));
-  const accentPreset = custom ? "custom" : preset in ACCENT_PRESETS ? preset : "terracotta";
-  const accentColor = custom ?? ACCENT_PRESETS[accentPreset] ?? ACCENT_PRESETS.terracotta;
+  const accentPreset = custom ? "custom" : preset in ACCENT_PRESETS ? preset : "brand";
+  const accentColor = custom ?? ACCENT_PRESETS[accentPreset] ?? ACCENT_PRESETS.brand;
 
   const rawMotion = Number(formData.get("motionIntensity"));
   const motionIntensity = Number.isFinite(rawMotion) ? Math.min(1.6, Math.max(0, rawMotion)) : 1;

@@ -4,7 +4,7 @@
 import { PRODUCTS } from "./products";
 import { SERVICES } from "./services";
 import { INDUSTRIES } from "./industries";
-import type { Industry, IndustrySlug, Offering, Product, ProductSlug, Service, ServiceSlug } from "./types";
+import type { ChatDemo, Demo, Industry, IndustrySlug, Offering, Product, ProductSlug, Service, ServiceSlug } from "./types";
 
 export { PRODUCTS, SERVICES, INDUSTRIES };
 export type * from "./types";
@@ -13,7 +13,7 @@ export const OFFERINGS: Offering[] = [...PRODUCTS, ...SERVICES];
 
 export const PRODUCT_GROUPS = [
   { key: "messaging", label: "Messaging & voice" },
-  { key: "automation", label: "Automation & growth" },
+  { key: "automation", label: "Social & automation" },
   { key: "business", label: "Business software" },
 ] as const;
 
@@ -82,7 +82,41 @@ export const INTEREST_LABELS: Record<string, string> = Object.fromEntries(
 // ── Header menu ──────────────────────────────────────────────────────
 // Plain serialisable data, built on the server and handed to the header.
 
-export type MenuLink = { href: string; label: string; note?: string };
+export type MenuPreview = {
+  /** A chat thread or a list window, drawn small beside the menu. */
+  kind: "chat" | "list";
+  title: string;
+  sub: string;
+  lines: { out: boolean; text: string; tag?: string }[];
+};
+export type MenuLink = { href: string; label: string; note?: string; preview?: MenuPreview };
+
+const CHANNEL_NAME: Record<ChatDemo["channel"], string> = {
+  whatsapp: "WhatsApp",
+  instagram: "Instagram",
+  messenger: "Messenger",
+  rcs: "RCS",
+  voice: "IVR call",
+  web: "Website chat",
+};
+
+/** The first few lines of a product's hero demo, for the menu's side panel. */
+function menuPreview(demo: Demo): MenuPreview {
+  if (demo.channel === "inbox") {
+    return {
+      kind: "list",
+      title: demo.title ?? "Team inbox",
+      sub: (demo.tabs ?? ["All"])[0],
+      lines: demo.rows.slice(0, 4).map((r) => ({ out: false, text: r.name, tag: r.tag })),
+    };
+  }
+  const lines = demo.messages
+    .filter((m) => m.from !== "event")
+    .map((m) => ({ out: m.from === "business", text: m.text ?? m.card?.title ?? m.catalog?.[0]?.name ?? "" }))
+    .filter((l) => l.text)
+    .slice(0, 3);
+  return { kind: "chat", title: demo.contact, sub: CHANNEL_NAME[demo.channel], lines };
+}
 export type MenuEntry =
   | { kind: "link"; label: string; href: string }
   | {
@@ -120,7 +154,12 @@ export function buildMenu(): MenuEntry[] {
       wide: true,
       columns: PRODUCT_GROUPS.map((g) => ({
         heading: g.label,
-        links: productsIn(g.key).map((p) => ({ href: offeringHref(p), label: p.name, note: p.tagline })),
+        links: productsIn(g.key).map((p) => ({
+          href: offeringHref(p),
+          label: p.name,
+          note: p.tagline,
+          preview: menuPreview(p.demo),
+        })),
       })),
       footer: { href: "/products", label: "Platform overview" },
     },

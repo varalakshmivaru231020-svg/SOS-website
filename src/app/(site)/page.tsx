@@ -2,11 +2,10 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { getHeroStats, getTestimonials } from "@/lib/content";
 import { pageMetadata } from "@/lib/seo";
-import { INDUSTRIES, PRODUCT_GROUPS, SERVICES, demoHref, industryHref, offeringHref, productsIn } from "@/content";
+import { INDUSTRIES, PRODUCT_GROUPS, SERVICES, demoHref, getProduct, industryHref, offeringHref, productsIn } from "@/content";
 import { HOME, HOW_IT_WORKS, WHY_US } from "@/content/site";
-import PageHero from "@/components/site/PageHero";
+import HeroSlider, { type HeroSlide } from "@/components/site/HeroSlider";
 import SectionHead from "@/components/site/SectionHead";
-import DemoVisual from "@/components/site/DemoVisual";
 import CtaBanner from "@/components/site/CtaBanner";
 import Testimonials from "@/components/site/Testimonials";
 import { LinkCard, Steps } from "@/components/site/Cards";
@@ -15,6 +14,32 @@ export async function generateMetadata(): Promise<Metadata> {
   return pageMetadata("/", HOME.seo);
 }
 
+const slides: HeroSlide[] = HOME.slides.map((s) => {
+  if (!s.product) {
+    return {
+      tab: s.tab,
+      eyebrow: HOME.hero.eyebrow,
+      headline: HOME.hero.headline,
+      accent: HOME.hero.accent,
+      sub: HOME.hero.sub,
+      cta: { href: demoHref(), label: "Book a Demo" },
+      secondary: { href: "/products", label: "Explore Products" },
+      demo: HOME.heroDemo,
+    };
+  }
+  const p = getProduct(s.product)!;
+  return {
+    tab: s.tab,
+    eyebrow: p.name,
+    headline: s.headline,
+    accent: s.accent,
+    sub: s.sub,
+    cta: { href: demoHref(p.slug), label: "Book a Demo" },
+    secondary: { href: offeringHref(p), label: `Explore ${p.name}` },
+    demo: p.demo,
+  };
+});
+
 export default async function HomePage() {
   const [stats, testimonials] = await Promise.all([getHeroStats(), getTestimonials()]);
   // Featured quotes first; the home page shows up to three.
@@ -22,24 +47,10 @@ export default async function HomePage() {
 
   return (
     <>
-      <PageHero
-        size="lg"
-        eyebrow={HOME.hero.eyebrow}
-        title={HOME.hero.headline}
-        accent={HOME.hero.accent}
-        lede={HOME.hero.sub}
+      <HeroSlider
+        slides={slides}
+        badge={{ href: "/products", label: "ERP, CRM & Website Builder" }}
         note={HOME.hero.note}
-        actions={
-          <>
-            <Link href={demoHref()} className="btn btn-accent">
-              Book a Demo
-            </Link>
-            <Link href="/products" className="btn btn-ghost">
-              Explore Products
-            </Link>
-          </>
-        }
-        visual={<DemoVisual demo={HOME.heroDemo} />}
       />
 
       {/* ── Proof strip — figures are managed in Admin → Site blocks ── */}

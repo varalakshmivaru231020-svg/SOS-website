@@ -43,7 +43,7 @@ export async function GET(_req: NextRequest, { params }: { params: Promise<{ ass
 
 /** Generated logo: the wordmark set in serif with its accent full stop. */
 function fallbackLogoSvg(wordmark: string, accent: string): string {
-  const safeAccent = /^#[0-9a-fA-F]{3,8}$/.test(accent) ? accent : "#b8502a";
+  const safeAccent = /^#[0-9a-fA-F]{3,8}$/.test(accent) ? accent : "#ff6500";
   const text = (wordmark || "Supreme One Software").trim();
   const escaped = text.replace(/[<>&"]/g, (c) => ({ "<": "&lt;", ">": "&gt;", "&": "&amp;", '"': "&quot;" })[c]!);
 

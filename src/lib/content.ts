@@ -100,7 +100,7 @@ export const getSettings = unstable_cache(
     return (
       {
         id: 1,
-        accentPreset: "terracotta",
+        accentPreset: "brand",
         accentColor: "#b8502a",
         motionIntensity: 1,
         cursorEffects: true,

@@ -2,7 +2,11 @@
 // (guide Section 3), the platform overview and About (Section 1). Proof-strip
 // figures, testimonials, pricing and FAQs live in the database instead, so
 // marketing can confirm and change them from the admin panel.
-import type { ChatDemo, Item } from "./types";
+import type { ChatDemo, Item, ProductSlug } from "./types";
+
+type HeroSlideCopy =
+  | { tab: string; product: null }
+  | { tab: string; product: ProductSlug; headline: string; accent: string; sub: string };
 
 export const HOME = {
   seo: {
@@ -39,6 +43,39 @@ export const HOME = {
       },
     ],
   } satisfies ChatDemo,
+  // The hero rotates through these. The first is the platform pitch above and
+  // carries the page's H1; the rest each lead into one product.
+  slides: [
+    { tab: "Platform", product: null },
+    {
+      tab: "CRM",
+      product: "crm",
+      headline: "Every lead tracked from first message to sale",
+      accent: "to sale",
+      sub: "WhatsApp chats, calls and form enquiries become contacts, deals and follow-ups your whole team can see.",
+    },
+    {
+      tab: "ERP",
+      product: "erp",
+      headline: "Stock, billing and accounts in one system",
+      accent: "one system",
+      sub: "Run inventory, purchasing, invoicing and payments together — with order updates sent to customers on WhatsApp.",
+    },
+    {
+      tab: "Website Builder",
+      product: "website-builder",
+      headline: "A professional website, live this week",
+      accent: "live this week",
+      sub: "Pick a template, add your content and publish — with chat, enquiry forms and bookings built in.",
+    },
+    {
+      tab: "Chatbot",
+      product: "no-code-chatbot",
+      headline: "Answer every customer, around the clock",
+      accent: "around the clock",
+      sub: "Build WhatsApp, Instagram and website bots visually, and hand over to your team when a person is needed.",
+    },
+  ] satisfies HeroSlideCopy[],
   products: {
     heading: "Fourteen products. One platform.",
     accent: "One platform.",

@@ -4,6 +4,7 @@ import { updateSiteSettings } from "@/lib/actions/admin/settings";
 
 // Admin-only singleton editor for SiteSettings (id 1). One form, one action.
 const ACCENT_PRESETS: { key: string; label: string; hex: string }[] = [
+  { key: "brand", label: "Brand orange", hex: "#ff6500" },
   { key: "terracotta", label: "Terracotta", hex: "#b8502a" },
   { key: "moss", label: "Moss", hex: "#1c7d55" },
   { key: "indigo", label: "Indigo", hex: "#2b3a8f" },
@@ -16,8 +17,8 @@ export default async function AppearanceAdminPage() {
   const stored = await db.siteSettings.findUnique({ where: { id: 1 } });
   const settings = stored ?? {
     id: 1,
-    accentPreset: "terracotta",
-    accentColor: "#b8502a",
+    accentPreset: "brand",
+    accentColor: "#ff6500",
     motionIntensity: 1,
     cursorEffects: true,
     orgName: "Supreme One Software Pvt Ltd",

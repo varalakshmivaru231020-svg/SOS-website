@@ -109,8 +109,8 @@ async function resetAndSeed() {
     update: {},
     create: {
       id: 1,
-      accentPreset: "terracotta",
-      accentColor: "#b8502a",
+      accentPreset: "brand",
+      accentColor: "#ff6500",
       motionIntensity: 1,
       cursorEffects: true,
       orgName: "Supreme One Software Pvt Ltd",

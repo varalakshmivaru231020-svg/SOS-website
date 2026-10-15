@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import Brandmark from "./Brandmark";
-import type { MenuEntry } from "@/content";
+import type { MenuEntry, MenuLink } from "@/content";
 
 // Dropdowns open on hover with a mouse and on click/tap/Enter otherwise. Hover
 // is gated on pointerType so a tap — which also fires pointerenter — doesn't
@@ -14,8 +14,53 @@ const CLOSE_DELAY = 140;
 function Chevron() {
   return (
     <svg className="chev" viewBox="0 0 12 12" width="10" height="10" aria-hidden="true">
-      <path d="M2.5 4.5L6 8l3.5-3.5" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+      <path
+        d="M2.5 4.5L6 8l3.5-3.5"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.6"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
     </svg>
+  );
+}
+
+/** The menu's side panel: a small drawing of the hovered product's screen. */
+function Peek({ link, onPick }: { link: MenuLink; onPick: () => void }) {
+  const p = link.preview!;
+  return (
+    <Link href={link.href} className="mega-peek" tabIndex={-1} aria-hidden="true" onClick={onPick}>
+      <span key={link.href} className={`peek-win peek-${p.kind}`}>
+        <span className="peek-head">
+          <span className="peek-av">{p.title.charAt(0)}</span>
+          <span className="peek-who">
+            <b>{p.title}</b>
+            <small>{p.sub}</small>
+          </span>
+        </span>
+        <span className="peek-body">
+          {p.lines.map((l, i) =>
+            p.kind === "chat" ? (
+              <span key={i} className={`peek-b${l.out ? " out" : ""}`} style={{ "--i": i } as React.CSSProperties}>
+                {l.text}
+              </span>
+            ) : (
+              <span key={i} className="peek-row" style={{ "--i": i } as React.CSSProperties}>
+                <span className="peek-dot" />
+                <span className="peek-t">{l.text}</span>
+                {l.tag && <em>{l.tag}</em>}
+              </span>
+            ),
+          )}
+        </span>
+      </span>
+      <span className="peek-name">{link.label}</span>
+      {link.note && <span className="peek-note">{link.note}</span>}
+      <span className="peek-cta">
+        View product <span aria-hidden="true">→</span>
+      </span>
+    </Link>
   );
 }
 
@@ -41,6 +86,8 @@ export default function Header({
   const [mobileOpen, setMobileOpen] = useState(false);
   const [mobileSection, setMobileSection] = useState<number | null>(null);
   const [lastPath, setLastPath] = useState(pathname);
+  // The product under the pointer (or keyboard focus) in a previewing menu.
+  const [peekHref, setPeekHref] = useState<string | null>(null);
   const navRef = useRef<HTMLElement>(null);
   const toggleRef = useRef<HTMLButtonElement>(null);
   const closeTimer = useRef<number | undefined>(undefined);
@@ -101,6 +148,13 @@ export default function Header({
     };
   }, [mobileOpen]);
 
+  // Each previewing menu shows the hovered product, or its first one.
+  const peeks = menu.map((e) => {
+    if (e.kind !== "menu") return undefined;
+    const links = e.columns.flatMap((c) => c.links).filter((l) => l.preview);
+    return links.find((l) => l.href === peekHref) ?? links[0];
+  });
+
   return (
     <header className="site-header">
       <div className="container bar">
@@ -129,7 +183,8 @@ export default function Header({
                   }}
                   onPointerLeave={(ev) => ev.pointerType === "mouse" && closeSoon()}
                   onBlur={(ev) => {
-                    if (!ev.currentTarget.contains(ev.relatedTarget as Node | null)) setOpenIdx((v) => (v === i ? null : v));
+                    if (!ev.currentTarget.contains(ev.relatedTarget as Node | null))
+                      setOpenIdx((v) => (v === i ? null : v));
                   }}
                 >
                   <button
@@ -149,34 +204,40 @@ export default function Header({
                     {e.label}
                     <Chevron />
                   </button>
-                  <div id={`menu-${i}`} className={`mega${e.wide ? " wide" : ""}`}>
-                    <div className="mega-cols">
-                      {e.columns.map((col, c) => (
-                        <div key={c} className="mega-col">
-                          {col.heading && <p className="mega-h">{col.heading}</p>}
-                          <ul>
-                            {col.links.map((l) => (
-                              <li key={l.href}>
-                                <Link
-                                  href={l.href}
-                                  className={`mega-link${pathname === l.href ? " active" : ""}`}
-                                  aria-current={pathname === l.href ? "page" : undefined}
-                                  onClick={() => setOpenIdx(null)}
-                                >
-                                  <span>{l.label}</span>
-                                  {l.note && <small>{l.note}</small>}
-                                </Link>
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      ))}
+                  <div id={`menu-${i}`} className={`mega${e.wide ? " wide" : ""}${peeks[i] ? " has-peek" : ""}`}>
+                    <div className="mega-main">
+                      <div className="mega-cols">
+                        {e.columns.map((col, c) => (
+                          <div key={c} className="mega-col">
+                            {col.heading && <p className="mega-h">{col.heading}</p>}
+                            <ul>
+                              {col.links.map((l) => (
+                                <li key={l.href}>
+                                  <Link
+                                    href={l.href}
+                                    className={`mega-link${pathname === l.href ? " active" : ""}`}
+                                    aria-current={pathname === l.href ? "page" : undefined}
+                                    onClick={() => setOpenIdx(null)}
+                                    onPointerEnter={() => l.preview && setPeekHref(l.href)}
+                                    onFocus={() => l.preview && setPeekHref(l.href)}
+                                    data-peek={peeks[i]?.href === l.href || undefined}
+                                  >
+                                    <span>{l.label}</span>
+                                    {l.note && <small>{l.note}</small>}
+                                  </Link>
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        ))}
+                      </div>
+                      {e.footer && (
+                        <Link href={e.footer.href} className="mega-foot" onClick={() => setOpenIdx(null)}>
+                          {e.footer.label} <span aria-hidden="true">→</span>
+                        </Link>
+                      )}
                     </div>
-                    {e.footer && (
-                      <Link href={e.footer.href} className="mega-foot" onClick={() => setOpenIdx(null)}>
-                        {e.footer.label} <span aria-hidden="true">→</span>
-                      </Link>
-                    )}
+                    {peeks[i] && <Peek link={peeks[i]} onPick={() => setOpenIdx(null)} />}
                   </div>
                 </li>
               ),

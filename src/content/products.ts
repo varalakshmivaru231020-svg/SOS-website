@@ -4,8 +4,10 @@
 // next build. Departures from the guide are deliberate and noted inline.
 import type { Product } from "./types";
 
+// Menu groups come from each record's `group`, not from where it sits in this
+// file — they're balanced 5 / 5 / 4 so the Products menu columns line up.
 export const PRODUCTS: Product[] = [
-  // ── Messaging & voice ──────────────────────────────────────────────
+  // ── Messaging, voice & social ──────────────────────────────────────────────
   {
     kind: "product",
     slug: "whatsapp-business-api",
@@ -297,7 +299,7 @@ export const PRODUCTS: Product[] = [
   {
     kind: "product",
     slug: "facebook-automation",
-    group: "messaging",
+    group: "automation",
     name: "Facebook Automation",
     tagline: "Messenger and comment replies",
     priority: "P2",
@@ -387,7 +389,7 @@ export const PRODUCTS: Product[] = [
   {
     kind: "product",
     slug: "instagram-automation",
-    group: "messaging",
+    group: "automation",
     name: "Instagram Automation",
     tagline: "Turn DMs and comments into leads",
     priority: "P1",
@@ -472,7 +474,7 @@ export const PRODUCTS: Product[] = [
     },
   },
 
-  // ── Automation & growth ────────────────────────────────────────────
+  // ── Automation & commerce ──────────────────────────────────────────
   {
     kind: "product",
     slug: "no-code-chatbot",
@@ -564,7 +566,7 @@ export const PRODUCTS: Product[] = [
   {
     kind: "product",
     slug: "campaigns",
-    group: "automation",
+    group: "messaging",
     name: "Campaigns",
     tagline: "Segmented broadcasts that get read",
     priority: "P1",
@@ -649,7 +651,7 @@ export const PRODUCTS: Product[] = [
   {
     kind: "product",
     slug: "unified-team-inbox",
-    group: "automation",
+    group: "messaging",
     name: "Unified Team Inbox",
     tagline: "Every channel in one inbox",
     priority: "P1",
@@ -728,7 +730,7 @@ export const PRODUCTS: Product[] = [
   {
     kind: "product",
     slug: "ecommerce-solutions",
-    group: "automation",
+    group: "business",
     name: "E-Commerce Solutions",
     tagline: "Catalog, carts and payments in chat",
     priority: "P1",

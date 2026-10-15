@@ -24,7 +24,8 @@ const INDUSTRY_SERVICE_LINKS = [
 export default async function Footer() {
   const [settings, offices] = await Promise.all([getSettings(), getOffices()]);
   const year = new Date().getFullYear();
-  const logoSrc = settings.logoData ? `/api/brand/logo?v=${settings.assetVersion}` : null;
+  // The footer is a dark band: always the white-on-transparent cut of the logo.
+  const logoSrc = "/logo.png";
   const office = offices[0];
   const socials = asSocialLinks(settings.socialLinks);
 
