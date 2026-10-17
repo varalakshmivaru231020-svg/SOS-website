@@ -187,23 +187,32 @@ export default function Header({
                       setOpenIdx((v) => (v === i ? null : v));
                   }}
                 >
-                  <button
-                    type="button"
-                    className={`nav-link nav-trigger${isActive(pathname, e) ? " active" : ""}`}
-                    aria-expanded={openIdx === i}
-                    aria-controls={`menu-${i}`}
-                    data-trigger={i}
-                    onClick={() => {
-                      if (hoverOpened.current && openIdx === i) {
-                        hoverOpened.current = false;
-                        return;
-                      }
-                      setOpenIdx((v) => (v === i ? null : i));
-                    }}
-                  >
-                    {e.label}
-                    <Chevron />
-                  </button>
+                  <span className="nav-split">
+                    <Link
+                      href={e.href}
+                      className={`nav-link${isActive(pathname, e) ? " active" : ""}`}
+                      onClick={() => setOpenIdx(null)}
+                    >
+                      {e.label}
+                    </Link>
+                    <button
+                      type="button"
+                      className="nav-link nav-more"
+                      aria-label={`${e.label} menu`}
+                      aria-expanded={openIdx === i}
+                      aria-controls={`menu-${i}`}
+                      data-trigger={i}
+                      onClick={() => {
+                        if (hoverOpened.current && openIdx === i) {
+                          hoverOpened.current = false;
+                          return;
+                        }
+                        setOpenIdx((v) => (v === i ? null : i));
+                      }}
+                    >
+                      <Chevron />
+                    </button>
+                  </span>
                   <div id={`menu-${i}`} className={`mega${e.wide ? " wide" : ""}${peeks[i] ? " has-peek" : ""}`}>
                     <div className="mega-main">
                       <div className="mega-cols">
@@ -277,16 +286,21 @@ export default function Header({
                 </li>
               ) : (
                 <li key={e.label}>
-                  <button
-                    type="button"
-                    className="m-link m-trigger"
-                    aria-expanded={mobileSection === i}
-                    aria-controls={`m-sub-${i}`}
-                    onClick={() => setMobileSection((v) => (v === i ? null : i))}
-                  >
-                    {e.label}
-                    <Chevron />
-                  </button>
+                  <div className="m-row">
+                    <Link href={e.href} className="m-link" onClick={() => setMobileOpen(false)}>
+                      {e.label}
+                    </Link>
+                    <button
+                      type="button"
+                      className="m-more"
+                      aria-label={`${e.label} menu`}
+                      aria-expanded={mobileSection === i}
+                      aria-controls={`m-sub-${i}`}
+                      onClick={() => setMobileSection((v) => (v === i ? null : i))}
+                    >
+                      <Chevron />
+                    </button>
+                  </div>
                   <div id={`m-sub-${i}`} className="m-sub" hidden={mobileSection !== i}>
                     {e.columns.map((col, c) => (
                       <div key={c}>

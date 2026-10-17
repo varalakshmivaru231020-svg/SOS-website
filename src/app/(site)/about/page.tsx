@@ -27,7 +27,6 @@ export default async function AboutPage() {
     <>
       <PageHero
         crumbs={[{ label: "Our Story", href: "/about" }]}
-        backdrop="/images/about-hero.webp"
         eyebrow={ABOUT.eyebrow}
         title={ABOUT.headline}
         accent={ABOUT.accent}
@@ -42,58 +41,70 @@ export default async function AboutPage() {
             </Link>
           </>
         }
+        visual={<Cinematic src="/images/about-hero.webp" pos="78% 50%" preload />}
       />
+
+      {/* Each section pairs its copy with a related render: text on one side,
+          picture on the other, alternating sides down the page. */}
 
       {/* ── What we do ── */}
       <section className="section section-line">
-        <div className="container">
-          <SectionHead eyebrow="What we do" heading="Engineering and messaging under one roof" accent="one roof" />
-          <div className="card-grid two">
-            <LinkCard href="/products" title={ABOUT.whatWeDo[0].title} note={ABOUT.whatWeDo[0].copy} />
-            <LinkCard href="/services" title={ABOUT.whatWeDo[1].title} note={ABOUT.whatWeDo[1].copy} delay={0.06} />
+        <div className="container split-feature">
+          <div>
+            <SectionHead eyebrow="What we do" heading="Engineering and messaging under one roof" accent="one roof" />
+            <div className="card-stack">
+              <LinkCard href="/products" title={ABOUT.whatWeDo[0].title} note={ABOUT.whatWeDo[0].copy} />
+              <LinkCard href="/services" title={ABOUT.whatWeDo[1].title} note={ABOUT.whatWeDo[1].copy} delay={0.06} />
+            </div>
           </div>
-          <Cinematic src="/images/about-team.webp" wide delay={0.1} />
+          <Cinematic src="/images/about-build.webp" />
         </div>
       </section>
 
       {/* ── Mission ── */}
       <section className="section section-line tint">
-        <div className="container narrow">
-          <span className="eyebrow" data-reveal>
-            Our mission
-          </span>
-          <p className="problem serif" data-reveal data-delay="0.06">
-            {ABOUT.mission}
-          </p>
-          <Cinematic src="/images/about-channels.webp" delay={0.1} />
+        <div className="container split-feature flip">
+          <div>
+            <span className="eyebrow" data-reveal>
+              Our mission
+            </span>
+            <p className="problem serif" data-reveal data-delay="0.06">
+              {ABOUT.mission}
+            </p>
+          </div>
+          <Cinematic src="/images/about-channels.webp" from="left" pos="68% 50%" />
         </div>
       </section>
 
       {/* ── Values ── */}
       <section className="section section-line">
-        <div className="container">
-          <SectionHead eyebrow="What we stand for" heading="How we show up for customers" accent="show up" />
-          <div className="why-grid">
-            {ABOUT.values.map((v, i) => (
-              <div key={v.title} className="why-item" data-reveal data-delay={0.07 * i}>
-                <span className="why-n" aria-hidden="true">
-                  {String(i + 1).padStart(2, "0")}
-                </span>
-                <h3 className="h3 serif">{v.title}</h3>
-                <p>{v.copy}</p>
-              </div>
-            ))}
+        <div className="container split-feature">
+          <div>
+            <SectionHead eyebrow="What we stand for" heading="How we show up for customers" accent="show up" />
+            <div className="why-grid stack">
+              {ABOUT.values.map((v, i) => (
+                <div key={v.title} className="why-item" data-reveal data-delay={0.07 * i}>
+                  <span className="why-n" aria-hidden="true">
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                  <h3 className="h3 serif">{v.title}</h3>
+                  <p>{v.copy}</p>
+                </div>
+              ))}
+            </div>
           </div>
-          <Cinematic src="/images/about-office.webp" delay={0.1} />
+          <Cinematic src="/images/about-values.webp" />
         </div>
       </section>
 
       {/* ── How we work ── */}
       <section className="section section-line tint">
-        <div className="container">
-          <SectionHead eyebrow="How we work" heading="Discover, design, build, launch" accent="launch" />
-          <Steps steps={ABOUT.process} />
-          <Cinematic src="/images/about-build.webp" delay={0.1} />
+        <div className="container split-feature flip">
+          <div>
+            <SectionHead eyebrow="How we work" heading="Discover, design, build, launch" accent="launch" />
+            <Steps steps={ABOUT.process} />
+          </div>
+          <Cinematic src="/images/about-process.webp" from="left" />
         </div>
       </section>
 
@@ -149,32 +160,35 @@ export default async function AboutPage() {
 
       {/* ── Company details ── */}
       <section className="section section-line">
-        <div className="container narrow">
-          <SectionHead eyebrow="Company details" heading={settings.orgName} />
-          <dl className="biz-details wide" data-reveal>
-            <div>
-              <dt>Established</dt>
-              <dd>2025</dd>
-            </div>
-            {settings.cin && (
+        <div className="container split-feature">
+          <div>
+            <SectionHead eyebrow="Company details" heading={settings.orgName} />
+            <dl className="biz-details wide" data-reveal>
               <div>
-                <dt>CIN</dt>
-                <dd>{settings.cin}</dd>
+                <dt>Established</dt>
+                <dd>2025</dd>
               </div>
-            )}
-            {settings.gst && (
-              <div>
-                <dt>GST</dt>
-                <dd>{settings.gst}</dd>
-              </div>
-            )}
-            {office && (
-              <div>
-                <dt>Registered office</dt>
-                <dd>{asStringArray(office.addressLines).join(", ")}</dd>
-              </div>
-            )}
-          </dl>
+              {settings.cin && (
+                <div>
+                  <dt>CIN</dt>
+                  <dd>{settings.cin}</dd>
+                </div>
+              )}
+              {settings.gst && (
+                <div>
+                  <dt>GST</dt>
+                  <dd>{settings.gst}</dd>
+                </div>
+              )}
+              {office && (
+                <div>
+                  <dt>Registered office</dt>
+                  <dd>{asStringArray(office.addressLines).join(", ")}</dd>
+                </div>
+              )}
+            </dl>
+          </div>
+          <Cinematic src="/images/about-office.webp" pos="60% 50%" />
         </div>
       </section>
 

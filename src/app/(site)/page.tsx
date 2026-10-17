@@ -14,7 +14,6 @@ import {
 } from "@/content";
 import { HOME, HOW_IT_WORKS, WHY_US } from "@/content/site";
 import HeroSlider, { type HeroSlide } from "@/components/site/HeroSlider";
-import Cinematic from "@/components/site/Cinematic";
 import SectionHead from "@/components/site/SectionHead";
 import CtaBanner from "@/components/site/CtaBanner";
 import Testimonials from "@/components/site/Testimonials";
@@ -34,7 +33,6 @@ const slides: HeroSlide[] = HOME.slides.map((s) => {
       sub: HOME.hero.sub,
       cta: { href: demoHref(), label: "Book a Demo" },
       secondary: { href: "/products", label: "Explore Products" },
-      demo: HOME.heroDemo,
     };
   }
   const p = getProduct(s.product)!;
@@ -46,7 +44,6 @@ const slides: HeroSlide[] = HOME.slides.map((s) => {
     sub: s.sub,
     cta: { href: demoHref(p.slug), label: "Book a Demo" },
     secondary: { href: offeringHref(p), label: `Explore ${p.name}` },
-    demo: p.demo,
   };
 });
 
@@ -62,7 +59,6 @@ export default async function HomePage() {
     <>
       <HeroSlider
         slides={slides}
-        backdrop="/images/home-hero.webp"
         badge={{ href: "/products", label: "ERP, CRM & Website Builder" }}
         note={HOME.hero.note}
       />
@@ -94,7 +90,6 @@ export default async function HomePage() {
             accent={HOME.products.accent}
             sub={HOME.products.sub}
           />
-          <Cinematic src="/images/home-platform.webp" />
           {PRODUCT_GROUPS.map((g) => (
             <div key={g.key} className="group-block">
               <h3 className="group-label" data-reveal>
@@ -115,7 +110,6 @@ export default async function HomePage() {
         <div className="container">
           <SectionHead eyebrow="How it works" heading={HOW_IT_WORKS.heading} accent={HOW_IT_WORKS.accent} />
           <Steps steps={HOW_IT_WORKS.steps} />
-          <Cinematic src="/images/home-process.webp" delay={0.1} />
         </div>
       </section>
 
@@ -162,7 +156,6 @@ export default async function HomePage() {
               </div>
             ))}
           </div>
-          <Cinematic src="/images/home-team.webp" delay={0.1} />
         </div>
       </section>
 

@@ -122,6 +122,8 @@ export type MenuEntry =
   | {
       kind: "menu";
       label: string;
+      /** The section's landing page — clicking the label goes here; the chevron opens the panel. */
+      href: string;
       /** Paths that mark this entry active. */
       match: string[];
       columns: { heading?: string; links: MenuLink[] }[];
@@ -135,6 +137,7 @@ export function buildMenu(): MenuEntry[] {
     {
       kind: "menu",
       label: "About Us",
+      href: "/about",
       match: ["/about", "/careers", "/contact", "/partners", "/faq"],
       columns: [
         {
@@ -150,6 +153,7 @@ export function buildMenu(): MenuEntry[] {
     {
       kind: "menu",
       label: "Products",
+      href: "/products",
       match: ["/products"],
       wide: true,
       columns: PRODUCT_GROUPS.map((g) => ({
@@ -166,6 +170,7 @@ export function buildMenu(): MenuEntry[] {
     {
       kind: "menu",
       label: "Industries",
+      href: "/industries",
       match: ["/industries"],
       columns: [
         { links: INDUSTRIES.slice(0, 5).map((i) => ({ href: industryHref(i.slug), label: i.label })) },
@@ -176,6 +181,7 @@ export function buildMenu(): MenuEntry[] {
     {
       kind: "menu",
       label: "Services",
+      href: "/services",
       match: ["/services"],
       columns: [{ links: SERVICES.map((s) => ({ href: offeringHref(s), label: s.name, note: s.tagline })) }],
     },

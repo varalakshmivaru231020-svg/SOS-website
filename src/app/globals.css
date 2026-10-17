@@ -160,7 +160,15 @@ h1 em, h2 em, h3 em, .serif em { font-style: normal; color: var(--accent); }
   transition: color 0.25s, background 0.25s;
 }
 .nav-link:hover,
-.nav-item[data-open="true"] > .nav-link { color: var(--ink); background: color-mix(in srgb, var(--ink) 5%, transparent); }
+.nav-item[data-open="true"] .nav-split .nav-link { color: var(--ink); background: color-mix(in srgb, var(--ink) 5%, transparent); }
+/* Section entries: the label is a link to the section's page, the chevron
+   beside it opens the panel. They share one pill. */
+.nav-split { display: inline-flex; align-items: center; border-radius: var(--r-pill); }
+.nav-split .nav-link:first-child { padding-right: 4px; border-radius: var(--r-pill) 0 0 var(--r-pill); }
+.nav-more { min-width: 28px; padding: 10px 10px 10px 2px; border-radius: 0 var(--r-pill) var(--r-pill) 0; }
+.nav-split:hover .nav-link,
+.nav-split:focus-within .nav-link,
+.nav-item[data-open="true"] .nav-split .nav-link { color: var(--ink); background: color-mix(in srgb, var(--ink) 5%, transparent); }
 .nav-link.active { color: var(--ink); }
 .nav-link.active::after {
   content: "";
@@ -351,7 +359,10 @@ html:not(.js) .nav-item:focus-within .mega {
   letter-spacing: -0.01em;
   text-align: left;
 }
-.m-trigger[aria-expanded="true"] .chev { transform: rotate(180deg); }
+.m-row { display: flex; align-items: center; }
+.m-row .m-link { flex: 1; }
+.m-more { display: grid; place-items: center; min-width: 56px; min-height: 56px; }
+.m-more[aria-expanded="true"] .chev { transform: rotate(180deg); }
 .m-sub { padding-bottom: 14px; }
 .m-sub .mega-h { padding-inline: 0; }
 .m-sub a:not(.mega-foot) { display: flex; align-items: center; min-height: 44px; font-size: var(--fs-3); color: var(--muted); }
@@ -402,6 +413,8 @@ html.js [data-reveal] {
     transform calc(0.6s * var(--motion, 1)) var(--ease);
   transition-delay: var(--reveal-delay, 0s);
 }
+html.js [data-reveal="left"] { transform: translateX(calc(-32px * var(--motion))); }
+html.js [data-reveal="right"] { transform: translateX(calc(32px * var(--motion))); }
 html.js [data-reveal].is-in { opacity: 1; transform: none; }
 
 /* Motion off entirely */
@@ -747,23 +760,12 @@ html[data-motion="0"] [data-reveal] { opacity: 1; transform: none; transition: n
 .hero .form-card { background: rgba(255, 255, 255, 0.04); border-color: rgba(255, 255, 255, 0.12); backdrop-filter: blur(8px); }
 .hero .crumbs [aria-current] { color: #fff; }
 
-/* Full-bleed render behind a hero (HeroBackdrop.tsx). Subjects sit on the
-   right of every picture; the left and bottom fade into the band so the
-   headline reads. */
-.hero-bg { position: absolute; inset: 0; z-index: -1; }
-.hero-bg img { object-fit: cover; object-position: 70% center; }
-.hero-bg::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background:
-    linear-gradient(90deg, var(--midnight) 0%, color-mix(in srgb, var(--midnight) 86%, transparent) 34%, transparent 64%),
-    linear-gradient(180deg, color-mix(in srgb, var(--midnight) 55%, transparent), transparent 30%, transparent 70%, var(--midnight) 100%);
-}
-@media (max-width: 960px) {
-  .hero-bg img { object-position: 72% center; }
-  .hero-bg::after { background: linear-gradient(180deg, color-mix(in srgb, var(--midnight) 82%, transparent), color-mix(in srgb, var(--midnight) 70%, transparent)); }
-}
+/* ── Hero ── */
+.hero { position: relative; isolation: isolate; overflow: hidden; padding-block: clamp(40px, 6vw, 88px) clamp(56px, 7vw, 100px); }
+.hero .btn-ghost { border-color: rgba(255, 255, 255, 0.25); }
+.hero .btn-ghost:hover { border-color: #fff; }
+.hero .form-card { background: rgba(255, 255, 255, 0.04); border-color: rgba(255, 255, 255, 0.12); backdrop-filter: blur(8px); }
+.hero .crumbs [aria-current] { color: #fff; }
 
 /* ── Cinematic figures (Cinematic.tsx) ──
    Wide renders inside sections. Where the browser supports scroll-driven
@@ -808,8 +810,8 @@ html[data-motion="0"] [data-reveal] { opacity: 1; transform: none; transition: n
 }
 
 /* ── Home hero: product slider ──
-   A cinematic render behind, a "New" pill, copy that crossfades between
-   slides, and tabs whose bar fills while a slide is showing. */
+   Centred copy that crossfades between slides, a "New" pill, and tabs whose
+   bar fills while a slide is showing. */
 .hero-saas { padding-block: clamp(36px, 5vw, 72px) clamp(28px, 4vw, 48px); }
 .hero-saas .container { position: relative; }
 .hero-badge {
@@ -840,11 +842,12 @@ html[data-motion="0"] [data-reveal] { opacity: 1; transform: none; transition: n
   transition: opacity 0.45s, transform 0.6s var(--ease);
 }
 .slide.on { opacity: 1; transform: none; pointer-events: auto; transition-delay: 0.1s; }
-.slide .display { font-size: var(--fs-8); line-height: 1.08; letter-spacing: -0.035em; max-width: 16ch; }
+.slide .display { font-size: var(--fs-8); line-height: 1.08; letter-spacing: -0.035em; max-width: 18ch; }
 .slide .lede { margin-top: 20px; }
-.hero-stage { min-height: 560px; align-items: center; perspective: 1200px; }
-.hero-stage .device { filter: drop-shadow(0 40px 60px rgba(0, 0, 0, 0.6)); }
-.hero-stage .phone { border-color: #2a2d33; box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.08), 0 60px 100px -40px rgba(0, 0, 0, 0.8); }
+.hero-saas .hero-copy { max-width: 860px; margin-inline: auto; text-align: center; }
+.hero-saas .display, .hero-saas .lede, .hero-saas .hero-note { margin-inline: auto; }
+.hero-saas .hero-actions, .hero-saas .hero-note { justify-content: center; }
+.hero-saas .hero-note { text-align: left; width: fit-content; }
 
 .slide-tabs {
   display: flex;
@@ -891,9 +894,55 @@ html[data-motion="0"] [data-reveal] { opacity: 1; transform: none; transition: n
 }
 html[data-motion="0"] .slide-bar { animation: none; }
 @media (max-width: 960px) {
-  .hero-stage { min-height: 0; }
   .slide .display { max-width: 20ch; }
 }
+
+/* ── Split sections (About) ──
+   Copy on one side, a framed render on the other; `.flip` puts the picture
+   first on wide screens. Pictures slide in from their side ([data-reveal]),
+   float gently, and zoom a little on hover. */
+.split-feature {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: clamp(32px, 5vw, 72px);
+  align-items: center;
+}
+.split-feature .sec-head { margin-bottom: clamp(22px, 3vw, 32px); }
+.split-feature .problem { margin-top: 0; }
+.why-grid.stack { grid-template-columns: 1fr; gap: 18px; }
+.why-grid.stack .why-item { padding-top: 16px; }
+.split-feature .steps { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 28px; }
+.split-feature .biz-details { margin-top: 0; }
+.cine {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  background: var(--paper3);
+  box-shadow: 0 40px 80px -48px rgba(0, 0, 0, 0.55);
+  animation: cineFloat 7s ease-in-out infinite;
+}
+.cine::after {
+  content: "";
+  position: absolute;
+  inset: auto -10% -30% -10%;
+  height: 60%;
+  background: radial-gradient(ellipse at center, color-mix(in srgb, var(--accent) 35%, transparent), transparent 70%);
+  pointer-events: none;
+}
+.cine img { object-fit: cover; transition: transform 0.9s var(--ease); }
+.cine:hover img { transform: scale(1.04); }
+.tint .cine { border-color: rgba(255, 255, 255, 0.12); }
+.hero .cine { aspect-ratio: 5 / 4; width: min(100%, 560px); }
+@keyframes cineFloat { 0%, 100% { translate: 0 0; } 50% { translate: 0 -8px; } }
+@media (min-width: 961px) { .split-feature.flip .cine { order: -1; } }
+@media (max-width: 960px) {
+  .split-feature { grid-template-columns: 1fr; }
+  .split-feature .steps { grid-template-columns: 1fr; }
+}
+@media (prefers-reduced-motion: reduce) { .cine { animation: none; } .cine:hover img { transform: none; } }
+html[data-motion="0"] .cine { animation: none; }
 
 /* ── Breadcrumbs ── */
 .crumbs { margin-bottom: clamp(22px, 3vw, 34px); font-size: var(--fs-1); color: var(--muted); }
