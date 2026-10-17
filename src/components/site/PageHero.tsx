@@ -1,3 +1,4 @@
+import Link from "next/link";
 import Accent from "./Accent";
 import Breadcrumbs, { type Crumb } from "./Breadcrumbs";
 
@@ -15,6 +16,7 @@ export default function PageHero({
   note,
   visual,
   crumbs,
+  badge,
   size = "md",
 }: {
   eyebrow?: string;
@@ -25,6 +27,8 @@ export default function PageHero({
   note?: string;
   visual?: React.ReactNode;
   crumbs?: Crumb[];
+  /** A "New" pill above the eyebrow, linking to what is new. */
+  badge?: { href: string; label: string };
   size?: "lg" | "md";
 }) {
   return (
@@ -33,6 +37,13 @@ export default function PageHero({
         {crumbs && <Breadcrumbs trail={crumbs} />}
         <div className={visual ? "hero-grid" : undefined}>
           <div className="hero-copy">
+            {badge && (
+              <Link href={badge.href} className="hero-badge" data-reveal>
+                <span className="hero-badge-new">New</span>
+                {badge.label}
+                <span aria-hidden="true">→</span>
+              </Link>
+            )}
             {eyebrow && (
               <span className="eyebrow" data-reveal>
                 {eyebrow}

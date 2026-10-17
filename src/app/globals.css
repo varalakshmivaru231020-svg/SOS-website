@@ -809,11 +809,7 @@ html[data-motion="0"] [data-reveal] { opacity: 1; transform: none; transition: n
   .hero-visual { margin-top: 8px; }
 }
 
-/* ── Home hero: product slider ──
-   Centred copy that crossfades between slides, a "New" pill, and tabs whose
-   bar fills while a slide is showing. */
-.hero-saas { padding-block: clamp(36px, 5vw, 72px) clamp(28px, 4vw, 48px); }
-.hero-saas .container { position: relative; }
+/* The New pill above a hero eyebrow (PageHero badge). */
 .hero-badge {
   display: inline-flex;
   align-items: center;
@@ -832,70 +828,6 @@ html[data-motion="0"] [data-reveal] { opacity: 1; transform: none; transition: n
 .hero-badge-new { padding: 3px 10px; border-radius: var(--r-pill); background: var(--accent); color: #fff; font-size: var(--fs-1); font-weight: 600; }
 .hero-badge > span:last-child { color: var(--accent-text); transition: transform 0.3s var(--ease); }
 .hero-badge:hover > span:last-child { transform: translateX(3px); }
-
-.slides { display: grid; }
-.slide {
-  grid-area: 1 / 1;
-  opacity: 0;
-  transform: translateY(12px);
-  pointer-events: none;
-  transition: opacity 0.45s, transform 0.6s var(--ease);
-}
-.slide.on { opacity: 1; transform: none; pointer-events: auto; transition-delay: 0.1s; }
-.slide .display { font-size: var(--fs-8); line-height: 1.08; letter-spacing: -0.035em; max-width: 18ch; }
-.slide .lede { margin-top: 20px; }
-.hero-saas .hero-copy { max-width: 860px; margin-inline: auto; text-align: center; }
-.hero-saas .display, .hero-saas .lede, .hero-saas .hero-note { margin-inline: auto; }
-.hero-saas .hero-actions, .hero-saas .hero-note { justify-content: center; }
-.hero-saas .hero-note { text-align: left; width: fit-content; }
-
-.slide-tabs {
-  display: flex;
-  gap: 6px;
-  margin-top: clamp(28px, 4vw, 48px);
-  padding: 6px;
-  overflow-x: auto;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: var(--r-pill);
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(8px);
-  scrollbar-width: none;
-}
-.slide-tab {
-  position: relative;
-  flex: 1 1 0;
-  min-width: max-content;
-  min-height: 44px;
-  padding: 10px 18px;
-  overflow: hidden;
-  border-radius: var(--r-pill);
-  color: var(--muted);
-  font-size: var(--fs-2);
-  font-weight: 500;
-  white-space: nowrap;
-  transition: color 0.2s, background 0.2s;
-}
-.slide-tab:hover { color: var(--ink); }
-.slide-tab.on { background: #fff; color: var(--midnight); }
-.slide-bar {
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  height: 3px;
-  width: 100%;
-  background: var(--accent);
-  transform-origin: left;
-  animation: slideBar 7s linear forwards;
-}
-@keyframes slideBar { from { transform: scaleX(0); } to { transform: scaleX(1); } }
-@media (prefers-reduced-motion: reduce) {
-  .slide { transition: none; transform: none; }
-  .slide-bar { animation: none; }
-}
-html[data-motion="0"] .slide-bar { animation: none; }
-@media (max-width: 960px) {
-  .slide .display { max-width: 20ch; }
-}
 
 /* ── Split sections (About) ──
    Copy on one side, a framed render on the other; `.flip` puts the picture
