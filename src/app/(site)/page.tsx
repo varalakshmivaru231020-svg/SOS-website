@@ -2,9 +2,19 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { getHeroStats, getTestimonials } from "@/lib/content";
 import { pageMetadata } from "@/lib/seo";
-import { INDUSTRIES, PRODUCT_GROUPS, SERVICES, demoHref, getProduct, industryHref, offeringHref, productsIn } from "@/content";
+import {
+  INDUSTRIES,
+  PRODUCT_GROUPS,
+  SERVICES,
+  demoHref,
+  getProduct,
+  industryHref,
+  offeringHref,
+  productsIn,
+} from "@/content";
 import { HOME, HOW_IT_WORKS, WHY_US } from "@/content/site";
 import HeroSlider, { type HeroSlide } from "@/components/site/HeroSlider";
+import Cinematic from "@/components/site/Cinematic";
 import SectionHead from "@/components/site/SectionHead";
 import CtaBanner from "@/components/site/CtaBanner";
 import Testimonials from "@/components/site/Testimonials";
@@ -43,12 +53,16 @@ const slides: HeroSlide[] = HOME.slides.map((s) => {
 export default async function HomePage() {
   const [stats, testimonials] = await Promise.all([getHeroStats(), getTestimonials()]);
   // Featured quotes first; the home page shows up to three.
-  const quotes = (testimonials.some((t) => t.featured) ? testimonials.filter((t) => t.featured) : testimonials).slice(0, 3);
+  const quotes = (testimonials.some((t) => t.featured) ? testimonials.filter((t) => t.featured) : testimonials).slice(
+    0,
+    3,
+  );
 
   return (
     <>
       <HeroSlider
         slides={slides}
+        backdrop="/images/home-hero.webp"
         badge={{ href: "/products", label: "ERP, CRM & Website Builder" }}
         note={HOME.hero.note}
       />
@@ -74,7 +88,13 @@ export default async function HomePage() {
       {/* ── Products ── */}
       <section className="section">
         <div className="container">
-          <SectionHead eyebrow="Products" heading={HOME.products.heading} accent={HOME.products.accent} sub={HOME.products.sub} />
+          <SectionHead
+            eyebrow="Products"
+            heading={HOME.products.heading}
+            accent={HOME.products.accent}
+            sub={HOME.products.sub}
+          />
+          <Cinematic src="/images/home-platform.webp" />
           {PRODUCT_GROUPS.map((g) => (
             <div key={g.key} className="group-block">
               <h3 className="group-label" data-reveal>
@@ -95,6 +115,7 @@ export default async function HomePage() {
         <div className="container">
           <SectionHead eyebrow="How it works" heading={HOW_IT_WORKS.heading} accent={HOW_IT_WORKS.accent} />
           <Steps steps={HOW_IT_WORKS.steps} />
+          <Cinematic src="/images/home-process.webp" delay={0.1} />
         </div>
       </section>
 
@@ -109,7 +130,13 @@ export default async function HomePage() {
           />
           <div className="card-grid four">
             {INDUSTRIES.filter((i) => i.onHome).map((ind, i) => (
-              <LinkCard key={ind.slug} href={industryHref(ind.slug)} title={ind.label} note={ind.tile} delay={0.04 * i} />
+              <LinkCard
+                key={ind.slug}
+                href={industryHref(ind.slug)}
+                title={ind.label}
+                note={ind.tile}
+                delay={0.04 * i}
+              />
             ))}
           </div>
           <div className="more-link" data-reveal>
@@ -135,13 +162,19 @@ export default async function HomePage() {
               </div>
             ))}
           </div>
+          <Cinematic src="/images/home-team.webp" delay={0.1} />
         </div>
       </section>
 
       {/* ── Custom services band ── */}
       <section className="section section-line">
         <div className="container split">
-          <SectionHead eyebrow="Services" heading={HOME.services.heading} accent={HOME.services.accent} sub={HOME.services.sub} />
+          <SectionHead
+            eyebrow="Services"
+            heading={HOME.services.heading}
+            accent={HOME.services.accent}
+            sub={HOME.services.sub}
+          />
           <div className="card-stack">
             {SERVICES.map((s, i) => (
               <LinkCard key={s.slug} href={offeringHref(s)} title={s.name} note={s.tagline} delay={0.06 * i} />

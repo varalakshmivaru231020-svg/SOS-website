@@ -1,5 +1,6 @@
 import Accent from "./Accent";
 import Breadcrumbs, { type Crumb } from "./Breadcrumbs";
+import HeroBackdrop from "./HeroBackdrop";
 
 /**
  * The page-opening band: eyebrow, one H1 with its orange accent phrase, lede
@@ -15,6 +16,7 @@ export default function PageHero({
   note,
   visual,
   crumbs,
+  backdrop,
   size = "md",
 }: {
   eyebrow?: string;
@@ -25,10 +27,13 @@ export default function PageHero({
   note?: string;
   visual?: React.ReactNode;
   crumbs?: Crumb[];
+  /** A full-bleed picture behind the band; see HeroBackdrop. */
+  backdrop?: string;
   size?: "lg" | "md";
 }) {
   return (
     <section className="hero">
+      {backdrop && <HeroBackdrop src={backdrop} />}
       <div className="container">
         {crumbs && <Breadcrumbs trail={crumbs} />}
         <div className={visual ? "hero-grid" : undefined}>

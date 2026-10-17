@@ -5,6 +5,7 @@ import { pageMetadata } from "@/lib/seo";
 import { demoHref } from "@/content";
 import { ABOUT, HOME } from "@/content/site";
 import PageHero from "@/components/site/PageHero";
+import Cinematic from "@/components/site/Cinematic";
 import SectionHead from "@/components/site/SectionHead";
 import CtaBanner from "@/components/site/CtaBanner";
 import { LinkCard, Steps } from "@/components/site/Cards";
@@ -14,13 +15,19 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function AboutPage() {
-  const [timeline, offices, team, settings] = await Promise.all([getTimeline(), getOffices(), getTeam(), getSettings()]);
+  const [timeline, offices, team, settings] = await Promise.all([
+    getTimeline(),
+    getOffices(),
+    getTeam(),
+    getSettings(),
+  ]);
   const office = offices[0];
 
   return (
     <>
       <PageHero
         crumbs={[{ label: "Our Story", href: "/about" }]}
+        backdrop="/images/about-hero.webp"
         eyebrow={ABOUT.eyebrow}
         title={ABOUT.headline}
         accent={ABOUT.accent}
@@ -45,6 +52,7 @@ export default async function AboutPage() {
             <LinkCard href="/products" title={ABOUT.whatWeDo[0].title} note={ABOUT.whatWeDo[0].copy} />
             <LinkCard href="/services" title={ABOUT.whatWeDo[1].title} note={ABOUT.whatWeDo[1].copy} delay={0.06} />
           </div>
+          <Cinematic src="/images/about-team.webp" wide delay={0.1} />
         </div>
       </section>
 
@@ -57,6 +65,7 @@ export default async function AboutPage() {
           <p className="problem serif" data-reveal data-delay="0.06">
             {ABOUT.mission}
           </p>
+          <Cinematic src="/images/about-channels.webp" delay={0.1} />
         </div>
       </section>
 
@@ -75,6 +84,7 @@ export default async function AboutPage() {
               </div>
             ))}
           </div>
+          <Cinematic src="/images/about-office.webp" delay={0.1} />
         </div>
       </section>
 
@@ -83,6 +93,7 @@ export default async function AboutPage() {
         <div className="container">
           <SectionHead eyebrow="How we work" heading="Discover, design, build, launch" accent="launch" />
           <Steps steps={ABOUT.process} />
+          <Cinematic src="/images/about-build.webp" delay={0.1} />
         </div>
       </section>
 

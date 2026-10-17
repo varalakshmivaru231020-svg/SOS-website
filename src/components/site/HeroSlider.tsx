@@ -5,7 +5,7 @@ import Link from "next/link";
 import type { Demo } from "@/content/types";
 import Accent from "./Accent";
 import DemoVisual from "./DemoVisual";
-import HeroArt from "./HeroArt";
+import HeroBackdrop from "./HeroBackdrop";
 
 export type HeroSlide = {
   tab: string;
@@ -29,10 +29,12 @@ export default function HeroSlider({
   slides,
   badge,
   note,
+  backdrop,
 }: {
   slides: HeroSlide[];
   badge?: { href: string; label: string };
   note?: string;
+  backdrop?: string;
 }) {
   const [active, setActive] = useState(0);
   const [paused, setPaused] = useState(false);
@@ -56,7 +58,7 @@ export default function HeroSlider({
       onFocus={() => setPaused(true)}
       onBlur={(e) => !e.currentTarget.contains(e.relatedTarget as Node | null) && setPaused(false)}
     >
-      <div className="hero-glow" aria-hidden="true" />
+      {backdrop && <HeroBackdrop src={backdrop} />}
       <div className="container">
         <div className="hero-grid">
           <div className="hero-copy">
@@ -101,7 +103,6 @@ export default function HeroSlider({
             {note && <p className="hero-note">{note}</p>}
           </div>
           <div className="hero-visual hero-stage" ref={visualRef}>
-            <HeroArt />
             <DemoVisual key={active} demo={slides[active].demo} />
           </div>
         </div>
