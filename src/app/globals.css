@@ -809,6 +809,49 @@ html[data-motion="0"] [data-reveal] { opacity: 1; transform: none; transition: n
   .hero-visual { margin-top: 8px; }
 }
 
+/* ── Photo hero ──
+   A light photograph fills the band (PageHero `backdrop`); the subjects sit on
+   the right, so a white fade on the left keeps the copy legible and the band
+   switches back to dark text. The bottom fades into the page. */
+.hero.hero-photo {
+  --paper: #ffffff;
+  --paper2: #ffffff;
+  --paper3: #f6f7f8;
+  --ink: var(--midnight);
+  --muted: #5f6470;
+  --line: rgba(11, 12, 15, 0.1);
+  --accent-text: color-mix(in srgb, var(--accent) 72%, var(--midnight));
+  display: flex;
+  align-items: center;
+  min-height: min(680px, 82vh);
+  background: #fff;
+  color: var(--ink);
+}
+.hero-photo .container { width: 100%; }
+.hero-photo .hero-copy { max-width: 640px; }
+.hero-photo .btn-ghost { border-color: color-mix(in srgb, var(--midnight) 25%, transparent); background: rgba(255, 255, 255, 0.6); }
+.hero-photo .btn-ghost:hover { border-color: var(--midnight); }
+.hero-photo .hero-badge { background: rgba(255, 255, 255, 0.72); backdrop-filter: blur(8px); }
+.hero-bg { position: absolute; inset: 0; z-index: -1; }
+.hero-bg img { object-fit: cover; object-position: 78% 50%; }
+.hero-bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, rgba(255, 255, 255, 0.96) 0%, rgba(255, 255, 255, 0.9) 36%, rgba(255, 255, 255, 0.4) 60%, rgba(255, 255, 255, 0) 100%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0) 75%, #fff 100%);
+}
+/* Narrow screens: the photo becomes a band under the copy, fading in from
+   the white above, so the people stay in view instead of the desk. */
+@media (max-width: 960px) {
+  .hero.hero-photo { min-height: 0; padding-bottom: clamp(240px, 62vw, 360px); }
+  .hero-photo .hero-copy { max-width: none; }
+  .hero-bg { inset: auto 0 0 0; height: clamp(260px, 68vw, 400px); }
+  .hero-bg img { object-position: 74% 30%; }
+  .hero-bg::after { background: linear-gradient(180deg, #fff 0%, rgba(255, 255, 255, 0) 42%); }
+}
+
 /* The New pill above a hero eyebrow (PageHero badge). */
 .hero-badge {
   display: inline-flex;

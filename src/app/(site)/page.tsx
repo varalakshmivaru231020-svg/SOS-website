@@ -5,7 +5,6 @@ import { pageMetadata } from "@/lib/seo";
 import { INDUSTRIES, PRODUCT_GROUPS, SERVICES, demoHref, industryHref, offeringHref, productsIn } from "@/content";
 import { HOME, HOW_IT_WORKS, WHY_US } from "@/content/site";
 import PageHero from "@/components/site/PageHero";
-import Cinematic from "@/components/site/Cinematic";
 import SectionHead from "@/components/site/SectionHead";
 import CtaBanner from "@/components/site/CtaBanner";
 import Testimonials from "@/components/site/Testimonials";
@@ -27,6 +26,7 @@ export default async function HomePage() {
     <>
       <PageHero
         size="lg"
+        backdrop="/images/home-hero.webp"
         badge={{ href: "/products", label: "ERP, CRM & Website Builder" }}
         eyebrow={HOME.hero.eyebrow}
         title={HOME.hero.headline}
@@ -43,7 +43,6 @@ export default async function HomePage() {
             </Link>
           </>
         }
-        visual={<Cinematic src="/images/home-hero.webp" pos="76% 50%" preload />}
       />
 
       {/* ── Proof strip — figures are managed in Admin → Site blocks ── */}

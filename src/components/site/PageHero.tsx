@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import Accent from "./Accent";
 import Breadcrumbs, { type Crumb } from "./Breadcrumbs";
 
@@ -17,6 +18,7 @@ export default function PageHero({
   visual,
   crumbs,
   badge,
+  backdrop,
   size = "md",
 }: {
   eyebrow?: string;
@@ -29,10 +31,17 @@ export default function PageHero({
   crumbs?: Crumb[];
   /** A "New" pill above the eyebrow, linking to what is new. */
   badge?: { href: string; label: string };
+  /** A photo filling the band, with a light fade behind the copy. */
+  backdrop?: string;
   size?: "lg" | "md";
 }) {
   return (
-    <section className="hero">
+    <section className={`hero${backdrop ? " hero-photo" : ""}`}>
+      {backdrop && (
+        <div className="hero-bg" aria-hidden="true">
+          <Image src={backdrop} alt="" fill preload sizes="100vw" />
+        </div>
+      )}
       <div className="container">
         {crumbs && <Breadcrumbs trail={crumbs} />}
         <div className={visual ? "hero-grid" : undefined}>
